@@ -1,0 +1,109 @@
+import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+import { AuthContext } from "../contexts/Auth";
+
+import LandingPage from "../pages/LandingPage";
+import Client from "../pages/Client";
+import Admin from "../pages/Admin";
+import Station from "../pages/Station";
+
+import { STATION, ADMIN, CLIENT } from "../constants";
+
+class AuthSwitch extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <LandingPage />
+          </Route>
+          <Redirect to="/login" />
+        </Switch>
+      </Router>
+    );
+  }
+}
+
+class ClientSwitch extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/client">
+            <Client />
+          </Route>
+
+          <Redirect to="/client" />
+        </Switch>
+      </Router>
+    );
+  }
+}
+
+class AdminSwitch extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/admin" exact>
+            <Admin />
+          </Route>
+        </Switch>
+        <Redirect to="/admin" />
+      </Router>
+    );
+  }
+}
+
+class Bill extends Component {
+  render() {
+    return <div>bill</div>;
+  }
+}
+
+class StationSwitch extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/station" exact>
+            <Station />
+          </Route>
+          <Route path="/station/bill" exact>
+            <Bill />
+          </Route>
+          <Redirect to="/station" />
+        </Switch>
+      </Router>
+    );
+  }
+}
+
+export default class Routers extends Component {
+  render() {
+    let auth = this.context;
+    if (!auth.isLogin) {
+      return <AuthSwitch />;
+    }
+
+    // check role
+    switch (auth.role) {
+      case ADMIN:
+        return <AdminSwitch />;
+      case CLIENT:
+        return <ClientSwitch />;
+      case STATION:
+        return <StationSwitch />;
+      case null:
+        return null;
+    }
+  }
+}
+
+Routers.contextType = AuthContext;
