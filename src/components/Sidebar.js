@@ -7,17 +7,6 @@ import LogoCol from "../assets/Logo-col.png"
 export default class Sidebar extends Component {
     render() {
         return (
-            <div>
-                <header>
-                    <div className="left-area d-flex">
-                        <img className="logo-col" src={LogoCol}/>
-                    </div>
-                    <div className="right-area d-flex ml-auto">
-                        <button  className="logout-btn btn-primary rounded" value="Logout">
-                            Logout
-                        </button>
-                    </div>
-                </header>
                 <div className="sidebar">
                     <a>
                         <FontAwesomeIcon icon={faDesktop} />
@@ -40,8 +29,6 @@ export default class Sidebar extends Component {
                         <span>Cài đặt</span>
                     </a>
                 </div>
-                <div className="content"> asdasdjkashdjkasd</div>
-            </div>
             
         )
     }
