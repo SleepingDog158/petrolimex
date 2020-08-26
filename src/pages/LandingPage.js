@@ -39,7 +39,7 @@ class LandingPage extends Component {
             </div>
 
             <button
-              className="w-75 p-2 btn mt-4 btn-outline-primary shadow btn-custom"
+              className="w-75 p-2 btn mt-4 btn-outline-primary shadow btn-custom font-weight-bold"
               onClick={(event) => auth.onLogin(event)}
             >
               <span></span>
