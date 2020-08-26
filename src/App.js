@@ -5,8 +5,8 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 
-
-
+import Admin from "./pages/Admin"
+import NavBar from "./components/NavBar"
 import Sidebar from "./components/Sidebar"
 import Client from "./pages/Client/Client";
 function App() {
@@ -14,7 +14,7 @@ function App() {
     // <AuthProvider>
     //   <Router />
     // </AuthProvider>
-    <Sidebar/>
+    <NavBar/>
   )
 }
 

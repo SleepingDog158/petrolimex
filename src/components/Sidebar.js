@@ -40,7 +40,7 @@ export default class Sidebar extends Component {
                         <span>Cài đặt</span>
                     </a>
                 </div>
-                <div className="content"> asdasdjkashdjkasd</div>
+                <div className="content"></div>
             </div>
             
         )
