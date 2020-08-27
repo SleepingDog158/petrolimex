@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import LogoCol from '../assets/Logo-col.png'
+import './Sidebar.css'
 export default class Header extends Component {
     render() {
         return (

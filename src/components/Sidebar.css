@@ -75,7 +75,30 @@ label #collapse:hover{
 
 .content{
     margin-left: 180px;
-    background-color: red;
     height: 100vh;
     margin-top:80px
+}
+
+.tag-name{
+    margin-top: 10px;
+    margin-left: 10px
+}
+h4{
+    margin-top:10px;
+    padding-top: 10px
+}
+
+
+header{
+    z-index: 1;
+}
+
+.card-tab{
+    width: 300px
+}
+
+.piechart-container{
+    width: 600px;
+    margin-top: 20px
+  
 }

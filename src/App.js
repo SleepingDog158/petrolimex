@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import AdminPartner from "./pages/Admin/AdminPartner"
 import NavBar from "./components/NavBar"
 import Sidebar from "./components/Sidebar"
-import Client from "./pages/Client/Client";
+import Client from "./pages/Client/Client-Main";
 function App() {
   return (
     // <AuthProvider>
