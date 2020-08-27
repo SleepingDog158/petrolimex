@@ -7,7 +7,7 @@ export default class Admin extends Component {
         return (
            <div>
                <NavBar/>
-               <div class="admin-main-content">Hello</div>
+               <div className="admin-main-content">Hello</div>
            </div>
         )
     }

@@ -5,15 +5,27 @@ import LogoCol from "../assets/Logo-col.png"
 export default class NavBar extends Component {
     render() {
         return (
-            <div class="nav-bar">
+            <div className="nav-bar">
                 <nav>
-                    <ul class="nav-content">
-                        <li class='list-content'><a href="#" class="navbar-prop"><img src={LogoCol} alt="logo" id="logo"/></a></li>
-                        <li class='list-content'><a href="#" class="nav-items navbar-prop">Đối tác</a></li>
-                        <li class='list-content'><a href="#" class="nav-items navbar-prop">Chi nhánh</a></li>
-                        <li class='list-content'><a href="#" class="nav-items navbar-prop">Sản phẩm</a></li>
-                        <li class='list-content'><a href="#" class="nav-items navbar-prop">Thống kê</a></li>
-                        <li class='list-content'><a href="#" class="nav-items navbar-prop">Logout</a></li>
+                    <ul className="nav-content">
+                        <li className='list-content'>
+                            <a href="#" className="navbar-prop"><img src={LogoCol} alt="logo" id="logo"/></a>
+                        </li>
+                        <li className='list-content'>
+                            <a href="#" className="nav-items navbar-prop">Đối tác</a>
+                        </li>
+                        <li className='list-content'>
+                            <a href="#" className="nav-items navbar-prop">Chi nhánh</a>
+                        </li>
+                        <li className='list-content'>
+                            <a href="#" className="nav-items navbar-prop">Sản phẩm</a>
+                        </li>
+                        <li className='list-content'>
+                            <a href="#" className="nav-items navbar-prop">Thống kê</a>
+                        </li>
+                        <li className='list-content'>
+                            <a href="#" className="nav-items navbar-prop">Logout</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
