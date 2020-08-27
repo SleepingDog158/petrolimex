@@ -1,9 +1,30 @@
 div {
-    background-color: lightblue;
+    background-color: #0066cc;
+    padding: 10px 0px;
 }
 #logo {
     height: 100px;
 }
 ul {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+li {
+    display: inline-flex;
+}
+.nav-items {
+    display: block;
+    color: white;
+    padding: 20px;
+    margin: 0;
+    font-size: 20px;
+}
+#logout {
+    left: 0;
+}
+.nav-items:hover {
+    text-decoration: none;
+    color: white;
+    background-color: darkblue;
 }

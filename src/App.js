@@ -3,7 +3,7 @@ import Router from "./routes";
 import { AuthProvider, AuthContext } from "./contexts/Auth";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-
+import Admin from './pages/Admin'
 
 import Admin from "./pages/Admin"
 import NavBar from "./components/NavBar"
@@ -14,7 +14,7 @@ function App() {
     // <AuthProvider>
     //   <Router />
     // </AuthProvider>
-    <NavBar/>
+    <Client/>
   )
 }
 
