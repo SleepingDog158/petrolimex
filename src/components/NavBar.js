@@ -5,7 +5,7 @@ import LogoCol from "../assets/Logo-col.png"
 export default class NavBar extends Component {
     render() {
         return (
-            <div>
+            <div class="nav-bar">
                 <nav>
                     <ul>
                         <li><a href=""><img src={LogoCol} alt="logo" id="logo"/></a></li>
@@ -13,7 +13,7 @@ export default class NavBar extends Component {
                         <li><a href="#" class="nav-items">Chi nhánh</a></li>
                         <li><a href="#" class="nav-items">Sản phẩm</a></li>
                         <li><a href="#" class="nav-items">Thống kê</a></li>
-                        <li><a href="#" class="nav-items" id="logout">Logout</a></li>
+                        <li><a href="#" class="nav-items">Logout</a></li>
                     </ul>
                 </nav>
             </div>
