@@ -5,10 +5,10 @@ h1 {
     position: absolute;
     margin: 50px 150px;
 }
-table {
+.admin-table-content {
     width: 100%;
 }
-table, th, td {
+.admin-table-content, .admin-table-header, .admin-table-row {
     border: 1px solid black;
     padding: 10px;
 }
