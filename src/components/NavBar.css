@@ -7,12 +7,12 @@
     height: 50px;
     margin: -5px 0 0 0;
 }
-ul {
+.nav-content {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-li {
+.list-content {
     display: inline-flex;
     align-items: center;
     margin: 0;
@@ -28,9 +28,9 @@ li {
     color: white;
     background-color: mediumblue;
 }
-a {
+.navbar-prop {
     color: white;
 }
-li:last-child {
+.list-content:last-child {
     float: right;
 }

@@ -7,26 +7,30 @@ export default class AdminPartner extends Component {
         return (
             <div>
                 <NavBar/>
-                <div class="admin-partner-content">
+                <div className="admin-partner-content">
                     <h1>Các công ty đối tác</h1>
-                    <table class='table-content'>
+                    <table className='admin-table-content'>
                         <tr>
-                            <th>Tên Công Ty</th>
-                            <th>Địa Chỉ</th>
-                            <th>Hạn Mức</th>
-                            <th></th>
+                            <th className="admin-table-header">Tên Công Ty</th>
+                            <th className="admin-table-header">Địa Chỉ</th>
+                            <th className="admin-table-header">Hạn Mức</th>
+                            <th className="admin-table-header"></th>
                         </tr>
                         <tr>
-                            <td>Công ty THHH A</td>
-                            <td>Số 3 Tôn Thất Thuyết</td>
-                            <td>200.000.000 VND</td>
-                            <td><button type='button'>Xem chi tiết</button></td>
+                            <td className="admin-table-row">Công ty THHH A</td>
+                            <td className="admin-table-row">Số 3 Tôn Thất Thuyết</td>
+                            <td className="admin-table-row">200.000.000 VND</td>
+                            <td className="admin-table-row">
+                                <button type='button'>Xem chi tiết</button>
+                            </td>
                         </tr>
                         <tr>
-                            <td>Công ty THHH B</td>
-                            <td>Số 3 Tôn Thất Thuyết</td>
-                            <td>1.000.000.000 VND</td>
-                            <td><button type='button'>Xem chi tiết</button></td>
+                            <td className="admin-table-row">Công ty THHH B</td>
+                            <td className="admin-table-row">Số 3 Tôn Thất Thuyết</td>
+                            <td className="admin-table-row">1.000.000.000 VND</td>
+                            <td className="admin-table-row">
+                                <button type='button'>Xem chi tiết</button>
+                            </td>
                         </tr>
                     </table>
                 </div>
