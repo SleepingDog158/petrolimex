@@ -56,7 +56,7 @@ export default class Client extends Component {
               <h6>Bảng giá xăng dầu</h6>
               <GasPriceTable />
             </div>
-            <div className="piechart-container col-6">
+            <div className="piechart-container col-5">
               <PieChart className="piechart" />
             </div>
             

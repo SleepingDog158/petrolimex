@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './Sidebar.css'
+import './Client.css'
 import { faFileAlt  ,faFileContract, faBus, faCogs, faDesktop } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LogoCol from "../assets/Logo-col.png"
