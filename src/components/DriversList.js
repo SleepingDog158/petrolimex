@@ -5,8 +5,10 @@ import Button from "react-bootstrap/Button";
 import { FaUserEdit } from "react-icons/fa";
 import { CgUserRemove } from "react-icons/cg";
 
-import {PaginationComponent} from "./PaginationComponent";
-import {Search} from "./Search";
+import ModalExample from "./ModalExample";
+
+import { PaginationComponent } from "./PaginationComponent";
+import { Search } from "./Search";
 
 export const DriversList = () => {
   const [drivers, setDrivers] = useState([]);
@@ -14,7 +16,16 @@ export const DriversList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
 
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("");
+
+  const [modal, setModal] = useState(false);
+
+  const [currentDriver, setCurrentDriver] = useState(null);
+
+  const toggle = driver => {
+    setModal(!modal);
+    setCurrentDriver(driver);
+  };
 
   useEffect(async () => {
     const result = await axios("https://1ne1c.sse.codesandbox.io/drivers");
@@ -22,40 +33,43 @@ export const DriversList = () => {
     setDrivers(result.data);
   }, []);
 
-    const driversData = useMemo(() => {
-        let computedDrivers = drivers;
-        if(search){
-            computedDrivers=computedDrivers.filter(
-                driver=>
-                driver.name.toLowerCase().includes(search.toLowerCase())||
-                driver.phone.includes(search)||
-                driver.plate.toLowerCase().includes(search.toLowerCase())
-            )
-        }
-        setTotalItems(computedDrivers.length)
-        return computedDrivers.slice(
-            (currentPage-1)*ITEMS_PER_PAGE,
-            (currentPage-1)*ITEMS_PER_PAGE +ITEMS_PER_PAGE
-        )
-    }, [drivers, currentPage, search]);
+  const driversData = useMemo(() => {
+    let computedDrivers = drivers;
+    if (search) {
+      computedDrivers = computedDrivers.filter(
+        (driver) =>
+          driver.name.toLowerCase().includes(search.toLowerCase()) ||
+          driver.phone.includes(search) ||
+          driver.plate.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    setTotalItems(computedDrivers.length);
+    return computedDrivers.slice(
+      (currentPage - 1) * ITEMS_PER_PAGE,
+      (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
+    );
+  }, [drivers, currentPage, search]);
 
   return (
     <div className="row w-100">
       <div className="col mb-3 col-11 text-center ml-4">
         <div className="row">
           <div className="col-md-6">
-            <Search onSearch={(value)=>{
-                setSearch(value)
+            <Search
+              onSearch={(value) => {
+                setSearch(value);
                 setCurrentPage(1);
-            }}/>
+              }}
+            />
           </div>
-          
+
           <div className="col-md-6 d-flex flex-row-reverse p-0 pagination">
-            <PaginationComponent 
-            total ={totalItems}
-            itemsPerPage={ITEMS_PER_PAGE}
-            currentPage ={currentPage}
-            onPageChange={page=>setCurrentPage(page)}/>
+            <PaginationComponent
+              total={totalItems}
+              itemsPerPage={ITEMS_PER_PAGE}
+              currentPage={currentPage}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
           </div>
 
           <Table className="col-12 ml-3" striped>
@@ -88,7 +102,8 @@ export const DriversList = () => {
               {driversData.map((driver) => (
                 <tr>
                   <th
-                    scope="row" className="id-column"
+                    scope="row"
+                    className="id-column"
                     style={{ textAlign: "center", verticalAlign: "middle" }}
                   >
                     {driver.id}
@@ -112,7 +127,7 @@ export const DriversList = () => {
                     {driver.plate}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    <Button variant="primary" className="mr-1">
+                    <Button variant="primary" className="mr-1" onClick={() => toggle(driver)}>
                       <FaUserEdit />
                     </Button>
                     <Button variant="danger">
@@ -123,6 +138,8 @@ export const DriversList = () => {
               ))}
             </tbody>
           </Table>
+
+          <ModalExample modal={modal} toggle={toggle} driver={currentDriver}/>
         </div>
       </div>
     </div>

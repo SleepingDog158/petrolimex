@@ -7,7 +7,8 @@ import LandingPage from './pages/LandingPage'
 import AdminPartner from "./pages/Admin/AdminPartner"
 import DriversList from './components/DriversList'
 import ClientDriver from "./pages/Client/Client-Driver";
-import Client from "./pages/Client/Client-Main";
+import ClientMain from "./pages/Client/Client-Main";
+
 function App() {
   return (
     // <AuthProvider>
