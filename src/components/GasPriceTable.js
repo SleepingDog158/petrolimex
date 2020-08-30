@@ -3,7 +3,8 @@ import { Table } from 'reactstrap';
 
 const GasPriceTable = (props) => {
   return (
-    <Table>
+    <Table striped>
+      <thead></thead>
       <tbody>
         <tr>
           <th scope="row">1</th>
