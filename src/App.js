@@ -5,6 +5,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 import GasPriceTable from "./components/GasPriceTable"
+import AdminMain from "./pages/Admin/AdminMain"
 import AdminProduct from "./pages/Admin/AdminProduct"
 import NavBar from "./components/NavBar"
 import Sidebar from "./components/Sidebar"
@@ -18,7 +19,8 @@ function App() {
     // <AuthProvider>
     //   <Router />
     // </AuthProvider>
-     <ClientDriver/>
+     //<ClientDriver/>
+     <AdminPartner/>
   )
 }
 

@@ -1,4 +1,5 @@
-h1 {
+/*
+.admin-partner-header {
     color: mediumblue; 
 }
 .admin-partner-content {
@@ -11,4 +12,33 @@ h1 {
 .admin-table-content, .admin-table-header, .admin-table-row {
     border: 1px solid black;
     padding: 10px;
+}
+*/
+.admin-partner-header {
+    color: mediumblue;
+}
+.admin-partner-content {
+    position: absolute;
+    margin: 50px 150px;
+}
+.admin-partner-button {
+    padding: 20px;
+    position: relative;
+    margin: 20px 50px 10px 0px;
+    width: 200px;
+    height: 150px;
+    display: inline-flex;
+    float: left;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    border-radius: 50px 0px;
+    border: 2px solid darkblue;
+    color: orangered;
+}
+.admin-partner-icon {
+    zoom: 3.5;
+}
+.admin-partner-button:focus {
+    outline: none;
 }

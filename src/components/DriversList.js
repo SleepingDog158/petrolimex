@@ -1,3 +1,4 @@
+/*
 import React, { useState, useMemo, useEffect, Component } from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
@@ -128,3 +129,4 @@ export const DriversList = () => {
     </div>
   );
 };
+*/
