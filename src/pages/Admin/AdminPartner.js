@@ -8,7 +8,7 @@ export default class AdminPartner extends Component {
     render() {
         return (
             <div>
-                <NavBar />
+                <NavBar/>
                 <div className="admin-partner-content">
                     <h1 className="admin-partner-header">Các công ty đối tác</h1>
                     <button type="button" class="admin-partner-button"><FontAwesomeIcon icon={faPlusCircle} className="admin-partner-icon"/></button>
