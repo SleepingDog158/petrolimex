@@ -11,13 +11,13 @@ import {
   CardSubtitle,
   Button,
 } from "reactstrap";
-export default class Client extends Component {
+export default class ClientMain extends Component {
   render() {
     return (
       <div>
         <Header />
         <Sidebar />
-        <div className="content">
+        <div className="content-area">
           <div className="tag-name">
             <h4>Dashboard</h4>
           </div>
