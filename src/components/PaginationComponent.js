@@ -3,7 +3,7 @@ import Pagination from "react-bootstrap/Pagination";
 
 export const PaginationComponent = ({
   total = 0,
-  itemsPerPage = 10,
+  itemsPerPage = 5,
   currentPage = 1,
   onPageChange
 }) => {
@@ -33,9 +33,13 @@ export const PaginationComponent = ({
   if(totalPages===0) return null
   return (
     <Pagination>
+      <Pagination.First onClick={ ()=> onPageChange(1)} disabled={currentPage===1}/>
       <Pagination.Prev onClick={ ()=> onPageChange(currentPage-1)} disabled={currentPage===1} />
-      { paginationItems }
+      {paginationItems}
+      
       <Pagination.Next onClick={ ()=> onPageChange(currentPage+1)} disabled={currentPage===totalPages}/>
+      <Pagination.Last onClick={ ()=> onPageChange(totalPages)} disabled={currentPage===totalPages}/>
+      
     </Pagination>
   );
 };
