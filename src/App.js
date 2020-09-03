@@ -22,7 +22,7 @@ function App() {
     //   <Router />
     // </AuthProvider>
      //<ClientDriver/>
-     <AdminPartner/>
+     <AdminPartnerMain/>
   )
 }
 

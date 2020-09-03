@@ -1,7 +1,11 @@
 .admin-partner-main-header {
     color: mediumblue;
+    text-align: justify;
 }
 .admin-partner-main-content {
     position: absolute;
     margin: 20px 150px;
+}
+.admin-partner-main-left-content {
+    position: relative;
 }
