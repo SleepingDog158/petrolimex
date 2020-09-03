@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import LogoCol from '../assets/Logo-col.png'
 import './Client.css'
-export default class Header extends Component {
+export default class PageHeader extends Component {
     render() {
         return (
             <div>
