@@ -15,6 +15,7 @@ export const TableHeader = ({ headers, onSorting }) => {
       <tr>
         {headers.map(({ name, field, sortable }) => (
           <th className ="table-head-tag" style={{
+            width: "200px",
             textAlign: "center",
             verticalAlign: "middle",
             padding: "12px",

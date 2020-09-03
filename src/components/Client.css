@@ -46,7 +46,7 @@ header {
   display: block;
   width: 100%;
   line-height: 60px;
-  padding-left: 30px;
+  padding-left: 15px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -85,10 +85,11 @@ header {
 }
 
 .name-column {
-  width: 250px;
-  max-width: 250px;
+  width: 200px;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-wrap: normal;
   white-space: nowrap;
 }
 
@@ -101,4 +102,11 @@ header {
 }
 .table-head-tag{
   cursor: default;
+}
+.number-column{
+  width: 200px;
+  max-width: 200px;
+}
+.searchbar{
+  margin-left : 100px
 }
