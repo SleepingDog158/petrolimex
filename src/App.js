@@ -14,6 +14,7 @@ import AdminPartner from "./pages/Admin/AdminPartner"
 import DriversList from './components/DriversList'
 import ClientDriver from "./pages/Client/Client-Driver";
 import ClientMain from "./pages/Client/Client-Main";
+import AdminPartnerMain from "./pages/Admin/AdminPartnerMain";
 
 function App() {
   return (
