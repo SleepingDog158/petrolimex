@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
+import PageHeader from "../../components/PageHeader";
 import PieChart from "../../components/PieChart";
 import GasPriceTable from "../../components/GasPriceTable";
 import {
@@ -15,7 +15,7 @@ export default class ClientMain extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <PageHeader />
         <Sidebar />
         <div className="content-area">
           <div className="tag-name">

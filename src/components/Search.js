@@ -13,7 +13,7 @@ export const Search = ({onSearch}) => {
         <input
             type="text"
             className="form-control"
-            style={{width:"300px"}}
+            style={{width:"900px"}}
             placeholder="Tìm kiếm ..."
             value={search}
             onChange={(e)=>onInputChange(e.target.value)}
