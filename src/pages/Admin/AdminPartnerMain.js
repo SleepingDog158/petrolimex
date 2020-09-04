@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavBar from "../../components/NavBar"
-import "./AdminPartnerMain.css"
+import "./Admin.css"
 import PieChart from '../../components/PieChart'
 
 export default class AdminPartnerMain extends Component {

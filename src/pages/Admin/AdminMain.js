@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavBar from "../../components/NavBar"
-import "./AdminMain.css"
+import "./Admin.css"
 
 export default class Admin extends Component {
     render() {
