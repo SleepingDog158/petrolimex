@@ -16,14 +16,15 @@ import ClientDriver from "./pages/Client/Client-Driver";
 import ClientMain from "./pages/Client/Client-Main";
 import ClientContract from "./pages/Client/ClientContract"
 import ClientReport from "./pages/Client/ClientReport"
-import AdminPartnerMain from "./pages/Admin/AdminPartnerMain";
+import ClientDeal from "./pages/Client/ClientDeal"
+import {Filterbar} from "./components/FilterBar"
+
 function App() {
   return (
     // <AuthProvider>
     //   <Router />
     // </AuthProvider>
-    // <ClientContract/>
-    <AdminPartnerMain/>
+     <ClientDeal/>
   )
 }
 
