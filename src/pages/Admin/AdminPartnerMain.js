@@ -9,11 +9,11 @@ export default class AdminPartnerMain extends Component {
             <div>
                 <NavBar/>
                 <div className="admin-partner-main-content">
-                    <h2 className="admin-partner-main-header">Công ty TNHH A</h2>
                     <div className="admin-partner-main-left-content">
-                        <table>
+                    <h2 className="admin-partner-main-header">Công ty TNHH A</h2>
+                        <table className="admin-partner-main-table">
                             <tr>
-                                <th colSpan="2">Thông tin công ty</th> 
+                                <th colSpan="2" className="admin-partner-main-table-header">Thông tin công ty</th> 
                             </tr>
                             <tr>
                                 <td>Mã công ty:</td>
@@ -36,6 +36,15 @@ export default class AdminPartnerMain extends Component {
                                 <td>17254712</td>
                             </tr>
                         </table>
+                        <div className="admin-partner-main-grid">
+                            <button type="button" className="admin-partner-main-grid-button">Hợp đồng</button>
+                            <button type="button" className="admin-partner-main-grid-button">Tài xế</button>
+                            <button type="button" className="admin-partner-main-grid-button">Giao Dịch</button>
+                            <button type="button" className="admin-partner-main-grid-button">Thống kê chi tiết</button>
+                        </div>
+                    </div>
+                    <div className="admin-partner-main-chart">
+                        <PieChart/>
                     </div>
                 </div>
             </div>
