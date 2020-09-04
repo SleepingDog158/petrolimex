@@ -28,23 +28,25 @@ export const DriversList = () => {
 
   const [currentDriver, setCurrentDriver] = useState(null);
 
+  const [id, setId] = useState(currentDriver ? currentDriver.id : "");
   const [name, setName] = useState(currentDriver ? currentDriver.name : "");
   const [phone, setPhone] = useState(currentDriver ? currentDriver.phone : "");
-  const [creditLimit, setCreditLimit] = useState(
-    currentDriver ? currentDriver.creditLimit : ""
+  const [teamId, setTeamId] = useState(
+    currentDriver ? currentDriver.teamId : ""
   );
-  const [creditRemain, setCreditRemain] = useState(
-    currentDriver ? currentDriver.creditRemain : ""
+ 
+  const [loginId, setLoginId] = useState(
+    currentDriver ? currentDriver.loginId : ""
   );
   const [plate, setPlate] = useState(currentDriver ? currentDriver.plate : "");
 
   const headers = [
-    { name: "ID", field: "id", sortable: false },
+    { name: "ID", field: "id", sortable: true },
     { name: "Họ tên", field: "name", sortable: true },
-    { name: "Số điện thoại", field: "phone", sortable: false },
-    { name: "Hạn mức công nợ", field: "creditLimit", sortable: true },
-    { name: "Hạn mức còn lại", field: "creditRemain", sortable: true },
+    { name: "Số điện thoại", field: "phone", sortable: true },
+    { name: "Mã đăng nhập", field: "loginId", sortable: true },
     { name: "Biển kiểm soát", field: "plate", sortable: true },
+    { name: "Mã đơn vị", field: "teamId", sortable: true },
     { name: "Thao tác", sortable: false },
   ];
 
@@ -52,11 +54,12 @@ export const DriversList = () => {
     setModal(!modal);
     if (!modal) {
       setCurrentDriver(driver);
+      setId(driver.id)
       setName(driver.name);
       setPhone(driver.phone);
-      setCreditLimit(driver.creditLimit);
-      setCreditRemain(driver.creditRemain);
       setPlate(driver.plate);
+      setTeamId(driver.teamId);
+      setLoginId(driver.loginId);
     }
   };
 
@@ -77,12 +80,10 @@ export const DriversList = () => {
         return setName(text);
       case "phone":
         return setPhone(text);
-      case "creditLimit":
-        return setCreditLimit(text);
-      case "creditRemain":
-        return setCreditRemain(text);
       case "plate":
         return setPlate(text);
+      case "teamId":
+        return setTeamId(text);
     }
   }
 
@@ -91,7 +92,7 @@ export const DriversList = () => {
   }
 
   function onUpdate() {
-    console.log(name, phone, creditLimit, creditRemain, plate);
+    console.log(name, phone, teamId, plate);
   }
   // fetch data
   useEffect(async () => {
@@ -168,6 +169,7 @@ export const DriversList = () => {
                     scope="row"
                     className="id-column"
                     style={{
+                      fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
                       padding: "0px",
@@ -178,6 +180,7 @@ export const DriversList = () => {
                   <td
                     className="name-column"
                     style={{
+                      fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
                       padding: "0px",
@@ -186,7 +189,9 @@ export const DriversList = () => {
                     {driver.name}
                   </td>
                   <td
+                    className="number-column"
                     style={{
+                      fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
                       padding: "0px",
@@ -195,25 +200,24 @@ export const DriversList = () => {
                     {driver.phone}
                   </td>
                   <td
+                    className="number-column"
+                    scope="row"
+                    className="id-column"
                     style={{
+                      fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
                       padding: "0px",
                     }}
                   >
-                    {driver.creditLimit}
+                    {driver.loginId}
                   </td>
+    
+                  
                   <td
+                    className="number-column"
                     style={{
-                      textAlign: "center",
-                      verticalAlign: "middle",
-                      padding: "0px",
-                    }}
-                  >
-                    {driver.creditRemain}
-                  </td>
-                  <td
-                    style={{
+                      fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
                       padding: "0px",
@@ -221,6 +225,20 @@ export const DriversList = () => {
                   >
                     {driver.plate}
                   </td>
+                  <td
+                    className="number-column"
+                    scope="row"
+                    className="id-column"
+                    style={{
+                      fontSize: "15px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "0px",
+                    }}
+                  >
+                    {driver.teamId}
+                  </td>
+                 
                   <td>
                     <Button
                       variant="primary"
@@ -296,32 +314,6 @@ export const DriversList = () => {
               </tr>
               <tr>
                 <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Hạn mức công nợ
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={creditLimit}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "creditLimit")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Hạn mức còn lại
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={creditRemain}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "creditRemain")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                   Biển kiểm soát
                 </th>
                 <td style={{ textAlign: "center", verticalAlign: "middle" }}>
@@ -329,6 +321,19 @@ export const DriversList = () => {
                     defaultValue={plate}
                     onChange={(event) =>
                       onChangeValue(event.target.value, "plate")
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Mã đơn vị
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={teamId}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "teamId")
                     }
                   />
                 </td>
@@ -370,32 +375,7 @@ export const DriversList = () => {
                   />
                 </td>
               </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Hạn mức công nợ
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={""}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "creditLimit")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Hạn mức còn lại
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={""}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "creditRemain")
-                    }
-                  />
-                </td>
-              </tr>
+              
               <tr>
                 <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                   Biển kiểm soát
@@ -405,6 +385,19 @@ export const DriversList = () => {
                     defaultValue={""}
                     onChange={(event) =>
                       onChangeValue(event.target.value, "plate")
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Mã đơn vị
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={""}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "teamId")
                     }
                   />
                 </td>

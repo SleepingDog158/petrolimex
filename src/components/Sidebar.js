@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Client.css'
-import { faFileAlt  ,faFileContract, faBus, faCogs, faDesktop } from "@fortawesome/free-solid-svg-icons";
+import {faClipboard ,faFileAlt  ,faFileContract, faBus, faCogs, faDesktop } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LogoCol from "../assets/Logo-col.png"
 
@@ -23,6 +23,10 @@ export default class Sidebar extends Component {
                     <a>
                         <FontAwesomeIcon icon={faFileAlt} />
                         <span>Giao dịch</span>
+                    </a>
+                    <a>
+                        <FontAwesomeIcon icon={faClipboard} />
+                        <span>Báo cáo công nợ</span>
                     </a>
                     <a>
                         <FontAwesomeIcon icon={faCogs} />

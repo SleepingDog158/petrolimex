@@ -15,14 +15,13 @@ import DriversList from './components/DriversList'
 import ClientDriver from "./pages/Client/Client-Driver";
 import ClientMain from "./pages/Client/Client-Main";
 import ClientContract from "./pages/Client/ClientContract"
-import AdminPartnerMain from "./pages/Admin/AdminPartnerMain"
+import ClientReport from "./pages/Client/ClientReport"
 function App() {
   return (
     // <AuthProvider>
     //   <Router />
     // </AuthProvider>
-     //<ClientDriver/>
-     <AdminPartnerMain/>
+     <ClientContract/>
   )
 }
 
