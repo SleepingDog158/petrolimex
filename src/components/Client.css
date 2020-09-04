@@ -110,3 +110,8 @@ header {
 .searchbar{
   margin-left : 100px
 }
+
+.modal-content{
+  width: 800px;
+  left: -135px
+}

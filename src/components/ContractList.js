@@ -3,14 +3,19 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { CgDetailsMore } from "react-icons/cg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import ModalEdit from "./ModalExample";
 import { TableHeader } from "./TableHeader";
 import { PaginationComponent } from "./PaginationComponent";
 import { Search } from "./Search";
 
+toast.configure()
 export const ContractList = () => {
   const [contracts, setContracts] = useState([]);
+  const [drivers, setDrivers] = useState([]);
+  const [chosen, setChosen] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
@@ -24,33 +29,38 @@ export const ContractList = () => {
   const [currentContract, setCurrentContract] = useState(null);
 
   const [id, setId] = useState(currentContract ? currentContract.id : "");
-  const [startDate, setStartDate] = useState(currentContract ? currentContract.setStartDate : "");
-  const [signedDate, setSignedDate] = useState(currentContract ? currentContract.setSignedDate : "");
-  const [expiredDate, setExpiredDate] = useState(currentContract ? currentContract.expiredDate : "");
+  const [startDate, setStartDate] = useState(
+    currentContract ? currentContract.setStartDate : ""
+  );
+  const [signedDate, setSignedDate] = useState(
+    currentContract ? currentContract.setSignedDate : ""
+  );
+  const [expiredDate, setExpiredDate] = useState(
+    currentContract ? currentContract.expiredDate : ""
+  );
   const [debtCeiling, setDebtCeiling] = useState(
     currentContract ? currentContract.debtCeiling : ""
   );
- 
+
   const [status, setStatus] = useState(
     currentContract ? currentContract.status : ""
   );
 
-
   const headers = [
-    { name: "ID", field: "id", sortable: false },
+    { name: "ID", field: "id", sortable: true },
     { name: "Ngày kí kết", field: "signedDate", sortable: true },
     { name: "Ngày có hiệu lực", field: "startDate", sortable: true },
     { name: "Ngày kết thúc", field: "expiredDate", sortable: false },
     { name: "Hạn mức công nợ", field: "debtCeiling", sortable: true },
     { name: "Trạng thái", field: "status", sortable: true },
-    { name: "Thao tác" },
+    { name: "" },
   ];
 
   const toggle = (contract) => {
     setModal(!modal);
     if (!modal) {
       setCurrentContract(contract);
-      setId(contract.id)
+      setId(contract.id);
       setSignedDate(contract.signedDate);
       setStartDate(contract.startDate);
       setExpiredDate(contract.expiredDate);
@@ -58,7 +68,6 @@ export const ContractList = () => {
       setStatus(contract.status);
     }
   };
-
 
   // function onChangeValue(text, type) {
   //   switch (type) {
@@ -77,45 +86,42 @@ export const ContractList = () => {
   //   setContracts(contracts.filter((d) => currentContract.id !== d.id));
   // }
 
-  // function onUpdate() {
-  //   console.log(name, phone, teamId, plate);
-  // }
+  function onUpdate() {
+    toast.success("Thay đổi thành công", { position: toast.POSITION.TOP_CENTER, autoClose:2000 });
+  }
   // fetch data
   useEffect(async () => {
-    const result = await axios.get("https://1ne1c.sse.codesandbox.io/contracts");
-
-    // // lay token tu cookie
-
-    // let token = '...';
-    // const result = await axios({
-    //   method: "get",
-    //   url: "http://localhost:8080/api/v1/driver",
-    //   headers: {
-    //     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IndDU0tTb3NEQSIsImlhdCI6MTU5ODgwMDY3OSwiZXhwIjoxNTk4ODA3ODc5fQ.g7N8nNMkzpyd9DyJZLYpd6hSEyQlWbEhz5D7cGyNUgo`
-    //   }
-    // })
+    const result = await axios.get(
+      "https://1ne1c.sse.codesandbox.io/contracts"
+    );
 
     console.log(result.data);
     setContracts(result.data);
   }, []);
+  useEffect(async () => {
+    const result = await axios.get(
+      "https://1ne1c.sse.codesandbox.io/drivers"
+    );
+     console.log(result.data);
+     setDrivers(result.data.filter((d)=> d.contractId === null));
+  }, []);
 
   const contractsData = useMemo(() => {
-    let computedcontracts = contracts;
+    let computedContracts = contracts;
     if (search) {
-      computedcontracts = computedcontracts.filter(
-        (contract) =>
-          contract.id.includes(search)
+      computedContracts = computedContracts.filter((contract) =>
+        contract.id.includes(search)
       );
     }
-    setTotalItems(computedcontracts.length);
+    setTotalItems(computedContracts.length);
     //sorting
     if (sorting.field) {
       const reversed = sorting.order === "asc" ? 1 : -1;
-      computedcontracts = computedcontracts.sort(
+      computedContracts = computedContracts.sort(
         (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
       );
     }
-    return computedcontracts.slice(
+    return computedContracts.slice(
       (currentPage - 1) * ITEMS_PER_PAGE,
       (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
     );
@@ -200,8 +206,7 @@ export const ContractList = () => {
                   >
                     {contract.debtCeiling}
                   </td>
-    
-                  
+
                   <td
                     className="number-column"
                     style={{
@@ -213,17 +218,15 @@ export const ContractList = () => {
                   >
                     {contract.status}
                   </td>
-                 
+
                   <td>
                     <Button
                       variant="primary"
                       className="mr-1"
                       onClick={() => toggle(contract)}
-                     
                     >
                       <CgDetailsMore />
                     </Button>
-                    
                   </td>
                 </tr>
               ))}
@@ -239,15 +242,14 @@ export const ContractList = () => {
             />
           </div>
 
-
           {/* popup edit*/}
           <ModalEdit
             modal={modal}
             toggle={toggle}
-            // onSubmit={onUpdate}
+            onSubmit={onUpdate}
             title={"Thông tin hợp đồng"}
           >
-            <Table>
+            <Table className="contract-board">
               <tr>
                 <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                   Mã hợp đồng:
@@ -255,16 +257,14 @@ export const ContractList = () => {
                 <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                   {id}
                 </td>
-              </tr>
-              <tr>
                 <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                 Ngày kí kết
+                  Ngày kí kết
                 </th>
                 <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                   {signedDate}
                 </td>
               </tr>
-              
+
               <tr>
                 <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                   Ngày có hiệu lực
@@ -272,8 +272,6 @@ export const ContractList = () => {
                 <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                   {startDate}
                 </td>
-              </tr>
-              <tr>
                 <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                   Ngày kết thúc
                 </th>
@@ -291,8 +289,6 @@ export const ContractList = () => {
               </tr>
             </Table>
           </ModalEdit>
-
-        
         </div>
       </div>
     </div>
