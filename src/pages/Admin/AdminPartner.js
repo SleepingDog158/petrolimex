@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavBar from "../../components/NavBar"
-import "./Admin.css"
+import "../../components/Admin.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlusCircle, faSearch } from "@fortawesome/free-solid-svg-icons"
 
