@@ -13,7 +13,7 @@ export default class AdminPartnerMain extends Component {
                     <div className="admin-partner-main-left-content">
                         <table>
                             <tr>
-                                <th colSpan="1">Thông tin công ty</th> 
+                                <th colSpan="2">Thông tin công ty</th> 
                             </tr>
                             <tr>
                                 <td>Mã công ty:</td>
@@ -33,7 +33,7 @@ export default class AdminPartnerMain extends Component {
                             </tr>
                             <tr>
                                 <td>Mã đăng nhập:</td>
-                                <td>17254712    </td>
+                                <td>17254712</td>
                             </tr>
                         </table>
                     </div>
