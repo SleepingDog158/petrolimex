@@ -1,7 +1,7 @@
 header {
   position: fixed;
   top: 0;
-  display: flex;
+  display: flex !important;
   flex-direction: row;
   background: #2c6fb2;
   width: 100%;
