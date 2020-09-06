@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import { AuthContext } from "../contexts/Auth";
-
+import ClientSwitch from "./ClientSwitch"
 import LandingPage from "../pages/LandingPage";
 import Client from "../pages/Client";
 import Admin from "../pages/Admin";
@@ -30,21 +30,6 @@ class AuthSwitch extends Component {
   }
 }
 
-class ClientSwitch extends Component {
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route path="/client">
-            <Client />
-          </Route>
-
-          <Redirect to="/client" />
-        </Switch>
-      </Router>
-    );
-  }
-}
 
 class AdminSwitch extends Component {
   render() {
