@@ -11,7 +11,7 @@ export class AuthProvider extends Component {
       username: "",
       password: "",
       isLogin: false,
-      role: STATION,
+      role: CLIENT,
     };
 
     this.onChangeText = this.onChangeText.bind(this);
