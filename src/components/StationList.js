@@ -14,6 +14,7 @@ export const StationList = () => {
     const [station_name, setStationName] = useState([]);
     const [station_address, setStationAddress] = useState([]);
     const [station_working_time, setStationWorkingTime] = useState([]);
+    const [sorting, setSorting] = useState({ field: "", order: ""});
 
     const headers = [
         { name: "ID", field: "id", sortable: true },
@@ -42,8 +43,14 @@ export const StationList = () => {
 
     const stationData = useMemo(() => {
         let processedStation = station;
+        if (sorting.field) {
+            const reversed = sorting.order === "asc" ? 1 : -1;
+            processedStation = processedStation.sort(
+                (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
+            );
+        }
         return processedStation.slice();
-    }, [station]);
+    }, [station, sorting]);
 
     return (
         <div>
@@ -52,6 +59,7 @@ export const StationList = () => {
                     <Table striped>
                         <TableHeader
                             headers={headers}
+                            onSorting={(field, order) => setSorting({ field, order })}
                         />
                         <tbody>
                             {stationData.map((station) => (
@@ -72,13 +80,6 @@ export const StationList = () => {
                             ))}
                         </tbody>
                     </Table>
-
-                    <ModalEdit
-                        modal = {modal}
-                        toggle = {toggle}
-                        title = {"Thông tin cửa hàng"}
-                    >
-                    </ModalEdit>
                 </div>
             </div>
         </div>
