@@ -10,8 +10,6 @@ export const StationList = () => {
     }, []);
 
     return (
-        <div>
-            
-        </div>
+        <div></div>
     )
 }
