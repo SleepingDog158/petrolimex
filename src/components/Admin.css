@@ -96,3 +96,12 @@
 .admin-partner-main-chart {
     width: 650px;
 }
+
+/*AdminStation*/
+.admin-station-content {
+    position: absolute;
+    margin: 20px 150px;
+}
+.admin-station-header {
+    color: mediumblue;
+}
