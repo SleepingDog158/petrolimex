@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import { AuthContext } from "../contexts/Auth";
-import ClientSwitch from "./ClientSwitch";
+import ClientSwitch from "./ClientSwitch"
 import LandingPage from "../pages/LandingPage";
 import Client from "../pages/Client";
 import Admin from "../pages/Admin";

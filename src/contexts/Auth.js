@@ -10,7 +10,7 @@ export class AuthProvider extends Component {
     this.state = {
       username: "",
       password: "",
-      isLogin: true,
+      isLogin: false,
       role: CLIENT,
     };
 
