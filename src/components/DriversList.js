@@ -47,7 +47,7 @@ export const DriversList = () => {
     { name: "Mã đăng nhập", field: "loginId", sortable: true },
     { name: "Biển kiểm soát", field: "plate", sortable: true },
     { name: "Mã đơn vị", field: "teamId", sortable: true },
-    { name: "Thao tác", sortable: false },
+    { name: "", sortable: false },
   ];
 
   const toggle = (driver) => {
@@ -89,6 +89,7 @@ export const DriversList = () => {
 
   function onRemoveDriver(driver) {
     setDrivers(drivers.filter((d) => currentDriver.id !== d.id));
+    console.log(drivers)
   }
 
   function onUpdate() {

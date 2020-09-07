@@ -10,8 +10,8 @@ export class AuthProvider extends Component {
     this.state = {
       username: "",
       password: "",
-      isLogin: false,
-      role: STATION,
+      isLogin: true,
+      role: CLIENT,
     };
 
     this.onChangeText = this.onChangeText.bind(this);
@@ -50,6 +50,8 @@ export class AuthProvider extends Component {
     this.setState({
       isLogin: true,
     });
+
+    this.setRole(CLIENT);
   }
 
   componentDidMount() {

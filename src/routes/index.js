@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import { AuthContext } from "../contexts/Auth";
-
+import ClientSwitch from "./ClientSwitch";
 import LandingPage from "../pages/LandingPage";
 import Client from "../pages/Client";
 import Admin from "../pages/Admin";
@@ -24,22 +24,6 @@ class AuthSwitch extends Component {
             <LandingPage />
           </Route>
           <Redirect to="/login" />
-        </Switch>
-      </Router>
-    );
-  }
-}
-
-class ClientSwitch extends Component {
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route path="/client">
-            <Client />
-          </Route>
-
-          <Redirect to="/client" />
         </Switch>
       </Router>
     );
@@ -88,6 +72,7 @@ class StationSwitch extends Component {
 export default class Routers extends Component {
   render() {
     let auth = this.context;
+    console.log(auth.role);
     if (!auth.isLogin) {
       return <AuthSwitch />;
     }
@@ -103,6 +88,22 @@ export default class Routers extends Component {
       case null:
         return null;
     }
+
+    // return (
+    //   <Router>
+    //     <Switch>
+    //       <Route path="/admin" exact>
+    //         <AdminSwitch />
+    //       </Route>
+    //       <Route path="/client" exact>
+    //         <ClientSwitch />
+    //       </Route>
+    //       <Route path="/station" exact>
+    //         <StationSwitch />
+    //       </Route>
+    //     </Switch>
+    //   </Router>
+    // )
   }
 }
 
