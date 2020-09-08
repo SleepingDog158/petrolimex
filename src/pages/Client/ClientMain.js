@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { useState, useMemo, useEffect, Component } from "react";
+import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import PageHeader from "../../components/PageHeader";
 import PieChart from "../../components/PieChart";
@@ -11,8 +12,21 @@ import {
   CardSubtitle,
   Button,
 } from "reactstrap";
-export default class ClientMain extends Component {
-  render() {
+export  const ClientMain = () => {
+  const [drivers, setDrivers] = useState([]);
+  const [activeContracts, setActiveContracts] = useState([]);
+  useEffect(async () => {
+    const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
+    console.log(result.data);
+    setDrivers(result.data);
+  }, []);
+  useEffect(async () => {
+    const result = await axios.get(
+      "https://1ne1c.sse.codesandbox.io/contracts"
+    );
+    console.log(result.data);
+    setActiveContracts(result.data.filter((d)=> d.status === "active"));
+  }, []);
     return (
       <div>
         <PageHeader />
@@ -25,18 +39,19 @@ export default class ClientMain extends Component {
             <Card className=" card-tab ml-3 rounded">
               <CardBody>
                 <CardTitle>Tài xế</CardTitle>
-                <CardSubtitle className="h5">20 tài xế</CardSubtitle>
+                <CardSubtitle className="h5">{drivers.length} tài xế</CardSubtitle>
               </CardBody>
-              <Button className="w-50 mb-3 ml-3" color="primary">
+              <Button className="w-50 mb-3 ml-3" color="primary" href="/driver">
                 Xem thêm
               </Button>
             </Card>
             <Card className="card-tab ml-3">
               <CardBody>
                 <CardTitle>Hợp Đồng</CardTitle>
-                <CardSubtitle className="h5">127 hợp đồng</CardSubtitle>
+                <CardSubtitle className="h5">{activeContracts.length} hợp đồng</CardSubtitle>
+                <CardText>đang có hiệu lực</CardText>
               </CardBody>
-              <Button className="w-50 mb-3 ml-3" color="primary">
+              <Button className="w-50 mb-3 ml-3" color="primary"  href="/contract">
                 Xem thêm
               </Button>
             </Card>
@@ -46,7 +61,7 @@ export default class ClientMain extends Component {
                 <CardSubtitle className="h5">100 giao dịch</CardSubtitle>
                 <CardText>trong 7 ngày</CardText>
               </CardBody>
-              <Button className="w-50 mb-3 ml-3" color="primary">
+              <Button className="w-50 mb-3 ml-3" color="primary"  href="/bill">
                 Xem thêm
               </Button>
             </Card>
@@ -65,4 +80,4 @@ export default class ClientMain extends Component {
       </div>
     );
   }
-}
+
