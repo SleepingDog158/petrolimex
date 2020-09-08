@@ -12,7 +12,6 @@ import LandingPage from "../pages/LandingPage";
 import Client from "../pages/Client";
 import Admin from "../pages/Admin";
 import Station from "../pages/Station";
-import AdminSwitch from "./AdminSwitch";
 
 import { STATION, ADMIN, CLIENT } from "../constants";
 
@@ -30,6 +29,7 @@ class AuthSwitch extends Component {
     );
   }
 }
+
 
 
 class Bill extends Component {
