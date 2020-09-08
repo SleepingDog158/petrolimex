@@ -8,23 +8,23 @@ export default class Sidebar extends Component {
     render() {
         return (
                 <div className="sidebar">
-                    <a>
+                    <a href="/">
                         <FontAwesomeIcon icon={faDesktop} />
                         <span>Dashboard</span>
                     </a>
-                    <a>
+                    <a href="/contract">
                         <FontAwesomeIcon icon={faFileContract} />
                         <span>Hợp đồng</span>
                     </a>
-                    <a>
+                    <a href="/driver">
                         <FontAwesomeIcon icon={faBus} />
                         <span>Tài xế</span>
                     </a>
-                    <a>
+                    <a href="/bill">
                         <FontAwesomeIcon icon={faFileAlt} />
                         <span>Giao dịch</span>
                     </a>
-                    <a>
+                    <a href="/report">
                         <FontAwesomeIcon icon={faClipboard} />
                         <span>Báo cáo công nợ</span>
                     </a>

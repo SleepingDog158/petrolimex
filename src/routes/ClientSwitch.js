@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ClientMain from "../pages/Client/Client-Main";
+import {ClientMain} from "../pages/Client/ClientMain";
 import ClientContract from "../pages/Client/ClientContract";
 import ClientDeal from "../pages/Client/ClientDeal";
 import ClientReport from "../pages/Client/ClientReport";
