@@ -12,7 +12,7 @@ export default class NavBar extends Component {
                             <a href="/" className="navbar-prop"><img src={LogoCol} alt="logo" id="logo"/></a>
                         </li>
                         <li className='list-content'>
-                            <a href="/partner-main" className="nav-items navbar-prop">Đối tác</a>
+                            <a href="/partner" className="nav-items navbar-prop">Đối tác</a>
                         </li>
                         <li className='list-content'>
                             <a href="/station" className="nav-items navbar-prop">Chi nhánh</a>

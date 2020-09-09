@@ -15,8 +15,8 @@ export default class AdminSwitch extends Component {
             <Route path="/" exact>
               <AdminMain/>
             </Route>
-            <Route path="/partner-main" exact>
-              <AdminPartnerMain/>
+            <Route path="/partner" exact>
+              <AdminPartner/>
             </Route>
             <Route path="/product" exact>
               <AdminProduct/>
@@ -29,7 +29,6 @@ export default class AdminSwitch extends Component {
             </Route>
             <Redirect to="/"/>
           </Switch>
-          
         </Router>
       );
     }
