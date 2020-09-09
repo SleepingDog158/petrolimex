@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table"
 import { TableHeader } from "./TableHeader"
 import { Search } from "./Search"
 import { PaginationComponent } from "./PaginationComponent"
+import ModalEdit from "./ModalExample"
 
 export const PartnerList = () => {
 
@@ -84,7 +85,7 @@ export const PartnerList = () => {
                     onSorting={(field, order) => setSorting({ field, order })}
                 />
                 <tbody>
-                    {partnerData.map((partner) > (
+                    {partnerData.map((partner) => (
                         <tr>
                             <td>
                                 {partner.partner_id}
