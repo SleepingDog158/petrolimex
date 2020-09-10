@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import NavBar from "../../components/NavBar"
 import "../../components/Admin.css"
 import PieChart from '../../components/PieChart'
+import { Route, Redirect, Switch, BrowserRouter as Router } from "react-router-dom"
+import { DriverListAdmin } from "../../components/DriverListAdmin"
 
 export default class AdminPartnerMain extends Component {
     render() {
@@ -38,7 +40,7 @@ export default class AdminPartnerMain extends Component {
                         </table>
                         <div className="admin-partner-main-grid">
                             <button type="button" className="admin-partner-main-grid-button">Hợp đồng</button>
-                            <button type="button" className="admin-partner-main-grid-button">Tài xế</button>
+                            <button type="button" className="admin-partner-main-grid-button" onClick="window.location.href='/driver'">Tài xế</button>
                             <button type="button" className="admin-partner-main-grid-button">Giao Dịch</button>
                             <button type="button" className="admin-partner-main-grid-button">Thống kê chi tiết</button>
                         </div>
