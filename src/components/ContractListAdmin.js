@@ -7,7 +7,8 @@ import { Search } from "./Search"
 
 export const ContractListAdmin = () => {
 
-    const
+    const [contract, setContract] = useState([]);
+    const [contract_id, setId] = useState([]);
 
     return (
         <div>
