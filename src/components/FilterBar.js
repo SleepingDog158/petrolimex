@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import { UncontrolledCollapse, Button} from 'reactstrap';
 
 export const Filterbar = () => {
   return (

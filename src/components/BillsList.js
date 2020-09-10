@@ -75,11 +75,7 @@ export const BillsList = () => {
 
   const billsData = useMemo(() => {
     let computedBills = bills;
-    for(let bill of bills){
-        for(let date in bill){
-            date = new Date(Date.parse(date))
-        }
-    }
+    
 
     if (search) {
       computedBills = computedBills.filter(

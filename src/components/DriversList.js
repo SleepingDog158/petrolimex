@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { FaUserEdit } from "react-icons/fa";
 import { CgUserRemove } from "react-icons/cg";
+import { ToastContainer, toast } from "react-toastify";
 
 import ModalEdit from "./ModalExample";
 import { TableHeader } from "./TableHeader";
@@ -89,11 +90,17 @@ export const DriversList = () => {
 
   function onRemoveDriver(driver) {
     setDrivers(drivers.filter((d) => currentDriver.id !== d.id));
+    toast.error("Đã xóa thông tin tài xế", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
     console.log(drivers)
   }
 
+  function onAdd() {
+    console.log(name, phone, teamId, plate);
+    toast.success("Đã thêm thông tin tài xế", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
+  }
   function onUpdate() {
     console.log(name, phone, teamId, plate);
+    toast.info("Thay đổi thành công", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
   }
   // fetch data
   useEffect(async () => {
@@ -346,7 +353,7 @@ export const DriversList = () => {
           <ModalEdit
             modal={addModal}
             toggle={onToggleAdd}
-            onSubmit={onUpdate}
+            onSubmit={onAdd}
             title={"Thêm tài xế"}
           >
             <Table>

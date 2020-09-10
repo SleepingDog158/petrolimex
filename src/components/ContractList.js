@@ -50,7 +50,7 @@ export const ContractList = () => {
     { name: "ID", field: "id", sortable: true },
     { name: "Ngày kí kết", field: "signedDate", sortable: true },
     { name: "Ngày có hiệu lực", field: "startDate", sortable: true },
-    { name: "Ngày kết thúc", field: "expiredDate", sortable: false },
+    { name: "Ngày kết thúc", field: "expiredDate", sortable: true },
     { name: "Hạn mức công nợ", field: "debtCeiling", sortable: true },
     { name: "Trạng thái", field: "status", sortable: true },
     { name: "" },
@@ -87,7 +87,7 @@ export const ContractList = () => {
   // }
 
   function onUpdate() {
-    toast.success("Thay đổi thành công", { position: toast.POSITION.TOP_CENTER, autoClose:2000 });
+    toast.info("Thay đổi thành công", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
   }
   // fetch data
   useEffect(async () => {
