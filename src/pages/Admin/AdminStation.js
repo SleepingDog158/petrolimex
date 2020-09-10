@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
+import { StationList } from '../../components/StationList'
+import "../../components/Admin.css"
 
 export default class AdminStation extends Component {
     render() {
@@ -7,27 +9,8 @@ export default class AdminStation extends Component {
             <div>
                 <NavBar/>
                 <div className='admin-station-content'>
-                    <h1>Các chi nhánh của công ty</h1>
-                    <table>
-                        <tr>
-                            <th>Tên Chi Nhánh</th>
-                            <th>Địa chỉ</th>
-                            <th>Thời gian làm việc</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td>Cửa hàng xăng dầu A</td>
-                            <td>Số 3 Tôn Thất Thuyết</td>
-                            <td>06:00-22:00</td>
-                            <td><button type='button'>Xem chi tiết</button></td>
-                        </tr>
-                        <tr>
-                            <td>Cửa hàng xăng dầu B</td>
-                            <td>Số 200 Cầu Giấy</td>
-                            <td>05:00-21:00</td>
-                            <td><button type='button'>Xem chi tiết</button></td>
-                        </tr>
-                    </table>
+                    <h1 className="admin-station-header">Các chi nhánh của công ty</h1>
+                <div><StationList/></div>
                 </div>
             </div>
         )

@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import NavBar from "../../components/NavBar"
-import "./AdminPartner.css"
+import "../../components/Admin.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPlusCircle, faSearch } from "@fortawesome/free-solid-svg-icons"
+import { PartnerList } from '../../components/PartnerList'
 
 export default class AdminPartner extends Component {
     render() {
@@ -8,31 +11,16 @@ export default class AdminPartner extends Component {
             <div>
                 <NavBar/>
                 <div className="admin-partner-content">
-                    <h1>Các công ty đối tác</h1>
-                    <table className='admin-table-content'>
-                        <tr>
-                            <th className="admin-table-header">Tên Công Ty</th>
-                            <th className="admin-table-header">Địa Chỉ</th>
-                            <th className="admin-table-header">Hạn Mức</th>
-                            <th className="admin-table-header"></th>
-                        </tr>
-                        <tr>
-                            <td className="admin-table-row">Công ty THHH A</td>
-                            <td className="admin-table-row">Số 3 Tôn Thất Thuyết</td>
-                            <td className="admin-table-row">200.000.000 VND</td>
-                            <td className="admin-table-row">
-                                <button type='button'>Xem chi tiết</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="admin-table-row">Công ty THHH B</td>
-                            <td className="admin-table-row">Số 3 Tôn Thất Thuyết</td>
-                            <td className="admin-table-row">1.000.000.000 VND</td>
-                            <td className="admin-table-row">
-                                <button type='button'>Xem chi tiết</button>
-                            </td>
-                        </tr>
-                    </table>
+                    <div>
+                        <h1 className="admin-partner-header">Các công ty đối tác</h1>
+                        {/*<input type="text" className="admin-partner-search-input" placeholder="Tên công ty"/>
+                        <button type="button" className="admin-partner-search-button"><FontAwesomeIcon icon={faSearch}/></button>
+                    </div>
+                    <button type="button" className="admin-partner-button"><FontAwesomeIcon icon={faPlusCircle} className="admin-partner-icon"/></button>
+                    <button type="button" className="admin-partner-button">Công ty TNHH A</button>
+                    <button type="button" className="admin-partner-button">Công ty TNHH B</button>*/}
+                        <div><PartnerList/></div>
+                    </div>
                 </div>
             </div>
         )
