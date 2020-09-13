@@ -34,7 +34,7 @@ export const ContractListAdmin = () => {
     ];
 
     useEffect(async() => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/contract")
+        const result = await axios.get("https://tnzio.sse.codesandbox.io/contract");
         console.log(result.data);
         setContract(result.data);
     }, []);
