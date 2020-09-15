@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import NavBarStation from "../../components/NavBarStation"
-
-import {BillsListStation} from "../../components/BillsListStation"
+import GasPriceTable from "../../components/GasPriceTable"
 import "../../components/Client.css"
 export default class StationMain extends Component {
   
@@ -13,7 +12,7 @@ export default class StationMain extends Component {
           <div className="tag-name" >
             <h4 style={{"margin-top":"70px"}}>Lịch sử giao dịch</h4>
           </div>
-            <BillsListStation/>
+            <GasPriceTable/>
         </div>
       </div>
     );

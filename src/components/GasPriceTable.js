@@ -25,8 +25,8 @@ const GasPriceTable = () => {
     />
     <tbody>
       {products.map((product) => (
-        <tr>
-          <td
+        <tr >
+          <td className="w-25"
             scope="row"
             style={{
               fontSize: "15px",
@@ -38,7 +38,7 @@ const GasPriceTable = () => {
           >
             {product.id}
           </td>
-          <td className="name-column"
+          <td className="w-50"
             style={{
               fontSize: "15px",
               textAlign: "left",

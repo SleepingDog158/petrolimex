@@ -32,22 +32,16 @@ export const DriversList = () => {
   const [id, setId] = useState(currentDriver ? currentDriver.id : "");
   const [name, setName] = useState(currentDriver ? currentDriver.name : "");
   const [phone, setPhone] = useState(currentDriver ? currentDriver.phone : "");
-  const [teamId, setTeamId] = useState(
-    currentDriver ? currentDriver.teamId : ""
-  );
  
-  const [loginId, setLoginId] = useState(
-    currentDriver ? currentDriver.loginId : ""
-  );
+ 
+
   const [plate, setPlate] = useState(currentDriver ? currentDriver.plate : "");
 
   const headers = [
     { name: "ID", field: "id", sortable: true },
     { name: "Họ tên", field: "name", sortable: true },
     { name: "Số điện thoại", field: "phone", sortable: true },
-    { name: "Mã đăng nhập", field: "loginId", sortable: true },
     { name: "Biển kiểm soát", field: "plate", sortable: true },
-    { name: "Mã đơn vị", field: "teamId", sortable: true },
     { name: "", sortable: false },
   ];
 
@@ -59,8 +53,6 @@ export const DriversList = () => {
       setName(driver.name);
       setPhone(driver.phone);
       setPlate(driver.plate);
-      setTeamId(driver.teamId);
-      setLoginId(driver.loginId);
     }
   };
 
@@ -83,8 +75,6 @@ export const DriversList = () => {
         return setPhone(text);
       case "plate":
         return setPlate(text);
-      case "teamId":
-        return setTeamId(text);
     }
   }
 
@@ -95,11 +85,11 @@ export const DriversList = () => {
   }
 
   function onAdd() {
-    console.log(name, phone, teamId, plate);
+    console.log(name, phone,plate);
     toast.success("Đã thêm thông tin tài xế", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
   }
   function onUpdate() {
-    console.log(name, phone, teamId, plate);
+    console.log(name, phone, plate);
     toast.info("Thay đổi thành công", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
   }
   // fetch data
@@ -207,19 +197,7 @@ export const DriversList = () => {
                   >
                     {driver.phone}
                   </td>
-                  <td
-                    className="number-column"
-                    scope="row"
-                    className="id-column"
-                    style={{
-                      fontSize: "15px",
-                      textAlign: "center",
-                      verticalAlign: "middle",
-                      padding: "0px",
-                    }}
-                  >
-                    {driver.loginId}
-                  </td>
+                  
     
                   
                   <td
@@ -232,19 +210,6 @@ export const DriversList = () => {
                     }}
                   >
                     {driver.plate}
-                  </td>
-                  <td
-                    className="number-column"
-                    scope="row"
-                    className="id-column"
-                    style={{
-                      fontSize: "15px",
-                      textAlign: "center",
-                      verticalAlign: "middle",
-                      padding: "0px",
-                    }}
-                  >
-                    {driver.teamId}
                   </td>
                  
                   <td>
@@ -333,19 +298,7 @@ export const DriversList = () => {
                   />
                 </td>
               </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Mã đơn vị
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={teamId}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "teamId")
-                    }
-                  />
-                </td>
-              </tr>
+              
             </Table>
           </ModalEdit>
 
@@ -397,19 +350,7 @@ export const DriversList = () => {
                   />
                 </td>
               </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Mã đơn vị
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={""}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "teamId")
-                    }
-                  />
-                </td>
-              </tr>
+              
             </Table>
           </ModalEdit>
         </div>
