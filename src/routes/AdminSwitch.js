@@ -6,6 +6,8 @@ import AdminPartnerMain from "../pages/Admin/AdminPartnerMain"
 import AdminProduct from "../pages/Admin/AdminProduct"
 import AdminStat from "../pages/Admin/AdminStat"
 import AdminStation from "../pages/Admin/AdminStation"
+import AdminContract from '../pages/Admin/AdminContract'
+import AdminBill from '../pages/Admin/AdminBill'
 
 export default class AdminSwitch extends Component {
     render() {
@@ -26,6 +28,15 @@ export default class AdminSwitch extends Component {
             </Route>
             <Route path="/station" exact>
               <AdminStation/>
+            </Route>
+            <Route path="/contract" exact>
+              <AdminContract/>
+            </Route>
+            <Route path="/bill" exact>
+              <AdminBill/>
+            </Route>
+            <Route path="/partner-main"exact>
+              <AdminPartnerMain/>
             </Route>
             <Redirect to="/"/>
           </Switch>
