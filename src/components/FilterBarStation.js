@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { UncontrolledCollapse, Button} from 'reactstrap';
 
-export const Filterbar = () => {
+export const FilterbarStation = () => {
   return (
     <div>
          <Button color="primary" id="toggler" style={{ marginBottom: '1rem',  marginLeft:"30px", marginTop:"0px"}}>
@@ -15,15 +15,15 @@ export const Filterbar = () => {
             <input
               type="select"
               className="form-control"
-              style={{ width: "350px" }}
+              style={{ width: "300px" }}
             />
           </td>
           <td className="p-1">
-            Cửa hàng:
+            Công ty:
             <input
               type="text"
               className="form-control"
-              style={{ width: "350px" }}
+              style={{ width: "300px" }}
             />
           </td>
           <td className="p-1">

@@ -14,11 +14,17 @@ import {
 } from "reactstrap";
 export  const ClientMain = () => {
   const [drivers, setDrivers] = useState([]);
+  const [activeDrivers, setActiveDrivers] = useState([]);
   const [activeContracts, setActiveContracts] = useState([]);
   useEffect(async () => {
     const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
     console.log(result.data);
     setDrivers(result.data);
+  }, []);
+  useEffect(async () => {
+    const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
+    console.log(result.data);
+    setActiveDrivers(result.data.filter((d)=> d.contractId !== null));
   }, []);
   useEffect(async () => {
     const result = await axios.get(
@@ -62,6 +68,16 @@ export  const ClientMain = () => {
                 <CardText>trong 7 ngày</CardText>
               </CardBody>
               <Button className="w-50 mb-3 ml-3" color="primary"  href="/bill">
+                Xem thêm
+              </Button>
+            </Card>
+            <Card className="card-tab ml-3">
+              <CardBody>
+                <CardTitle>Công nợ</CardTitle>
+                <CardSubtitle className="h5">{activeDrivers.length} tài xế</CardSubtitle>
+                <CardText>được chia hợp đồng</CardText>
+              </CardBody>
+              <Button className="w-50 mb-3 ml-3" color="primary"  href="/report">
                 Xem thêm
               </Button>
             </Card>

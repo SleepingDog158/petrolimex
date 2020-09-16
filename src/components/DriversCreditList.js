@@ -32,16 +32,13 @@ export const DriversCreditList = () => {
   const [creditRemain, setCreditRemain] = useState(
     currentDriver ? currentDriver.creditRemain : ""
   );
-  const [teamId, setTeamId] = useState(
-    currentDriver ? currentDriver.teamId : ""
-  );
+ 
   const [plate, setPlate] = useState(currentDriver ? currentDriver.plate : "");
 
   const headers = [
     { name: "ID", field: "id", sortable: true },
     { name: "Họ tên", field: "name", sortable: true },
     { name: "Biển kiểm soát", field: "plate", sortable: true },
-    { name: "Mã đơn vị", field: "teamId", sortable: true },
     { name: "Mã hợp đồng", field: "contractId", sortable: true },
     { name: "Hạn mức tổng (VNĐ)", field: "creditLimit", sortable: true },
     { name: "Hạn mức còn lại (VNĐ)", field: "creditRemain", sortable: true },
@@ -151,19 +148,7 @@ export const DriversCreditList = () => {
                   >
                     {driver.plate}
                   </td>
-                  <td
-                    className="number-column"
-                    scope="row"
-                    className="id-column"
-                    style={{
-                      fontSize: "15px",
-                      textAlign: "center",
-                      verticalAlign: "middle",
-                      padding: "0px",
-                    }}
-                  >
-                    {driver.teamId}
-                  </td>
+                 
 
                   <td
                     className="number-column"

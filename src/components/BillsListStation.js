@@ -7,9 +7,9 @@ import ModalEdit from "./ModalExample";
 import { TableHeader } from "./TableHeader";
 import { PaginationComponent } from "./PaginationComponent";
 import {Search} from "./Search"
-import { Filterbar } from "./FilterBar";
+import { FilterbarStation } from "./FilterBarStation";
 
-export const BillsList = () => {
+export const BillsListStation = () => {
   const [bills, setBills] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +39,7 @@ export const BillsList = () => {
 
   const headers = [
     { name: "ID", field: "id", sortable: true },
-    { name: "Mã cửa hàng", field: "stationId", sortable: true },
+    { name: "Mã Công ty", field: "stationId", sortable: true },
     { name: "Ngày giao dịch", field: "date", sortable: true },
     { name: "Mặt hàng", field: "product", sortable: true },
     { name: "Thành tiền", field: "total", sortable: true },
@@ -102,7 +102,7 @@ export const BillsList = () => {
     <div className="row w-100">
       <div className="col mb-3 col-11 ml-4">
         <div className="row">
-            <Filterbar/>
+            <FilterbarStation/>
           <Table className="col-12 ml-3" striped>
             <TableHeader
               headers={headers}

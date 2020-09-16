@@ -1,0 +1,42 @@
+import React, { useState } from 'react';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  NavbarText
+} from 'reactstrap';
+import logo from "../assets/Logo.png"
+import './Client.css'
+import { withRouter } from 'react-router-dom';
+const NavBarStation = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
+  return (
+    <div>
+      <Navbar className="nav-bar-station" light expand="md">
+        <NavbarBrand href="/"><img src={logo}/></NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink>Tạo giao dịch</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>Sản phẩm</NavLink>
+            </NavItem>
+            
+          </Nav>
+          <NavbarText style={{"color": "white", "margin-right":"10px", "fontWeight":"500"}}>Logout</NavbarText>
+        </Collapse>
+      </Navbar>
+    </div>
+  );
+}
+
+export default NavBarStation;
