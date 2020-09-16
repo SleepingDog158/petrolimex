@@ -42,10 +42,9 @@ export const ContractListAdmin = () => {
     const contractData = useMemo(() => {
         let processedContract = contract;
         if (search) {
-            processedContract = processedContract.filter((contract) => 
+            processedContract = processedContract.filter((contract) =>
                 contract.contract_id.includes(search) ||
-                contract.contract_partner.toLowerCase().includes(search.toLowerCase()) ||
-                contract.contract_status.toLowerCase().includes(search.toLowerCase())
+                contract.contract_partner.toLowerCase().includes(search.toLowerCase())
             );
         }
         setTotalItem(processedContract.length);
@@ -74,31 +73,31 @@ export const ContractListAdmin = () => {
                     headers={headers}
                     onSorting={(field, order) => setSorting({field, order})} />
                 <tbody>
-                    {contractData.map((contract) => {
+                    {contractData.map((contract) => (
                         <tr>
                             <td>
-                                {contract_id}
+                                {contract.contract_id}
                             </td>
                             <td>
-                                {contract_partner}
+                                {contract.contract_partner}
                             </td>
                             <td>
-                                {contract_signed_date}
+                                {contract.contract_signed_date}
                             </td>
                             <td>
-                                {contract_start_date}
+                                {contract.contract_start_date}
                             </td>
                             <td>
-                                {contract_end_date}
+                                {contract.contract_end_date}
                             </td>
                             <td>
-                                {contract_debt_ceiling}
+                                {contract.contract_debt_ceiling}
                             </td>
                             <td>
-                                {contract_status}
+                                {contract.contract_status}
                             </td>
                         </tr>
-                    })}
+                    ))}
                 </tbody>
             </Table>
             <div>

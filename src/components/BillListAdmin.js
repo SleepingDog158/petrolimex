@@ -74,31 +74,31 @@ export const BillListAdmin = () => {
                     headers = {headers}
                     onSorting = {(field, order) => setSorting({field, order})} />
                 <tbody>
-                    {billData.map((bill) => {
+                    {billData.map((bill) => (
                         <tr>
                             <td>
-                                {bill_id}
+                                {bill.bill_id}
                             </td>
                             <td>
-                                {station_name}
+                                {bill.station_name}
                             </td>
                             <td>
-                                {driver_name}
+                                {bill.driver_name}
                             </td>
                             <td>
-                            {product_name}
+                                {bill.product_name}
                             </td>
                             <td>
-                                {product_quantity}
+                                {bill.product_quantity}
                             </td>
                             <td>
-                                {created_time}
+                                {bill.created_time}
                             </td>
                             <td>
-                                {bill_status}
+                                {bill.bill_status}
                             </td>
                         </tr>
-                    })}
+                    ))}
                 </tbody>
             </Table>
             <div>
