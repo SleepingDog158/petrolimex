@@ -134,6 +134,8 @@
     border: 2px solid darkblue;
     border-radius: 30px;
     font-size: 18px;
+    text-align: center;
+    line-height: 45px;
 }
 .admin-partner-main-grid-button:focus {
     outline: none;
@@ -142,9 +144,17 @@
     color: white;
     background-color: #0066cc;
     border-color: #0066cc;
+    text-decoration: none;
 }
 .admin-partner-main-chart {
     width: 650px;
+}
+.admin-partner-main-grid-link {
+    color: darkblue;
+}
+.admin-partner-main-grid-link:hover {
+    color: white;
+    text-decoration: none;
 }
 
 /*AdminStation*/

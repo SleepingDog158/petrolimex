@@ -14,7 +14,6 @@ export const BillListAdmin = () => {
     const [product_name, setProductName] = useState([]);
     const [product_quantity, setProductQuantity] = useState([]);
     const [created_time, setCreatedTime] = useState([]);
-    const [bill_status, setStatus] = useState([]);
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [search, setSearch] = useState("");
     const ITEM_PER_PAGE = 10;
@@ -28,7 +27,6 @@ export const BillListAdmin = () => {
         { name: "Tên sản phẩm", field: "product_name", sortable: true },
         { name: "Số lượng", field: "product_quantity", sortable: false },
         { name: "Thời gian tạo", field: "created_time", sortable: true },
-        { name: "Trạng thái", field: "bill_status", sortable: true },
         { name: "", sortable: false }
     ];
 
@@ -44,8 +42,7 @@ export const BillListAdmin = () => {
             processedBill = processedBill.filter((bill) => 
             bill.bill_id.includes(search) ||
             bill.station_name.toLowerCase().includes(search.toLowerCase()) ||
-            bill.driver_name.toLowerCase().includes(search.toLowerCase()) ||
-            bill.bill_status.toLowerCase().includes(search.toLowerCase())
+            bill.driver_name.toLowerCase().includes(search.toLowerCase())
         );
     }
     setTotalItem(processedBill.length);
@@ -93,9 +90,6 @@ export const BillListAdmin = () => {
                             </td>
                             <td>
                                 {bill.created_time}
-                            </td>
-                            <td>
-                                {bill.bill_status}
                             </td>
                         </tr>
                     ))}
