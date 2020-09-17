@@ -6,15 +6,16 @@ import { TableHeader } from "./TableHeader"
 import { Search } from "./Search"
 import { PaginationComponent } from "./PaginationComponent"
 import { toast } from 'react-toastify'
+import './Admin.css'
 
 export const StationList = () => {
 
-    const [station, setStation] = useState([]);
+    const [stations, setStation] = useState([]);
     const [modal, setModal] = useState(false);
     const [addModal, setAddModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [id, setId] = useState(currentStation ? currentStation.id : "");
     const [currentStation, setCurrentStation] = useState(null);
+    const [id, setId] = useState(currentStation ? currentStation.id : "");
     const [station_name, setStationName] = useState(currentStation ? currentStation.station_name : "");
     const [station_address, setStationAddress] = useState(currentStation ? currentStation.station_address : "");
     const [station_working_time, setStationWorkingTime] = useState(currentStation ? currentStation.station_working_time : "");
@@ -56,8 +57,6 @@ export const StationList = () => {
 
     function onChangeValue(content, type) {
         switch (type) {
-            case "id":
-                return setId(content);
             case "station_name":
                 return setStationName(content);
             case "station_address":
@@ -69,7 +68,7 @@ export const StationList = () => {
 
     function onAdd() {
         console.log(id, station_name, station_address, station_working_time);
-        toast.success("Đã thêm thông tin chi nhánh", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true});
+        toast.success("Đã thêm thông tin chi nhánh!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true});
     }
 
     function onUpdate() {
@@ -78,9 +77,9 @@ export const StationList = () => {
     }
 
     function onRemove(station) {
-        setStation(station.filter((s) => currentStation.id !== s.id));
+        setStation(stations.filter((s) => currentStation.id !== s.id));
         toast.error("Đã xóa thông tin chi nhánh", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
-        console.log(station);
+        console.log(stations);
     }
     
     useEffect(async() => {
@@ -90,7 +89,7 @@ export const StationList = () => {
     }, []);
 
     const stationData = useMemo(() => {
-        let processedStation = station;
+        let processedStation = stations;
         if (search) {
             processedStation = processedStation.filter((station) =>
                 station.id.includes(search) || station.station_name.toLowerCase().includes(search.toLowerCase())
@@ -107,14 +106,14 @@ export const StationList = () => {
             (currentPage - 1) * ITEM_PER_PAGE,
             (currentPage - 1) * ITEM_PER_PAGE + ITEM_PER_PAGE
         );
-    }, [station, currentPage, search, sorting]);
+    }, [stations, currentPage, search, sorting]);
 
     return (
         <div>
             <div>
                 <div>
                     <div>
-                        <button onClick = {() => onToggleAdd()}>
+                        <button className="admin-add-button" onClick = {() => onToggleAdd()}>
                             Thêm chi nhánh
                         </button>
                         <Search onSearch={(value) => {
@@ -143,10 +142,10 @@ export const StationList = () => {
                                         {station.station_working_time}
                                     </td>
                                     <td>
-                                        <button onClick = {() => toggle(station)}>
+                                        <button className="admin-edit-button" onClick = {() => toggle(station)}>
                                             Sửa
                                         </button>
-                                        <button onClick = {() => onToggleDelete(station)}>
+                                        <button className="admin-delete-button" onClick = {() => onToggleDelete(station)}>
                                             Xóa
                                         </button>
                                     </td>
@@ -167,8 +166,8 @@ export const StationList = () => {
                                 <th>Tên chi nhánh</th>
                                 <td>
                                     <input 
-                                    defaultValue = {station_name} 
-                                    onChange = {(event) => onChangeValue(event.target.value, "station_name")} />
+                                        defaultValue = {station_name} 
+                                        onChange = {(event) => onChangeValue(event.target.value, "station_name")} />
                                 </td>
                             </tr>
                             <tr>
@@ -190,13 +189,13 @@ export const StationList = () => {
                         </Table>
                     </ModalEdit>
                     <ModalEdit modal = {addModal} toggle = {onToggleAdd} onSubmit = {onAdd} title = {"Thêm chi nhánh"}>
-                    <Table>
+                        <Table>
                             <tr>
                                 <th>Tên chi nhánh</th>
                                 <td>
                                     <input 
-                                    defaultValue = {""} 
-                                    onChange = {(event) => onChangeValue(event.target.value, "station_name")} />
+                                        defaultValue = {""} 
+                                        onChange = {(event) => onChangeValue(event.target.value, "station_name")} />
                                 </td>
                             </tr>
                             <tr>
@@ -218,7 +217,7 @@ export const StationList = () => {
                         </Table>
                     </ModalEdit>
                     <ModalEdit modal = {deleteModal} toggle = {onToggleDelete} onSubmit = {onRemove} title = {"Xóa chi nhánh"}>
-                        <p>Xác nhận xóa thông tin chi nhánh?</p>
+                        <p>Xóa thông tin chi nhánh?</p>
                     </ModalEdit>
                 </div>
             </div>

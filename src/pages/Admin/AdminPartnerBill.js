@@ -10,7 +10,7 @@ export default class AdminPartnerBill extends Component {
             <div>
                 <NavBar/>
                 <div className="admin-partner-bill-content">
-                    <a href="/partner-main"><FontAwesomeIcon icon={faAngleLeft}/>Đối tác</a>
+                    <a href="/partner-main" className="admin-partner-return-button"><FontAwesomeIcon icon={faAngleLeft}/>Đối tác</a>
                     <h1 className="admin-partner-bill-header">Lịch sử giao dịch của công ty</h1>
                     <BillListPartner/>
                 </div>

@@ -74,7 +74,7 @@ export const PartnerList = () => {
                                 {partner.partner_name}
                             </td>
                             <td>
-                                <a href="/partner-main"><button>Xem chi tiết</button></a>
+                                <a href="/partner-main" className="admin-partner-detail-button">Xem chi tiết</a>
                             </td>
                         </tr>
                     ))}
