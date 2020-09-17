@@ -10,7 +10,7 @@ export default class AdminPartnerDriver extends Component {
             <div>
                 <NavBar/>
                 <div className="admin-partner-driver-content">
-                    <a href="/partner-main"><FontAwesomeIcon icon={faAngleLeft}/>Đối tác</a>
+                    <a href="/partner-main" className="admin-partner-return-button"><FontAwesomeIcon icon={faAngleLeft}/>Đối tác</a>
                     <h1 className="admin-partner-driver-header">Danh sách tài xế của công ty</h1>
                     <DriverListPartner/>
                 </div>

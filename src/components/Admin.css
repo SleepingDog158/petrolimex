@@ -131,15 +131,9 @@
 .admin-partner-return-button {
     color: mediumblue;
     font-size: 20px;
-    border: 2px solid mediumblue;
-    border-radius: 10px;
-    padding: 5px 30px;
 }
 .admin-partner-return-button:hover {
     text-decoration: none;
-    color: white;
-    background-color: #0066cc;
-    border-color: #0066cc;
 }
 
 /*AdminStation*/
