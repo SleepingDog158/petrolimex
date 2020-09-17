@@ -26,8 +26,7 @@ export const BillListAdmin = () => {
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Tên sản phẩm", field: "product_name", sortable: true },
         { name: "Số lượng", field: "product_quantity", sortable: false },
-        { name: "Thời gian tạo", field: "created_time", sortable: true },
-        { name: "", sortable: false }
+        { name: "Thời gian tạo", field: "created_time", sortable: true }
     ];
 
     useEffect(async() => {
@@ -73,7 +72,7 @@ export const BillListAdmin = () => {
                 <tbody>
                     {billData.map((bill) => (
                         <tr>
-                            <td>
+                            <td className="table-center">
                                 {bill.bill_id}
                             </td>
                             <td>
@@ -85,10 +84,10 @@ export const BillListAdmin = () => {
                             <td>
                                 {bill.product_name}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {bill.product_quantity}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {bill.created_time}
                             </td>
                         </tr>

@@ -74,22 +74,22 @@ export const DriverListPartner = () => {
                 <tbody>
                     {driverData.map((driver) => (
                         <tr>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_id}
                             </td>
                             <td>
                                 {driver.driver_name}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_phone}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_login_id}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_plate}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_team_id}
                             </td>
                         </tr>

@@ -137,19 +137,19 @@ export const ContractListPartner = () => {
                 <tbody>
                     {contractData.map((contract) => (
                         <tr>
-                            <td>
+                            <td className="table-center">
                                 {contract.contract_id}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {contract.contract_signed_date}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {contract.contract_start_date}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {contract.contract_end_date}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {contract.contract_debt_ceiling}
                             </td>
                             <td>

@@ -271,3 +271,7 @@
     background-color: orangered;
     color: white;
 }
+
+.table-center {
+    text-align: center;
+}

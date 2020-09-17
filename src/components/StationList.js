@@ -129,7 +129,7 @@ export const StationList = () => {
                         <tbody>
                             {stationData.map((station) => (
                                 <tr>
-                                    <td>
+                                    <td className="table-center">
                                         {station.id}
                                     </td>
                                     <td>
@@ -138,7 +138,7 @@ export const StationList = () => {
                                     <td>
                                         {station.station_address}
                                     </td>
-                                    <td>
+                                    <td className="table-center">
                                         {station.station_working_time}
                                     </td>
                                     <td>
