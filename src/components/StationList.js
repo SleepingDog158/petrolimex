@@ -1,20 +1,23 @@
 import React, { useEffect, useMemo, useState, Component } from 'react'
 import axios from "axios"
-import ModalEdit from "./ModalExample"
+import ModalEdit from "./ModalAdmin"
 import Table from "react-bootstrap/Table"
 import { TableHeader } from "./TableHeader"
 import { Search } from "./Search"
 import { PaginationComponent } from "./PaginationComponent"
+import { toast } from 'react-toastify'
 
 export const StationList = () => {
 
     const [station, setStation] = useState([]);
-    const [modal, setModal] = useState([false]);
-    const [id, setId] = useState([]);
+    const [modal, setModal] = useState(false);
+    const [addModal, setAddModal] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [id, setId] = useState(currentStation ? currentStation.id : "");
     const [currentStation, setCurrentStation] = useState(null);
-    const [station_name, setStationName] = useState([]);
-    const [station_address, setStationAddress] = useState([]);
-    const [station_working_time, setStationWorkingTime] = useState([]);
+    const [station_name, setStationName] = useState(currentStation ? currentStation.station_name : "");
+    const [station_address, setStationAddress] = useState(currentStation ? currentStation.station_address : "");
+    const [station_working_time, setStationWorkingTime] = useState(currentStation ? currentStation.station_working_time : "");
     const [sorting, setSorting] = useState({ field: "", order: ""});
     const [search, setSearch] = useState("");
     const ITEM_PER_PAGE = 10;
@@ -29,7 +32,7 @@ export const StationList = () => {
         { name: "", sortable: false },
     ];
 
-    const toggle = (setStation) => {
+    const toggle = (station) => {
         setModal(!modal);
         if (!modal) {
             setCurrentStation(station);
@@ -38,6 +41,46 @@ export const StationList = () => {
             setStationAddress(station.station_address);
             setStationWorkingTime(station.station_working_time);
         }
+    };
+
+    const onToggleAdd = () => {
+        setAddModal(!addModal);
+    };
+
+    const onToggleDelete = (station) => {
+        setDeleteModal(!deleteModal);
+        if (!modal) {
+            setCurrentStation(station);
+        }
+    };
+
+    function onChangeValue(content, type) {
+        switch (type) {
+            case "id":
+                return setId(content);
+            case "station_name":
+                return setStationName(content);
+            case "station_address":
+                return setStationAddress(content);
+            case "station_working_time":
+                return setStationWorkingTime(content);
+        }
+    }
+
+    function onAdd() {
+        console.log(id, station_name, station_address, station_working_time);
+        toast.success("Đã thêm thông tin chi nhánh", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true});
+    }
+
+    function onUpdate() {
+        console.log(id, station_name, station_address, station_working_time);
+        toast.info("Thay đổi thông tin thành công!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true});
+    }
+
+    function onRemove(station) {
+        setStation(station.filter((s) => currentStation.id !== s.id));
+        toast.error("Đã xóa thông tin chi nhánh", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
+        console.log(station);
     }
     
     useEffect(async() => {
@@ -71,6 +114,9 @@ export const StationList = () => {
             <div>
                 <div>
                     <div>
+                        <button onClick = {() => onToggleAdd()}>
+                            Thêm chi nhánh
+                        </button>
                         <Search onSearch={(value) => {
                             setSearch(value);
                             setCurrentPage(1);
@@ -96,6 +142,14 @@ export const StationList = () => {
                                     <td>
                                         {station.station_working_time}
                                     </td>
+                                    <td>
+                                        <button onClick = {() => toggle(station)}>
+                                            Sửa
+                                        </button>
+                                        <button onClick = {() => onToggleDelete(station)}>
+                                            Xóa
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -107,6 +161,65 @@ export const StationList = () => {
                             currentPage={currentPage}
                             onPageChange={(page) => setCurrentPage(page)} />
                     </div>
+                    <ModalEdit modal = {modal} toggle = {toggle} onSubmit = {onUpdate} title = {"Thông tin chi nhánh"}>
+                        <Table>
+                            <tr>
+                                <th>Tên chi nhánh</th>
+                                <td>
+                                    <input 
+                                    defaultValue = {station_name} 
+                                    onChange = {(event) => onChangeValue(event.target.value, "station_name")} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ</th>
+                                <td>
+                                    <input
+                                        defaultValue = {station_address}
+                                        onChange = {(event) => onChangeValue(event.target.value, "station_address")} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Thời gian làm việc</th>
+                                <td>
+                                    <input
+                                        defaultValue = {station_working_time}
+                                        onChange = {(event) => onChangeValue(event.target.value, "station_working_time")} />
+                                </td>
+                            </tr>
+                        </Table>
+                    </ModalEdit>
+                    <ModalEdit modal = {addModal} toggle = {onToggleAdd} onSubmit = {onAdd} title = {"Thêm chi nhánh"}>
+                    <Table>
+                            <tr>
+                                <th>Tên chi nhánh</th>
+                                <td>
+                                    <input 
+                                    defaultValue = {""} 
+                                    onChange = {(event) => onChangeValue(event.target.value, "station_name")} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ</th>
+                                <td>
+                                    <input
+                                        defaultValue = {""}
+                                        onChange = {(event) => onChangeValue(event.target.value, "station_address")} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Thời gian làm việc</th>
+                                <td>
+                                    <input
+                                        defaultValue = {""}
+                                        onChange = {(event) => onChangeValue(event.target.value, "station_working_time")} />
+                                </td>
+                            </tr>
+                        </Table>
+                    </ModalEdit>
+                    <ModalEdit modal = {deleteModal} toggle = {onToggleDelete} onSubmit = {onRemove} title = {"Xóa chi nhánh"}>
+                        <p>Xác nhận xóa thông tin chi nhánh?</p>
+                    </ModalEdit>
                 </div>
             </div>
         </div>
