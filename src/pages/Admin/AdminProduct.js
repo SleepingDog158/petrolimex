@@ -8,7 +8,7 @@ export default class AdminProduct extends Component {
             <div>
                 <NavBar/>
                 <div className="admin-product-content">
-                    <h1>Giá xăng dầu hiện tại</h1>
+                    <h1 className="admin-product-header">Giá xăng dầu hiện tại</h1>
                     <GasPriceTable/>
                 </div>
             </div>

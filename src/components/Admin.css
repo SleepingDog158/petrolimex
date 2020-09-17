@@ -171,6 +171,9 @@
     position: absolute;
     margin: 20px 150px;
 }
+.admin-product-header {
+    color: mediumblue;
+}
 
 /*AdminBill*/
 .admin-bill-content {
@@ -187,5 +190,32 @@
     margin: 20px 150px;
 }
 .admin-contract-header {
+    color: mediumblue;
+}
+
+/*AdminPartnerDriver*/
+.admin-partner-driver-content {
+    position: absolute;
+    margin: 20px 150px;
+}
+.admin-partner-driver-header {
+    color: mediumblue;
+}
+
+/*AdminPartnerContract*/
+.admin-partner-contract-content {
+    position: absolute;
+    margin: 20px 150px;
+}
+.admin-partner-contract-header {
+    color: mediumblue;
+}
+
+/*AdminPartnerBill*/
+.admin-partner-bill-content {
+    position: absolute;
+    margin: 20px 150px;
+}
+.admin-partner-bill-header {
     color: mediumblue;
 }

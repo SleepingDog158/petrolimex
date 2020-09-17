@@ -41,7 +41,7 @@ export default class AdminPartnerMain extends Component {
                         <div className="admin-partner-main-grid">
                             <a href="/partner-contract" className="admin-partner-main-grid-button">Hợp đồng</a>
                             <a href="/partner-driver" className="admin-partner-main-grid-button">Tài xế</a>
-                            <a href="" className="admin-partner-main-grid-button">Giao Dịch</a>
+                            <a href="/partner-bill" className="admin-partner-main-grid-button">Giao Dịch</a>
                             <a href="" className="admin-partner-main-grid-button">Thống kê chi tiết</a>
                         </div>
                     </div>

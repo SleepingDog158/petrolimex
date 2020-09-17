@@ -5,7 +5,7 @@ import { TableHeader } from "./TableHeader"
 import { PaginationComponent } from "./PaginationComponent"
 import { Search } from "./Search"
 
-export const BillListAdmin = () => {
+export const BillListPartner = () => {
 
     const [bill, setBill] = useState([]);
     const [bill_id, setId] = useState([]);

@@ -9,6 +9,7 @@ import AdminContract from '../pages/Admin/AdminContract'
 import AdminBill from '../pages/Admin/AdminBill'
 import AdminPartnerContract from '../pages/Admin/AdminPartnerContract'
 import AdminPartnerDriver from '../pages/Admin/AdminPartnerDriver'
+import AdminPartnerBill from '../pages/Admin/AdminPartnerBill'
 
 export default class AdminSwitch extends Component {
     render() {
@@ -41,6 +42,9 @@ export default class AdminSwitch extends Component {
             </Route>
             <Route path="/partner-driver" exact>
               <AdminPartnerDriver/>
+            </Route>
+            <Route path="/partner-bill" exact>
+              <AdminPartnerBill/>
             </Route>
             <Redirect to="/"/>
           </Switch>

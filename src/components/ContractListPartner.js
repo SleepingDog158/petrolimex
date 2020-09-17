@@ -46,7 +46,7 @@ export const ContractListPartner = () => {
         }
         setTotalItem(processedContract.length);
         if (sorting.field) {
-            const reversed = sorting.order == "asc" ? 1: -1;
+            const reversed = sorting.order === "asc" ? 1: -1;
             processedContract = processedContract.sort(
                 (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
             );
