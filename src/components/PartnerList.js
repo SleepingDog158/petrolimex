@@ -67,13 +67,13 @@ export const PartnerList = () => {
                 <tbody>
                     {partnerData.map((partner) => (
                         <tr>
-                            <td>
+                            <td style={{textAlign: "center"}}>
                                 {partner.partner_id}
                             </td>
-                            <td>
+                            <td style={{width: "500px"}}>
                                 {partner.partner_name}
                             </td>
-                            <td>
+                            <td style={{textAlign: "right"}}>
                                 <a href="/partner-main" className="admin-partner-detail-button">Xem chi tiết</a>
                             </td>
                         </tr>

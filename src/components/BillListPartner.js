@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table"
 import { TableHeader } from "./TableHeader"
 import { PaginationComponent } from "./PaginationComponent"
 import { Search } from "./Search"
+import { FilterAdminBill } from './FilterAdminBill'
 
 export const BillListPartner = () => {
 
@@ -60,6 +61,7 @@ export const BillListPartner = () => {
     return (
         <div>
             <div>
+                <FilterAdminBill/>
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);

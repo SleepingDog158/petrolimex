@@ -75,7 +75,7 @@ export const DriverListPartner = () => {
                             <td className="table-center">
                                 {driver.driver_id}
                             </td>
-                            <td>
+                            <td style={{width: "400px"}}>
                                 {driver.driver_name}
                             </td>
                             <td className="table-center">
