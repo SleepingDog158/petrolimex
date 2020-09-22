@@ -48,7 +48,7 @@ export const BillListAdmin = () => {
     if (sorting.field) {
         const reversed = sorting.order === "asc" ? 1 : -1;
         processedBill = processedBill.sort(
-            (a, b) => reversed * a[sorting.field].toLocaleCompare(b[sorting.field])
+            (a, b) => reversed * a[sorting.field].l0ocaleCompare(b[sorting.field])
         );
     }
     return processedBill.slice(
