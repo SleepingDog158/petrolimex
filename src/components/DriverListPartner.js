@@ -11,7 +11,6 @@ export const DriverListPartner = () => {
     const [driver_id, setId] = useState([]);
     const [driver_name, setName] = useState([]);
     const [driver_phone, setPhone] = useState([]);
-    const [driver_login_id, setLoginId] = useState([]);
     const [driver_plate, setPlate] = useState([]);
     const [driver_team_id, setTeamId] = useState([]);
     const [currentDriver, setCurrentDriver] = useState(null);
@@ -25,7 +24,6 @@ export const DriverListPartner = () => {
         { name: "ID", field: "driver_id", sortable: true },
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Số điện thoại", field: "driver_phone", sortable: false },
-        { name: "Mã đăng nhập", field: "driver_login_id", sortable: false },
         { name: "Biển kiểm soát", field: "driver_plate", sortable: false },
         { name: "Mã đơn vị", field: "driver_team_id", sortable: true },
         { name: "", sortable: false }
@@ -82,9 +80,6 @@ export const DriverListPartner = () => {
                             </td>
                             <td className="table-center">
                                 {driver.driver_phone}
-                            </td>
-                            <td className="table-center">
-                                {driver.driver_login_id}
                             </td>
                             <td className="table-center">
                                 {driver.driver_plate}
