@@ -1,7 +1,7 @@
 /*AdminMain*/
 .admin-main-content {
     position: absolute;
-    margin: 50px 100px 20px 100px;
+    margin: 130px 150px 20px 150px;
     font-size: 18px;
 }
 .admin-main-header {
@@ -61,7 +61,7 @@
 }
 .admin-partner-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
 }
 .admin-partner-detail-button {
     color: mediumblue;
@@ -87,7 +87,7 @@
 }
 .admin-partner-main-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
     display: inline-flex;
 }
 .admin-partner-main-left-content {
@@ -139,7 +139,7 @@
 /*AdminStation*/
 .admin-station-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
 }
 .admin-station-header {
     color: mediumblue;
@@ -148,7 +148,7 @@
 /*AdminProduct*/
 .admin-product-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
 }
 .admin-product-header {
     color: mediumblue;
@@ -157,7 +157,7 @@
 /*AdminBill*/
 .admin-bill-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
 }
 .admin-bill-header {
     color: mediumblue;
@@ -166,7 +166,7 @@
 /*AdminContract*/
 .admin-contract-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
 }
 .admin-contract-header {
     color: mediumblue;
@@ -175,7 +175,7 @@
 /*AdminPartnerDriver*/
 .admin-partner-driver-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
 }
 .admin-partner-driver-header {
     color: mediumblue;
@@ -184,7 +184,7 @@
 /*AdminPartnerContract*/
 .admin-partner-contract-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
 }
 .admin-partner-contract-header {
     color: mediumblue;
@@ -193,7 +193,7 @@
 /*AdminPartnerBill*/
 .admin-partner-bill-content {
     position: absolute;
-    margin: 20px 150px;
+    margin: 130px 150px 20px 150px;
 }
 .admin-partner-bill-header {
     color: mediumblue;
@@ -280,8 +280,9 @@
     margin-right: 5px;
     border: 1.5px solid #0066cc;
     border-radius: 5px;
-    padding: 5px 0px;
+    padding: 5px 2px;
 }
 .filter-box:focus {
     outline: none;
 }
+

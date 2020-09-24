@@ -1,7 +1,11 @@
 .nav-bar {
     background-color: #0066cc;
-    padding: 0px;
+    padding: 0;
     width: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
 }
 #logo {
     height: 50px;
