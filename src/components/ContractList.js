@@ -3,19 +3,23 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { CgDetailsMore } from "react-icons/cg";
-import { ToastContainer, toast } from "react-toastify";
+import { CgUserRemove } from "react-icons/cg";
+import { FaPlus } from "react-icons/fa";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import ModalEdit from "./ModalExample";
 import { TableHeader } from "./TableHeader";
 import { PaginationComponent } from "./PaginationComponent";
 import { Search } from "./Search";
+import { TableBody } from "@material-ui/core";
 
-toast.configure()
+toast.configure();
 export const ContractList = () => {
   const [contracts, setContracts] = useState([]);
   const [drivers, setDrivers] = useState([]);
-  const [chosen, setChosen] = useState([]);
+  
+
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
@@ -25,6 +29,7 @@ export const ContractList = () => {
   const [search, setSearch] = useState("");
 
   const [modal, setModal] = useState(false);
+  const [nestedModal, setNestedModal] = useState(false);
 
   const [currentContract, setCurrentContract] = useState(null);
 
@@ -56,6 +61,22 @@ export const ContractList = () => {
     { name: "" },
   ];
 
+  const headerlist = [
+    { name: "ID", field: "id", sortable: true },
+    { name: "Họ tên", field: "name", sortable: true },
+    { name: "Số điện thoại", field: "phone", sortable: true },
+    { name: "Biển kiểm soát", field: "plate", sortable: true },
+    { name: "", sortable: false },
+  ];
+  const headerSubList = [
+    { name: "ID", field: "id", sortable: true },
+    { name: "Họ tên", field: "name", sortable: true },
+    { name: "Biển kiểm soát", field: "plate", sortable: true },
+    { name: "Hạn mức công nợ" },
+
+    { name: "", sortable: false },
+  ];
+
   const toggle = (contract) => {
     setModal(!modal);
     if (!modal) {
@@ -69,25 +90,16 @@ export const ContractList = () => {
     }
   };
 
-  // function onChangeValue(text, type) {
-  //   switch (type) {
-  //     case "name":
-  //       return setName(text);
-  //     case "phone":
-  //       return setPhone(text);
-  //     case "plate":
-  //       return setPlate(text);
-  //     case "teamId":
-  //       return setTeamId(text);
-  //   }
-  // }
-
-  // function onRemoveDriver(driver) {
-  //   setContracts(contracts.filter((d) => currentContract.id !== d.id));
-  // }
+  const toggleNested = () => {
+    setNestedModal(!nestedModal);
+  };
 
   function onUpdate() {
-    toast.info("Thay đổi thành công", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
+    toast.info("Thay đổi thành công", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+      hideProgressBar: true,
+    });
   }
   // fetch data
   useEffect(async () => {
@@ -99,13 +111,11 @@ export const ContractList = () => {
     setContracts(result.data);
   }, []);
   useEffect(async () => {
-    const result = await axios.get(
-      "https://1ne1c.sse.codesandbox.io/drivers"
-    );
-     console.log(result.data);
-     setDrivers(result.data.filter((d)=> d.contractId === null));
+    const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
+    console.log(result.data);
+    setDrivers(result.data);
   }, []);
-
+  const unpicked = drivers.filter((d) => d.contractId === null);
   const contractsData = useMemo(() => {
     let computedContracts = contracts;
     if (search) {
@@ -244,50 +254,201 @@ export const ContractList = () => {
 
           {/* popup edit*/}
           <ModalEdit
+            className="contract-list"
             modal={modal}
             toggle={toggle}
             onSubmit={onUpdate}
             title={"Thông tin hợp đồng"}
           >
-            <Table className="contract-board">
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Mã hợp đồng:
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {id}
-                </td>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Ngày kí kết
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {signedDate}
-                </td>
-              </tr>
+            <Table>
+              <tbody>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Mã hợp đồng:
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {id}
+                  </td>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Ngày kí kết
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {signedDate}
+                  </td>
+                </tr>
 
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Ngày có hiệu lực
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {startDate}
-                </td>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Ngày kết thúc
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {expiredDate}
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Hạn mức công nợ
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {debtCeiling}
-                </td>
-              </tr>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Ngày có hiệu lực
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {startDate}
+                  </td>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Ngày kết thúc
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {expiredDate}
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Hạn mức công nợ
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {debtCeiling}
+                  </td>
+                </tr>
+              </tbody>
             </Table>
+            <tr>
+              <td>
+                <h5>Danh sách tài xế</h5>
+                <Button
+                  variant="success"
+                  className="mr-1"
+                  onClick={() => toggleNested()}
+                  hidden={status === "inactive"}
+                >
+                  Thêm tài xế
+                </Button>
+              </td>
+            </tr>
+            <Table className="mt-2">
+              <TableHeader
+                headers={headerSubList}
+                onSorting={(field, order) => setSorting({ field, order })}
+              />
+              <tbody>
+                {drivers
+                  .filter((d) => d.contractId === id)
+                  .map((driver) => (
+                    <tr>
+                      <td
+                        scope="row"
+                        className="id-column"
+                        style={{
+                          fontSize: "15px",
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                          padding: "0px",
+                        }}
+                      >
+                        {driver.id}
+                      </td>
+                      <td
+                        className="name-column"
+                        style={{
+                          fontSize: "15px",
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                          padding: "0px",
+                        }}
+                      >
+                        {driver.name}
+                      </td>
+
+                      <td
+                        className="number-column"
+                        style={{
+                          fontSize: "15px",
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                          padding: "0px",
+                        }}
+                      >
+                        {driver.plate}
+                      </td>
+                      <td
+                        style={{ textAlign: "center", verticalAlign: "middle" }}
+                      >
+                        <input disabled={status === "inactive"} defaultValue={driver.creditLimit}/>
+                        
+                      </td>
+                      <td>
+                      <Button variant="danger" hidden={status === "inactive"}>
+                        <CgUserRemove />
+                      </Button></td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+            <ModalEdit
+              className="contract-list"
+              modal={nestedModal}
+              toggle={toggleNested}
+              onSubmit={toggleNested}
+              title={"Thông tin hợp đồng"}
+            >
+              <Table className="mt-2">
+                <TableHeader
+                  headers={headerlist}
+                  onSorting={(field, order) => setSorting({ field, order })}
+                />
+                <tbody>
+                  {unpicked.map((driver) => (
+                    <tr>
+                      <td
+                        scope="row"
+                        className="id-column"
+                        style={{
+                          fontSize: "15px",
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                          padding: "0px",
+                        }}
+                      >
+                        {driver.id}
+                      </td>
+                      <td
+                        className="name-column"
+                        style={{
+                          fontSize: "15px",
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                          padding: "0px",
+                        }}
+                      >
+                        {driver.name}
+                      </td>
+                      <td
+                        className="number-column"
+                        style={{
+                          fontSize: "15px",
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                          padding: "0px",
+                        }}
+                      >
+                        {driver.phone}
+                      </td>
+
+                      <td
+                        className="number-column"
+                        style={{
+                          fontSize: "15px",
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                          padding: "0px",
+                        }}
+                      >
+                        {driver.plate}
+                      </td>
+
+                      <td>
+                        <Button
+                          variant="success"
+                          className="mr-1"
+                          
+                        >
+                          <FaPlus />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </ModalEdit>
           </ModalEdit>
         </div>
       </div>

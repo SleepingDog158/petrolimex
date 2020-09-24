@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NavBarStation from "../../components/NavBarStation";
 import { Table, Button } from "react-bootstrap";
 import "../../components/Client.css";
+import {BillCreate} from "../../components/BillCreate"
 export default class StationBill extends Component {
   render() {
     return (
@@ -16,7 +17,7 @@ export default class StationBill extends Component {
               height: "90vh",
             }}
           >
-            a
+            <BillCreate/>
           </div>
           <div
             className="bill-side col-6 ml-1 d-flex flex-column align-items-center"

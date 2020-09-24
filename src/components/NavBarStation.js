@@ -25,10 +25,10 @@ const NavBarStation = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink>Tạo giao dịch</NavLink>
+              <NavLink href="/bills">Tạo giao dịch</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink>Sản phẩm</NavLink>
+              <NavLink href="/products">Sản phẩm</NavLink>
             </NavItem>
             
           </Nav>
