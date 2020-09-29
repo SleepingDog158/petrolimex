@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, Component } from 'react'
 import axios from "axios"
 import Table from "react-bootstrap/Table"
-import { TableHeader } from "./TableHeader"
+import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { PaginationComponent } from "./PaginationComponent"
 import { Search } from "./Search"
 import ModalEdit from './ModalAdmin'
@@ -12,8 +12,7 @@ export const ContractListPartner = () => {
 
     const [contracts, setContract] = useState([]);
     const [currentContract, setCurrentContract] = useState(null);
-    const [sub_contract_id, setSubId] = useState(currentContract ? currentContract.sub_contract_id : "");
-    const [gross_contract_id, setGrossId] = useState(currentContract ? currentContract.gross_contract_id : "");
+    const [contract_id, setId] = useState(currentContract ? currentContract.contract_id : "");
     const [contract_signed_date, setSignedDate] = useState(currentContract ? currentContract.contract_signed_date : "");
     const [contract_start_date, setStartDate] = useState(currentContract ? currentContract.contract_start_date : "");
     const [contract_end_date, setEndDate] = useState(currentContract ? currentContract.contract_end_date : "");
@@ -29,9 +28,8 @@ export const ContractListPartner = () => {
     const [addModal, setAddModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
 
-    const headers = [
-        { name: "ID con", field: "sub_contract_id", sortable: true },
-        { name: "ID tổng", field: "gross_contract_id", sortable: true },
+    const header = [
+        { name: "Mã hợp đồng", field: "contract_id", sortable: true },
         { name: "Ngày kí kết", field: "contract_signed_date", sortable: true },
         { name: "Ngày có hiệu lực", field: "contract_start_date", sortable: true },
         { name: "Ngày hết hiệu lực", field: "contract_end_date", sortable: true },
@@ -45,8 +43,7 @@ export const ContractListPartner = () => {
         setModal(!modal);
         if(!modal) {
             setCurrentContract(contract);
-            setSubId(contract.sub_contract_id);
-            setGrossId(contract.contract_gross_id);
+            setId(contract.contract_id);
             setSignedDate(contract.contract_signed_date);
             setStartDate(contract.contract_start_date);
             setEndDate(contract.contract_end_date);
@@ -69,10 +66,8 @@ export const ContractListPartner = () => {
 
     function onChangeValue(content, type) {
         switch (type) {
-            case "sub_contract_id":
-                return setSubId(content);
-            case "gross_contract_id":
-                return setGrossId(content);
+            case "contract_id":
+                return setId(content);
             case "contract_signed_date":
                 return setSignedDate(content);
             case "contract_start_date":
@@ -89,12 +84,12 @@ export const ContractListPartner = () => {
     }
 
     function onAdd() {
-        console.log(sub_contract_id, gross_contract_id, contract_signed_date, contract_start_date, contract_end_date, contract_debt_ceiling, contract_remain_credit, contract_status);
+        console.log(contract_id, contract_signed_date, contract_start_date, contract_end_date, contract_debt_ceiling, contract_remain_credit, contract_status);
         toast.success("Đã thêm thông tin hợp đồng", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
     }
 
     function onRemove(contract) {
-        setContract(contracts.filter((c) => currentContract.sub_contract_id !== c.sub_contract_id));
+        setContract(contracts.filter((c) => currentContract.contract_id !== c.contract_id));
         toast.error("Đã xóa thông tin hợp đồng", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true});
     }
 
@@ -108,8 +103,7 @@ export const ContractListPartner = () => {
         let processedContract = contracts;
         if (search) {
             processedContract = processedContract.filter((contract) =>
-                contract.sub_contract_id.includes(search) ||
-                contract.gross_contract_id.includes(search)
+                contract.contract_id.includes(search)
             );
         }
         setTotalItem(processedContract.length);
@@ -134,34 +128,31 @@ export const ContractListPartner = () => {
                 }} />
             </div>
             <Table striped>
-                <TableHeader
-                    headers={headers}
+                <TableHeaderAdmin
+                    header={header}
                     onSorting={(field, order) => setSorting({field, order})} />
                 <tbody>
                     {contractData.map((contract) => (
                         <tr>
-                            <td className="table-center">
-                                {contract.sub_contract_id}
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                {contract.contract_id}
                             </td>
-                            <td className="table-center">
-                                {contract.gross_contract_id}
-                            </td>
-                            <td className="table-center">
+                            <td style={{width: "120px", textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.contract_signed_date}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.contract_start_date}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.contract_end_date}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.contract_debt_ceiling}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.contract_remain_credit}
                             </td>
-                            <td>
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.contract_status}
                             </td>
                         </tr>

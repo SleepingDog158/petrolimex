@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, Component } from 'react'
 import axios from "axios"
 import Table from "react-bootstrap/Table"
-import { TableHeader } from "./TableHeader"
+import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { PaginationComponent } from "./PaginationComponent"
 import { Search } from "./Search"
 import { FilterAdminBill } from './FilterAdminBill'
@@ -21,8 +21,8 @@ export const BillListPartner = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItem, setTotalItem] = useState(0);
 
-    const headers = [
-        { name: "ID", field: "bill_id", sortable: true },
+    const header = [
+        { name: "Mã giao dịch", field: "bill_id", sortable: true },
         { name: "Tên chi nhánh", field: "station_name", sortable: true },
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Tên sản phẩm", field: "product_name", sortable: true },
@@ -68,28 +68,28 @@ export const BillListPartner = () => {
                 }} />
             </div>
             <Table striped>
-                <TableHeader
-                    headers = {headers}
-                    onSorting = {(field, order) => setSorting({field, order})} />
+                <TableHeaderAdmin
+                    header={header}
+                    onSorting={(field, order) => setSorting({field, order})} />
                 <tbody>
                     {billData.map((bill) => (
                         <tr>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {bill.bill_id}
                             </td>
-                            <td>
+                            <td style={{width: "300px", verticalAlign: "middle"}}>
                                 {bill.station_name}
                             </td>
-                            <td>
+                            <td style={{width: "160px", verticalAlign: "middle"}}>
                                 {bill.driver_name}
                             </td>
-                            <td>
+                            <td style={{verticalAlign: "middle"}}>
                                 {bill.product_name}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {bill.product_quantity}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {bill.created_time}
                             </td>
                         </tr>

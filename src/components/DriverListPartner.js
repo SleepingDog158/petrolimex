@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, Component } from 'react'
 import axios from "axios"
 import Table from "react-bootstrap/Table"
-import { TableHeader } from "./TableHeader"
+import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { PaginationComponent } from './PaginationComponent'
 import { Search } from "./Search"
 
@@ -20,8 +20,8 @@ export const DriverListPartner = () => {
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [search, setSearch] = useState("");
 
-    const headers = [
-        { name: "ID", field: "driver_id", sortable: true },
+    const header = [
+        { name: "Mã tài xế", field: "driver_id", sortable: true },
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Số điện thoại", field: "driver_phone", sortable: false },
         { name: "Biển kiểm soát", field: "driver_plate", sortable: false },
@@ -49,7 +49,7 @@ export const DriverListPartner = () => {
         if (sorting.field) {
             const reversed = sorting.order === "asc" ? 1: -1;
             processedDriver = processedDriver.sort(
-                (a, b) => reversed * [sorting.field].localeCompare(b[sorting.field])
+                (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
             );
         }
         return processedDriver.slice(
@@ -67,24 +67,25 @@ export const DriverListPartner = () => {
                 }} />
             </div>
             <Table striped>
-                <TableHeader headers = {headers}
-                    onSorting = {(field, order) => setSorting({ field, order })} />
+                <TableHeaderAdmin
+                    header={header}
+                    onSorting={(field, order) => setSorting({ field, order })} />
                 <tbody>
                     {driverData.map((driver) => (
                         <tr>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {driver.driver_id}
                             </td>
-                            <td style={{width: "400px"}}>
+                            <td style={{width: "300px", verticalAlign: "middle"}}>
                                 {driver.driver_name}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {driver.driver_phone}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {driver.driver_plate}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {driver.driver_team_id}
                             </td>
                         </tr>
