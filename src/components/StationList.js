@@ -160,7 +160,7 @@ export const StationList = () => {
                             currentPage={currentPage}
                             onPageChange={(page) => setCurrentPage(page)} />
                     </div>
-                    <ModalEdit modal = {modal} toggle = {toggle} onSubmit = {onUpdate} title = {"Thông tin chi nhánh"}>
+                    <ModalEdit modal = {addModal} toggle = {toggle} onSubmit = {onUpdate} title = {"Thông tin chi nhánh"}>
                         <Table>
                             <tr>
                                 <th>Tên chi nhánh</th>
