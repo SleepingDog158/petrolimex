@@ -12,7 +12,9 @@ function App() {
     // <AuthProvider>
     //   <Router />
     // </AuthProvider>
+
     <ClientSwitch/>
+  
   )
 }
 

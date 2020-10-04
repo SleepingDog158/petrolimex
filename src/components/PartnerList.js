@@ -4,7 +4,6 @@ import Table from "react-bootstrap/Table"
 import { TableHeader } from "./TableHeader"
 import { Search } from "./Search"
 import { PaginationComponent } from "./PaginationComponent"
-import ModalEdit from "./ModalExample"
 
 export const PartnerList = () => {
 
@@ -12,9 +11,6 @@ export const PartnerList = () => {
     const [partner_id, setId] = useState([]);
     const [currentPartner, setCurrentPartner] = useState(null);
     const [partner_name, setName] = useState([]);
-    const [partner_address, setAddress] = useState([]);
-    const [partner_tax_id, setTaxId] = useState([]);
-    const [partner_payment_limit, setPaymentLimit] = useState([]);
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [search, setSearch] = useState("");
     const ITEM_PER_PAGE = 10;
@@ -25,23 +21,8 @@ export const PartnerList = () => {
     const headers = [
         { name: "ID", field: "partner_id", sortable: true },
         { name: "Tên công ty", field: "partner_name", sortable: true },
-        { name: "Địa chỉ", field: "partner_address", sortable: false },
-        { name: "Mã số thuế", field: "partner_tax_id", sortable: true },
-        { name: "Hạn mức", field: "partner_payment_limit", sortable: true},
         { name: "", sortable: false }
     ];
-
-    const toggle = (setPartner) => {
-        setModal(!modal);
-        if (!modal) {
-            setCurrentPartner(partner);
-            setId(partner.partner_id);
-            setName(partner.partner_name);
-            setAddress(partner.partner_address);
-            setTaxId(partner.partner_tax_id);
-            setPaymentLimit(partner.partner_payment_limit);
-        }
-    }
 
     useEffect(async() => {
         const result = await axios.get("https://tnzio.sse.codesandbox.io/partner");
@@ -54,8 +35,7 @@ export const PartnerList = () => {
         if (search) {
             processedPartner = processedPartner.filter((partner) => 
                 partner.partner_id.includes(search) || 
-                partner.partner_name.toLowerCase().includes(search.toLowerCase()) || 
-                partner.partner_tax_id.includes(search)
+                partner.partner_name.toLowerCase().includes(search.toLowerCase())
             );
         }
         setTotalItem(processedPartner.length);
@@ -94,13 +74,7 @@ export const PartnerList = () => {
                                 {partner.partner_name}
                             </td>
                             <td>
-                                {partner.partner_address}
-                            </td>
-                            <td>
-                                {partner.partner_tax_id}
-                            </td>
-                            <td>
-                                {partner.partner_payment_limit}
+                                <a href="/partner-main" className="admin-partner-detail-button">Xem chi tiết</a>
                             </td>
                         </tr>
                     ))}

@@ -3,7 +3,7 @@ import NavBar from "../../components/NavBar"
 import "../../components/Admin.css"
 import PieChart from '../../components/PieChart'
 import { Route, Redirect, Switch, BrowserRouter as Router } from "react-router-dom"
-import { DriverListAdmin } from "../../components/DriverListAdmin"
+import { DriverListAdmin } from "../../components/DriverListPartner"
 
 export default class AdminPartnerMain extends Component {
     render() {
@@ -39,10 +39,10 @@ export default class AdminPartnerMain extends Component {
                             </tr>
                         </table>
                         <div className="admin-partner-main-grid">
-                            <button type="button" className="admin-partner-main-grid-button">Hợp đồng</button>
-                            <button type="button" className="admin-partner-main-grid-button" onClick="window.location.href='/driver'">Tài xế</button>
-                            <button type="button" className="admin-partner-main-grid-button">Giao Dịch</button>
-                            <button type="button" className="admin-partner-main-grid-button">Thống kê chi tiết</button>
+                            <a href="/partner-contract" className="admin-partner-main-grid-button">Hợp đồng</a>
+                            <a href="/partner-driver" className="admin-partner-main-grid-button">Tài xế</a>
+                            <a href="/partner-bill" className="admin-partner-main-grid-button">Giao Dịch</a>
+                            <a href="/partner-contract" className="admin-partner-main-grid-button">Thống kê chi tiết</a>
                         </div>
                     </div>
                     <div className="admin-partner-main-chart">
