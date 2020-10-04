@@ -4,8 +4,12 @@ import AdminMain from "../pages/Admin/AdminMain"
 import AdminPartner from "../pages/Admin/AdminPartner"
 import AdminPartnerMain from "../pages/Admin/AdminPartnerMain"
 import AdminProduct from "../pages/Admin/AdminProduct"
-import AdminStat from "../pages/Admin/AdminStat"
 import AdminStation from "../pages/Admin/AdminStation"
+import AdminContract from '../pages/Admin/AdminContract'
+import AdminBill from '../pages/Admin/AdminBill'
+import AdminPartnerContract from '../pages/Admin/AdminPartnerContract'
+import AdminPartnerDriver from '../pages/Admin/AdminPartnerDriver'
+import AdminPartnerBill from '../pages/Admin/AdminPartnerBill'
 
 export default class AdminSwitch extends Component {
     render() {
@@ -16,16 +20,31 @@ export default class AdminSwitch extends Component {
               <AdminMain/>
             </Route>
             <Route path="/partner" exact>
-              <AdminPartnerMain/>
+              <AdminPartner/>
             </Route>
             <Route path="/product" exact>
               <AdminProduct/>
             </Route>
-            <Route path ="/stat" exact>
-              <AdminStat/>
-            </Route>
             <Route path="/station" exact>
               <AdminStation/>
+            </Route>
+            <Route path="/contract" exact>
+              <AdminContract/>
+            </Route>
+            <Route path="/bill" exact>
+              <AdminBill/>
+            </Route>
+            <Route path="/partner-main"exact>
+              <AdminPartnerMain/>
+            </Route>
+            <Route path="/partner-contract" exact>
+              <AdminPartnerContract/>
+            </Route>
+            <Route path="/partner-driver" exact>
+              <AdminPartnerDriver/>
+            </Route>
+            <Route path="/partner-bill" exact>
+              <AdminPartnerBill/>
             </Route>
             <Redirect to="/"/>
           </Switch>

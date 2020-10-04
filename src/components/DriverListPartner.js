@@ -5,7 +5,7 @@ import { TableHeader } from "./TableHeader"
 import { PaginationComponent } from './PaginationComponent'
 import { Search } from "./Search"
 
-export const DriverListAdmin = () => {
+export const DriverListPartner = () => {
 
     const [driver, setDriver] = useState([]);
     const [driver_id, setId] = useState([]);
@@ -69,30 +69,27 @@ export const DriverListAdmin = () => {
                 }} />
             </div>
             <Table striped>
-                <TableHeader header = {headers}
+                <TableHeader headers = {headers}
                     onSorting = {(field, order) => setSorting({ field, order })} />
                 <tbody>
                     {driverData.map((driver) => (
                         <tr>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_id}
                             </td>
                             <td>
                                 {driver.driver_name}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_phone}
                             </td>
-                            <td>
-                                {driver.driver_phone}
-                            </td>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_login_id}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_plate}
                             </td>
-                            <td>
+                            <td className="table-center">
                                 {driver.driver_team_id}
                             </td>
                         </tr>

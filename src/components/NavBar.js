@@ -21,7 +21,10 @@ export default class NavBar extends Component {
                             <a href="/product" className="nav-items navbar-prop">Sản phẩm</a>
                         </li>
                         <li className='list-content'>
-                            <a href="/stat" className="nav-items navbar-prop">Thống kê</a>
+                            <a href="/bill" className="nav-items navbar-prop">Giao dịch</a>
+                        </li>
+                        <li className='list-content'>
+                            <a href="/contract" className="nav-items navbar-prop">Hợp đồng</a>
                         </li>
                         <li className='list-content'>
                             <a href="" className="nav-items navbar-prop">Logout</a>
