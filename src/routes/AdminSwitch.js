@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Route, Redirect, Switch, BrowserRouter as Router } from 'react-router-dom'
-import AdminMain from "../pages/Admin/AdminMain"
+import { AdminMain } from "../pages/Admin/AdminMain"
 import AdminPartner from "../pages/Admin/AdminPartner"
 import AdminPartnerMain from "../pages/Admin/AdminPartnerMain"
 import AdminProduct from "../pages/Admin/AdminProduct"
