@@ -4,9 +4,10 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { FaUserEdit } from "react-icons/fa";
 import { CgUserRemove } from "react-icons/cg";
+import { ToastContainer, toast } from "react-toastify";
 
 import ModalEdit from "./ModalExample";
-
+import { TableHeader } from "./TableHeader";
 import { PaginationComponent } from "./PaginationComponent";
 import { Search } from "./Search";
 
@@ -16,32 +17,41 @@ export const DriversList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
 
+  const [sorting, setSorting] = useState({ field: "", order: "" });
+
   const [search, setSearch] = useState("");
 
   const [modal, setModal] = useState(false);
 
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const [addModal, setAddModal] = useState(false);
+
   const [currentDriver, setCurrentDriver] = useState(null);
 
+  const [id, setId] = useState(currentDriver ? currentDriver.id : "");
   const [name, setName] = useState(currentDriver ? currentDriver.name : "");
   const [phone, setPhone] = useState(currentDriver ? currentDriver.phone : "");
-  const [creditLimit, setCreditLimit] = useState(
-    currentDriver ? currentDriver.creditLimit : ""
-  );
-  const [creditRemain, setCreditRemain] = useState(
-    currentDriver ? currentDriver.creditRemain : ""
-  );
+ 
+ 
+
   const [plate, setPlate] = useState(currentDriver ? currentDriver.plate : "");
+
+  const headers = [
+    { name: "ID", field: "id", sortable: true },
+    { name: "Họ tên", field: "name", sortable: true },
+    { name: "Số điện thoại", field: "phone", sortable: true },
+    { name: "Biển kiểm soát", field: "plate", sortable: true },
+    { name: "", sortable: false },
+  ];
 
   const toggle = (driver) => {
     setModal(!modal);
     if (!modal) {
       setCurrentDriver(driver);
+      setId(driver.id)
       setName(driver.name);
       setPhone(driver.phone);
-      setCreditLimit(driver.creditLimit);
-      setCreditRemain(driver.creditRemain);
       setPlate(driver.plate);
     }
   };
@@ -53,16 +63,16 @@ export const DriversList = () => {
     }
   };
 
+  const onToggleAdd = () => {
+    setAddModal(!addModal);
+  };
+
   function onChangeValue(text, type) {
     switch (type) {
       case "name":
         return setName(text);
       case "phone":
         return setPhone(text);
-      case "creditLimit":
-        return setCreditLimit(text);
-      case "creditRemain":
-        return setCreditRemain(text);
       case "plate":
         return setPlate(text);
     }
@@ -70,20 +80,27 @@ export const DriversList = () => {
 
   function onRemoveDriver(driver) {
     setDrivers(drivers.filter((d) => currentDriver.id !== d.id));
+    toast.error("Đã xóa thông tin tài xế", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
+    console.log(drivers)
   }
 
+  function onAdd() {
+    console.log(name, phone,plate);
+    toast.success("Đã thêm thông tin tài xế", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
+  }
   function onUpdate() {
-    console.log(name, phone, creditLimit, creditRemain, plate);
+    console.log(name, phone, plate);
+    toast.info("Thay đổi thành công", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
   }
-
+  // fetch data
   useEffect(async () => {
-    const result = await axios.get("https://1ne1c.sse.codesandbox.io/");
+    const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
 
     // // lay token tu cookie
 
     // let token = '...';
     // const result = await axios({
-    //   method: "get",
+    //   method: "get", 
     //   url: "http://localhost:8080/api/v1/driver",
     //   headers: {
     //     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IndDU0tTb3NEQSIsImlhdCI6MTU5ODgwMDY3OSwiZXhwIjoxNTk4ODA3ODc5fQ.g7N8nNMkzpyd9DyJZLYpd6hSEyQlWbEhz5D7cGyNUgo`
@@ -105,17 +122,31 @@ export const DriversList = () => {
       );
     }
     setTotalItems(computedDrivers.length);
+    //sorting
+    if (sorting.field) {
+      const reversed = sorting.order === "asc" ? 1 : -1;
+      computedDrivers = computedDrivers.sort(
+        (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
+      );
+    }
     return computedDrivers.slice(
       (currentPage - 1) * ITEMS_PER_PAGE,
       (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
     );
-  }, [drivers, currentPage, search]);
+  }, [drivers, currentPage, search, sorting]);
 
   return (
     <div className="row w-100">
       <div className="col mb-3 col-11 text-center ml-4">
         <div className="row">
-          <div className="col-md-6">
+          <div className="d-inline-flex col-md-12">
+            <Button
+              variant="success"
+              className="mb-3 mr-5"
+              onClick={() => onToggleAdd()}
+            >
+              Thêm
+            </Button>
             <Search
               onSearch={(value) => {
                 setSearch(value);
@@ -124,70 +155,64 @@ export const DriversList = () => {
             />
           </div>
 
-          <div className="col-md-6 d-flex flex-row-reverse p-0 pagination">
-            <PaginationComponent
-              total={totalItems}
-              itemsPerPage={ITEMS_PER_PAGE}
-              currentPage={currentPage}
-              onPageChange={(page) => setCurrentPage(page)}
-            />
-          </div>
-
           <Table className="col-12 ml-3" striped>
-            <thead>
-              <tr>
-                <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  ID
-                </th>
-                <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  Họ tên
-                </th>
-                <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  Số điện thoại
-                </th>
-                <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  Hạn mức công nợ
-                </th>
-                <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  Hạn mức còn lại
-                </th>
-                <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  Biển kiểm soát
-                </th>
-                <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  Thao tác
-                </th>
-              </tr>
-            </thead>
+            <TableHeader
+              headers={headers}
+              onSorting={(field, order) => setSorting({ field, order })}
+            />
             <tbody>
               {driversData.map((driver) => (
                 <tr>
-                  <th
+                  <td
                     scope="row"
                     className="id-column"
-                    style={{ textAlign: "center", verticalAlign: "middle" }}
+                    style={{
+                      fontSize: "15px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "0px",
+                    }}
                   >
                     {driver.id}
-                  </th>
+                  </td>
                   <td
-                    style={{ textAlign: "center", verticalAlign: "middle" }}
                     className="name-column"
+                    style={{
+                      fontSize: "15px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "0px",
+                    }}
                   >
                     {driver.name}
                   </td>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <td
+                    className="number-column"
+                    style={{
+                      fontSize: "15px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "0px",
+                    }}
+                  >
                     {driver.phone}
                   </td>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {driver.creditLimit}
-                  </td>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {driver.creditRemain}
-                  </td>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  
+    
+                  
+                  <td
+                    className="number-column"
+                    style={{
+                      fontSize: "15px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "0px",
+                    }}
+                  >
                     {driver.plate}
                   </td>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                 
+                  <td>
                     <Button
                       variant="primary"
                       className="mr-1"
@@ -207,6 +232,16 @@ export const DriversList = () => {
             </tbody>
           </Table>
 
+          <div className="col-md-12 d-flex flex-row-reverse p-0 pagination">
+            <PaginationComponent
+              total={totalItems}
+              itemsPerPage={ITEMS_PER_PAGE}
+              currentPage={currentPage}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </div>
+
+          {/* popup delete*/}
           <ModalEdit
             modal={deleteModal}
             toggle={onToggleDelete}
@@ -216,6 +251,7 @@ export const DriversList = () => {
             <p>Bạn muốn xóa thông tin tài xế này?</p>
           </ModalEdit>
 
+          {/* popup edit*/}
           <ModalEdit
             modal={modal}
             toggle={toggle}
@@ -251,32 +287,6 @@ export const DriversList = () => {
               </tr>
               <tr>
                 <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Hạn mức công nợ
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={creditLimit}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "creditLimit")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Hạn mức còn lại
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={creditRemain}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "creditRemain")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                   Biển kiểm soát
                 </th>
                 <td style={{ textAlign: "center", verticalAlign: "middle" }}>
@@ -288,6 +298,59 @@ export const DriversList = () => {
                   />
                 </td>
               </tr>
+              
+            </Table>
+          </ModalEdit>
+
+          {/* popup create*/}
+          <ModalEdit
+            modal={addModal}
+            toggle={onToggleAdd}
+            onSubmit={onAdd}
+            title={"Thêm tài xế"}
+          >
+            <Table>
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Họ tên
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={""}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "name")
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Số điện thoại
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={""}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "phone")
+                    }
+                  />
+                </td>
+              </tr>
+              
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Biển kiểm soát
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={""}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "plate")
+                    }
+                  />
+                </td>
+              </tr>
+              
             </Table>
           </ModalEdit>
         </div>

@@ -20,7 +20,7 @@ const ModalEdit = (props) => {
           {props.children}
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={()=>{onSubmit(); toggle()}}>Xác nhận</Button>{' '}
+          <Button color="primary" onClick={()=>{toggle();onSubmit() }}>Xác nhận</Button>{' '}
           <Button color="danger" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>

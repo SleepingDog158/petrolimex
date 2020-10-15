@@ -1,37 +1,69 @@
-import React from 'react';
-import { Table } from 'reactstrap';
+import React, { useState, useMemo, useEffect, Component } from "react";
+import axios from "axios";
+import Table from "react-bootstrap/Table";
 
-const GasPriceTable = (props) => {
+import { TableHeader } from "./TableHeader";
+
+
+const GasPriceTable = () => {
+  const [products, setProducts] = useState([]);
+  const headers = [
+    { name: "ID", field: "id" },
+    { name: "Sản phẩm", field: "product" },
+    { name: "Giá", field: "price"},
+    ]
+
+    useEffect(async () => {
+      const result = await axios.get("https://1ne1c.sse.codesandbox.io/products");
+      console.log(result.data);
+      setProducts(result.data);
+    }, []);
   return (
-    <Table striped>
-      <thead></thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Xăng RON 95-III</td>
-          <td>14.970</td>
-          <td>0%</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Xăng ES RON 92-II</td>
-          <td>14.400</td>
-          <td>0.01%</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Dầu DO 0,05S-II</td>
-          <td>12.390</td>
-          <td>0.02%</td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td>Dầu KO</td>
-          <td>10.270</td>
-          <td>0.02%</td>
-        </tr>
-      </tbody>
-    </Table>
+    <Table className="col-12 ml-3" bordered>
+    <TableHeader
+      headers={headers}
+    />
+    <tbody>
+      {products.map((product) => (
+        <tr >
+          <td className="w-25"
+            scope="row"
+            style={{
+              fontSize: "15px",
+              textAlign: "center",
+              verticalAlign: "middle",
+              height:"30px",  
+              padding: "3px",
+            }}
+          >
+            {product.id}
+          </td>
+          <td className="w-50"
+            style={{
+              fontSize: "15px",
+              textAlign: "left",
+              verticalAlign: "middle",
+              height:"40px", 
+              padding: "3px",
+            }}
+          >
+            {product.product}
+          </td>
+          <td
+            style={{
+              fontSize: "15px",
+              textAlign: "center",
+              verticalAlign: "middle",
+              height:"30px", 
+              padding: "3px",
+            }}
+          >
+            {product.price}
+          </td>
+          </tr>
+      ))}
+    </tbody>
+  </Table>
   );
 }
 

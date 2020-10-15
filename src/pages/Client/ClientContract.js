@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Sidebar from "../../components/Sidebar";
 import PageHeader from "../../components/PageHeader";
-import {DriversList} from "../../components/DriversList"
+import {ContractList} from "../../components/ContractList"
 import "../../components/Client.css"
 export default class ClientDriver extends Component {
   
@@ -13,9 +13,9 @@ export default class ClientDriver extends Component {
         <Sidebar />
         <div className="content-area">
           <div className="tag-name">
-            <h3>Danh sách tài xế</h3>
+            <h4>Danh sách hợp đồng</h4>
           </div>
-            <DriversList/>
+            <ContractList/>
         </div>
       </div>
     );

@@ -9,22 +9,25 @@ export default class NavBar extends Component {
                 <nav>
                     <ul className="nav-content">
                         <li className='list-content'>
-                            <a href="#" className="navbar-prop"><img src={LogoCol} alt="logo" id="logo"/></a>
+                            <a href="/" className="navbar-prop"><img src={LogoCol} alt="logo" id="logo"/></a>
                         </li>
                         <li className='list-content'>
-                            <a href="#" className="nav-items navbar-prop">Đối tác</a>
+                            <a href="/partner" className="nav-items navbar-prop">Đối tác</a>
                         </li>
                         <li className='list-content'>
-                            <a href="#" className="nav-items navbar-prop">Chi nhánh</a>
+                            <a href="/station" className="nav-items navbar-prop">Chi nhánh</a>
                         </li>
                         <li className='list-content'>
-                            <a href="#" className="nav-items navbar-prop">Sản phẩm</a>
+                            <a href="/product" className="nav-items navbar-prop">Sản phẩm</a>
                         </li>
                         <li className='list-content'>
-                            <a href="#" className="nav-items navbar-prop">Thống kê</a>
+                            <a href="/bill" className="nav-items navbar-prop">Giao dịch</a>
                         </li>
                         <li className='list-content'>
-                            <a href="#" className="nav-items navbar-prop">Logout</a>
+                            <a href="/contract" className="nav-items navbar-prop">Hợp đồng</a>
+                        </li>
+                        <li className='list-content'>
+                            <a href="" className="nav-items navbar-prop">Logout</a>
                         </li>
                     </ul>
                 </nav>
