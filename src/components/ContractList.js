@@ -13,12 +13,18 @@ import { TableHeader } from "./TableHeader";
 import { PaginationComponent } from "./PaginationComponent";
 import { Search } from "./Search";
 import { TableBody } from "@material-ui/core";
+import useDrivers from "../customHook/useDrivers";
 
 toast.configure();
 export const ContractList = () => {
   const [contracts, setContracts] = useState([]);
-  const [drivers, setDrivers] = useState([]);
-  
+  const {
+    drivers,
+    onCheckDriver,
+    onDeleteDriver,
+    onUpdate,
+    setDrivers,
+  } = useDrivers();
 
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -94,13 +100,6 @@ export const ContractList = () => {
     setNestedModal(!nestedModal);
   };
 
-  function onUpdate() {
-    toast.info("Thay đổi thành công", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-      hideProgressBar: true,
-    });
-  }
   // fetch data
   useEffect(async () => {
     const result = await axios.get(
@@ -109,11 +108,6 @@ export const ContractList = () => {
 
     console.log(result.data);
     setContracts(result.data);
-  }, []);
-  useEffect(async () => {
-    const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
-    console.log(result.data);
-    setDrivers(result.data);
   }, []);
   const unpicked = drivers.filter((d) => d.contractId === null);
   const contractsData = useMemo(() => {
@@ -362,13 +356,20 @@ export const ContractList = () => {
                       <td
                         style={{ textAlign: "center", verticalAlign: "middle" }}
                       >
-                        <input disabled={status === "inactive"} defaultValue={driver.creditLimit}/>
-                        
+                        <input
+                          disabled={status === "inactive"}
+                          defaultValue={driver.creditLimit}
+                        />
                       </td>
                       <td>
-                      <Button variant="danger" hidden={status === "inactive"}>
-                        <CgUserRemove />
-                      </Button></td>
+                        <Button
+                          onClick={() => onDeleteDriver(driver.id, id)}
+                          variant="danger"
+                          hidden={status === "inactive"}
+                        >
+                          <CgUserRemove />
+                        </Button>
+                      </td>
                     </tr>
                   ))}
               </tbody>
@@ -378,6 +379,7 @@ export const ContractList = () => {
               modal={nestedModal}
               toggle={toggleNested}
               onSubmit={toggleNested}
+              // showFooter={false}
               title={"Thông tin hợp đồng"}
             >
               <Table className="mt-2">
@@ -437,9 +439,9 @@ export const ContractList = () => {
 
                       <td>
                         <Button
+                          onClick={() => onCheckDriver(driver.id, id)}
                           variant="success"
                           className="mr-1"
-                          
                         >
                           <FaPlus />
                         </Button>
