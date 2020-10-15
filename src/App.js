@@ -12,9 +12,8 @@ function App() {
     // <AuthProvider>
     //   <Router />
     // </AuthProvider>
-
-    <ClientSwitch/>
-  
+    //<StationBill/>
+    <AdminSwitch/>
   )
 }
 

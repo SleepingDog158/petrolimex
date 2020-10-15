@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState, Component } from 'react'
 import axios from "axios"
 import ModalEdit from "./ModalAdmin"
 import Table from "react-bootstrap/Table"
-import { TableHeader } from "./TableHeader"
+import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { Search } from "./Search"
 import { PaginationComponent } from "./PaginationComponent"
 import { toast } from 'react-toastify'
@@ -25,8 +25,8 @@ export const StationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItem, setTotalItem] = useState(0)
 
-    const headers = [
-        { name: "ID", field: "id", sortable: true },
+    const header = [
+        { name: "Mã cửa hàng", field: "id", sortable: true },
         { name: "Tên cửa hàng", field: "station_name", sortable: true },
         { name: "Địa chỉ", field: "station_address", sortable: false },
         { name: "Thời gian làm việc", field: "station_working_time", sortable: false },
@@ -122,23 +122,23 @@ export const StationList = () => {
                         }} />
                     </div>
                     <Table striped>
-                        <TableHeader
-                            headers={headers}
+                        <TableHeaderAdmin
+                            header={header}
                             onSorting={(field, order) => setSorting({ field, order })}
                         />
                         <tbody>
                             {stationData.map((station) => (
                                 <tr>
-                                    <td className="table-center">
+                                    <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                         {station.id}
                                     </td>
-                                    <td>
+                                    <td style={{width: "280px", verticalAlign: "middle"}}>
                                         {station.station_name}
                                     </td>
-                                    <td>
+                                    <td style={{width: "320px", verticalAlign: "middle"}}>
                                         {station.station_address}
                                     </td>
-                                    <td className="table-center">
+                                    <td style={{width: "170px", textAlign: "center", verticalAlign: "middle"}}>
                                         {station.station_working_time}
                                     </td>
                                     <td>
@@ -156,11 +156,11 @@ export const StationList = () => {
                     <div>
                         <PaginationComponent
                             total={totalItem}
-                            itemPerPage={ITEM_PER_PAGE}
+                            itemsPerPage={ITEM_PER_PAGE}
                             currentPage={currentPage}
                             onPageChange={(page) => setCurrentPage(page)} />
                     </div>
-                    <ModalEdit modal = {modal} toggle = {toggle} onSubmit = {onUpdate} title = {"Thông tin chi nhánh"}>
+                    <ModalEdit modal = {addModal} toggle = {toggle} onSubmit = {onUpdate} title = {"Thông tin chi nhánh"}>
                         <Table>
                             <tr>
                                 <th>Tên chi nhánh</th>
