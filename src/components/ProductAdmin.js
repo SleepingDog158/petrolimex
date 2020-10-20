@@ -72,10 +72,20 @@ export const ProductAdmin = () => {
         console.log(products);
     }
 
-    useEffect(async() => {
-        const result = await axios.get("https://localhost:6060/product");
+    /*useEffect(async() => {
+        const result = await axios.get("https://tnzio.sse.codesandbox.io/product");
         console.log(result.data);
         setProduct(result.data);
+    }, []);*/
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios(
+                'https://localhost:6060/getProducts',
+            );
+            setProduct(result.data);
+        };
+        fetchData();
     }, []);
 
     const productData = useMemo(() => {
