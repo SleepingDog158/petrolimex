@@ -72,31 +72,21 @@ export const ProductAdmin = () => {
         console.log(products);
     }
 
-    /*useEffect(async() => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/product");
-        console.log(result.data);
-        setProduct(result.data);
-    }, []);*/
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios(
-                'https://localhost:6060/getProducts',
-            );
-            setProduct(result.data);
-        };
-        fetchData();
+    useEffect(async () => {
+        const result = await axios.post("https://localhost:6060/getProducts/", {});
+        console.log(result.data.products);
+        setProduct(result.data.products);
     }, []);
 
     const productData = useMemo(() => {
-        let processProduct = products;
+        let processedProduct = products;
         if (sorting.field) {
             const reversed = sorting.order === "asc" ? 1 : -1;
-            processProduct = processProduct.sort(
+            processedProduct = processedProduct.sort(
                 (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
             );
         }
-        return processProduct.slice();
+        return processedProduct.slice();
     }, [products, sorting]);
 
     return (
@@ -114,8 +104,8 @@ export const ProductAdmin = () => {
                             onSorting={(field, order) => setSorting({ field, order })}
                         />
                         <tbody>
-                            {productData.map((product) => (
-                                <tr>
+                            {productData.map((product, i) => (
+                                <tr key={i}>
                                     <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                         {product.code}
                                     </td>

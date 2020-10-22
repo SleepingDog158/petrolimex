@@ -379,7 +379,7 @@ export const ContractList = () => {
                       </td>
                       <td>
                         <Button
-                          onClick={() => onDeleteDriver(driver.id, id)}
+                          onClick={() => onDeleteDriver(driver.code, code)}
                           variant="danger"
                           hidden={status === "inactive"}
                         >
@@ -455,7 +455,7 @@ export const ContractList = () => {
 
                       <td>
                         <Button
-                          onClick={() => onCheckDriver(driver.id, id)}
+                          onClick={() => onCheckDriver(driver.code, code)}
                           variant="success"
                           className="mr-1"
                         >
