@@ -10,7 +10,7 @@ export default class StationMain extends Component {
         <NavBarStation/>
         <div className="container" >
           <div className="tag-name" >
-            <h4 style={{"margin-top":"70px"}}>Lịch sử giao dịch</h4>
+            <h4 style={{marginTop:"70px"}}>Lịch sử giao dịch</h4>
           </div>
             <GasPriceTable/>
         </div>

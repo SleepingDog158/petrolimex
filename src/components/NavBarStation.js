@@ -32,7 +32,7 @@ const NavBarStation = (props) => {
             </NavItem>
             
           </Nav>
-          <NavbarText style={{"color": "white", "margin-right":"10px", "fontWeight":"500"}}>Logout</NavbarText>
+          <NavbarText style={{color: "white", marginRight:"10px", fontWeight:"500"}}>Logout</NavbarText>
         </Collapse>
       </Navbar>
     </div>

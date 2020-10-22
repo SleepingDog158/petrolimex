@@ -5,32 +5,35 @@ export const BillCreate = () => {
     const [drivers, setDrivers] = useState([]);
     const [id, setId] = useState();
     const [currentDrivers, setCurrentDrivers] = useState([]);
-    let checked =[]
+    let checked =[{"id":1}]
     useEffect(async () => {
-        const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
-        console.log(result.data);
-        setDrivers(result.data);
-      }, []);
-      function onEnter(){
-          checked= drivers.filter((d)=>d.id === id)
-          return checked
-          console.log(checked)
-      }
+      const result = await axios.post("http://localhost:6060/getDrivers/", {
+        clientId: 1,
+      });
+      console.log(result.data.drivers);
+      setDrivers(result.data.drivers);
+    }, []);
+      
 
-      const onInputChange=(value)=>{
-        setId(value);
-        
+      function onChangeValue(text) {
+        return setId(text)
+      }
+    function onSubmit(e){
+      if(e.keyCode==13&&e.shiftKey==false)
+      console.log(id)
+      setId(id)
     }
 
     return (
-        <div className="d-flex flex-column align-items-center">
+        <div className="d-flex flex-column align-items-center" style={{marginTop: "10%"}}>
             
                 <h3> Thông tin tài xế</h3>
 
                 <div style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input  className="form-control w-100" type="text" value={id}
-                    onKeyDown={onEnter}
-                    onChange={(e)=>onInputChange(e.target.value)}
+                  <input  className="w-100" type="text" defaultValue={" "}
+                  onChange={(event) =>
+                    onChangeValue(event.target.value, "id")}
+                    onKeyDown={onSubmit}
                   />
                 </div>
                 <Table>

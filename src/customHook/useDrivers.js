@@ -7,18 +7,18 @@ export default function () {
   const [drivers, setDrivers] = useState([]);
 
   const getDrivers = async () => {
-    const { data } = await Axios.get(
-      "https://1ne1c.sse.codesandbox.io/drivers"
-    );
+    const { data } =await Axios.post("http://localhost:6060/getDrivers/", {
+      clientId: 1,
+    });
     if (data) {
-      setDrivers(data);
+      setDrivers(data.drivers);
     }
   };
 
   const onCheckDriver = (driverId, contractId) => {
     setDrivers(
       drivers.map((driver) => {
-        if (driver.id === driverId) {
+        if (driver.driverId === driverId) {
           let driverTemp = {
             ...driver,
             contractId: contractId,
@@ -34,7 +34,7 @@ export default function () {
   const onDeleteDriver = (driverId, contractId) => {
     setDrivers(
       drivers.map((driver) => {
-        if (driver.id === driverId) {
+        if (driver.driverId === driverId) {
           let driverTemp = {
             ...driver,
             contractId: null,

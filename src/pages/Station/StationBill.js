@@ -12,16 +12,16 @@ export default class StationBill extends Component {
           <div
             className="user-side col-6 mr-1"
             style={{
-              "margin-top": "60px",
-              "border-style": "outset",
-              height: "90vh",
+              marginTop:"30px",
+              height: "95vh",
+              borderStyle: "outset"
             }}
           >
             <BillCreate/>
           </div>
           <div
             className="bill-side col-6 ml-1 d-flex flex-column align-items-center"
-            style={{ "margin-top": "60px", "border-style": "outset" }}
+            style={{ marginTop: "3.5%", borderStyle: "outset" }}
           >
             <h3 className="mt-5">Tạo hóa đơn</h3>
             <Table>
