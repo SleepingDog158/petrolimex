@@ -3,8 +3,8 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { FaUserEdit } from "react-icons/fa";
-import { CgUserRemove } from "react-icons/cg";
-import { ToastContainer, toast } from "react-toastify";
+
+import {  toast } from "react-toastify";
 
 import ModalEdit from "./ModalExample";
 import { TableHeader } from "./TableHeader";
@@ -23,25 +23,27 @@ export const DriversList = () => {
 
   const [modal, setModal] = useState(false);
 
-  const [deleteModal, setDeleteModal] = useState(false);
+  
 
   const [addModal, setAddModal] = useState(false);
 
   const [currentDriver, setCurrentDriver] = useState(null);
 
-  const [id, setId] = useState(currentDriver ? currentDriver.id : "");
+  const [code, setCode] = useState(currentDriver ? currentDriver.code : "");
+  const [residentId, setResidentId] = useState(currentDriver ? currentDriver.residentId : "");
   const [name, setName] = useState(currentDriver ? currentDriver.name : "");
   const [phone, setPhone] = useState(currentDriver ? currentDriver.phone : "");
- 
- 
 
   const [plate, setPlate] = useState(currentDriver ? currentDriver.plate : "");
+  const [status, setStatus] = useState(currentDriver ? currentDriver.status : "");
 
   const headers = [
-    { name: "ID", field: "id", sortable: true },
+    { name: "Mã tài xế", field: "code", sortable: true },
     { name: "Họ tên", field: "name", sortable: true },
     { name: "Số điện thoại", field: "phone", sortable: true },
+    { name: "Số CMND", field: "plate", sortable: true },
     { name: "Biển kiểm soát", field: "plate", sortable: true },
+    { name: "Trạng thái", field: "status", sortable: true },
     { name: "", sortable: false },
   ];
 
@@ -49,19 +51,16 @@ export const DriversList = () => {
     setModal(!modal);
     if (!modal) {
       setCurrentDriver(driver);
-      setId(driver.id)
+      setCode(driver.code);
       setName(driver.name);
       setPhone(driver.phone);
       setPlate(driver.plate);
+      setResidentId(driver.residentId);
+      setStatus(driver.status);
     }
   };
 
-  const onToggleDelete = (driver) => {
-    setDeleteModal(!deleteModal);
-    if (!modal) {
-      setCurrentDriver(driver);
-    }
-  };
+ 
 
   const onToggleAdd = () => {
     setAddModal(!addModal);
@@ -74,41 +73,37 @@ export const DriversList = () => {
       case "phone":
         return setPhone(text);
       case "plate":
+        return setResidentId(text);
+      case "residentId":
         return setPlate(text);
+      case "status":
+        return setStatus(text);
     }
   }
 
-  function onRemoveDriver(driver) {
-    setDrivers(drivers.filter((d) => currentDriver.id !== d.id));
-    toast.error("Đã xóa thông tin tài xế", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
-    console.log(drivers)
-  }
-
   function onAdd() {
-    console.log(name, phone,plate);
-    toast.success("Đã thêm thông tin tài xế", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
+    console.log(name, phone, plate);
+    toast.success("Đã thêm thông tin tài xế", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+      hideProgressBar: true,
+    });
   }
   function onUpdate() {
-    console.log(name, phone, plate);
-    toast.info("Thay đổi thành công", { position: toast.POSITION.TOP_CENTER, autoClose:2000 ,hideProgressBar: true});
+    console.log(name, phone, plate, residentId, status);
+    toast.info("Thay đổi thành công", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+      hideProgressBar: true,
+    });
   }
   // fetch data
   useEffect(async () => {
-    const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
-
-    // // lay token tu cookie
-
-    // let token = '...';
-    // const result = await axios({
-    //   method: "get", 
-    //   url: "http://localhost:8080/api/v1/driver",
-    //   headers: {
-    //     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IndDU0tTb3NEQSIsImlhdCI6MTU5ODgwMDY3OSwiZXhwIjoxNTk4ODA3ODc5fQ.g7N8nNMkzpyd9DyJZLYpd6hSEyQlWbEhz5D7cGyNUgo`
-    //   }
-    // })
-
-    console.log(result.data);
-    setDrivers(result.data);
+    const result = await axios.post("http://localhost:6060/getDrivers/", {
+      clientId: 1,
+    });
+    console.log(result.data.drivers);
+    setDrivers(result.data.drivers);
   }, []);
 
   const driversData = useMemo(() => {
@@ -161,10 +156,10 @@ export const DriversList = () => {
               onSorting={(field, order) => setSorting({ field, order })}
             />
             <tbody>
-              {driversData.map((driver) => (
-                <tr>
+              {driversData.map((driver, i) => (
+                <tr key={i}>
                   <td
-                    scope="row"
+                   
                     className="id-column"
                     style={{
                       fontSize: "15px",
@@ -173,7 +168,7 @@ export const DriversList = () => {
                       padding: "0px",
                     }}
                   >
-                    {driver.id}
+                    {driver.code}
                   </td>
                   <td
                     className="name-column"
@@ -187,7 +182,7 @@ export const DriversList = () => {
                     {driver.name}
                   </td>
                   <td
-                    className="number-column"
+                    
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
@@ -197,11 +192,17 @@ export const DriversList = () => {
                   >
                     {driver.phone}
                   </td>
-                  
-    
-                  
                   <td
-                    className="number-column"
+                    style={{
+                      fontSize: "15px",
+                      textAlign: "center",  
+                      verticalAlign: "middle",
+                      padding: "0px",
+                    }}
+                  >
+                    {driver.residentId}
+                  </td>
+                  <td
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
@@ -211,7 +212,17 @@ export const DriversList = () => {
                   >
                     {driver.plate}
                   </td>
-                 
+                  <td
+                    style={{
+                      fontSize: "15px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "0px",
+                    }}
+                  >
+                    {driver.status}
+                  </td>
+
                   <td>
                     <Button
                       variant="primary"
@@ -220,12 +231,8 @@ export const DriversList = () => {
                     >
                       <FaUserEdit />
                     </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => onToggleDelete(driver)}
-                    >
-                      <CgUserRemove />
-                    </Button>
+                    
+                      
                   </td>
                 </tr>
               ))}
@@ -241,15 +248,7 @@ export const DriversList = () => {
             />
           </div>
 
-          {/* popup delete*/}
-          <ModalEdit
-            modal={deleteModal}
-            toggle={onToggleDelete}
-            onSubmit={onRemoveDriver}
-            title={"Xóa tài xế"}
-          >
-            <p>Bạn muốn xóa thông tin tài xế này?</p>
-          </ModalEdit>
+         
 
           {/* popup edit*/}
           <ModalEdit
@@ -259,46 +258,71 @@ export const DriversList = () => {
             title={"Thông tin tài xế"}
           >
             <Table>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Họ tên
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={name}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "name")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Số điện thoại
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={phone}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "phone")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Biển kiểm soát
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={plate}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "plate")
-                    }
-                  />
-                </td>
-              </tr>
-              
+              <tbody>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Họ tên
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    <input
+                      defaultValue={name}
+                      onChange={(event) =>
+                        onChangeValue(event.target.value, "name")
+                      }
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Số điện thoại
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    <input
+                      defaultValue={phone}
+                      onChange={(event) =>
+                        onChangeValue(event.target.value, "phone")
+                      }
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Số CMND
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    <input
+                      defaultValue={residentId}
+                      onChange={(event) =>
+                        onChangeValue(event.target.value, "residentId")
+                      }
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Biển kiểm soát
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    <input
+                      defaultValue={plate}
+                      onChange={(event) =>
+                        onChangeValue(event.target.value, "plate")
+                      }
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Trạng thái
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    <select defaultValue={status} onChange={(event)=> onChangeValue(event.target.value, "status")} style={{width:"100%"}}>
+                      <option value="active">active</option>
+                      <option value="inactive">inactive</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
             </Table>
           </ModalEdit>
 
@@ -336,7 +360,20 @@ export const DriversList = () => {
                   />
                 </td>
               </tr>
-              
+
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Số CMND
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={""}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "residentId")
+                    }
+                  />
+                </td>
+              </tr>
               <tr>
                 <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                   Biển kiểm soát
@@ -350,7 +387,6 @@ export const DriversList = () => {
                   />
                 </td>
               </tr>
-              
             </Table>
           </ModalEdit>
         </div>

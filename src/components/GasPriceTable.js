@@ -13,10 +13,12 @@ const GasPriceTable = () => {
     { name: "Giá", field: "price"},
     ]
 
-    useEffect(async () => {
+    useEffect(() => {
+      async function fetchData(){
       const result = await axios.get("https://1ne1c.sse.codesandbox.io/products");
       console.log(result.data);
-      setProducts(result.data);
+      setProducts(result.data);}
+      fetchData()
     }, []);
   return (
     <Table className="col-12 ml-3" bordered>
@@ -24,8 +26,8 @@ const GasPriceTable = () => {
       headers={headers}
     />
     <tbody>
-      {products.map((product) => (
-        <tr >
+      {products.map((product,i) => (
+        <tr key={i}>
           <td className="w-25"
             scope="row"
             style={{

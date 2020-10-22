@@ -12,27 +12,21 @@ import {
   CardSubtitle,
   Button,
 } from "reactstrap";
+import { func } from "prop-types";
 export  const ClientMain = () => {
   const [drivers, setDrivers] = useState([]);
   const [activeDrivers, setActiveDrivers] = useState([]);
   const [activeContracts, setActiveContracts] = useState([]);
-  useEffect(async () => {
-    const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
-    console.log(result.data);
-    setDrivers(result.data);
-  }, []);
-  useEffect(async () => {
-    const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
-    console.log(result.data);
-    setActiveDrivers(result.data.filter((d)=> d.contractId !== null));
-  }, []);
-  useEffect(async () => {
-    const result = await axios.get(
-      "https://1ne1c.sse.codesandbox.io/contracts"
-    );
-    console.log(result.data);
-    setActiveContracts(result.data.filter((d)=> d.status === "active"));
-  }, []);
+  // useEffect( () => {
+  //   async function fetchData(){
+  //   const response = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
+  //   console.log(response.data);
+  //   setDrivers(response.data);}
+
+  //   fetchData()
+    
+  // }, []);
+ 
     return (
       <div>
         <PageHeader />
