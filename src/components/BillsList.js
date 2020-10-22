@@ -39,7 +39,7 @@ export const BillsList = () => {
 
   const headers = [
     { name: "ID", field: "id", sortable: true },
-    { name: "Mã cửa hàng", field: "stationId", sortable: true },
+    { name: "Cửa hàng", field: "stationName", sortable: true },
     { name: "Ngày giao dịch", field: "date", sortable: true },
     { name: "Mặt hàng", field: "product", sortable: true },
     { name: "Thành tiền", field: "total", sortable: true },
@@ -50,13 +50,10 @@ export const BillsList = () => {
     setModal(!modal);
     if (!modal) {
       setCurrentBill(bill);
-      setId(bill.id)
-      setStationId(bill.stationId);
-      setDate(bill.date);
-      setDriver(bill.driver);
-      setTeamId(bill.teamId);
-      setProduct(bill.product);
-      setQuantity(bill.quantity);
+      setId(bill.billId)
+      setStationId(bill.gasStationId);
+      setDate(bill.trasactionDate);
+      
       setTotal(bill.total);
     }
   };
@@ -68,9 +65,9 @@ export const BillsList = () => {
   }
   // fetch data
   useEffect(async () => {
-    const result = await axios.get("https://1ne1c.sse.codesandbox.io/bills");
-    console.log(result.data);
-    setBills(result.data);
+    const result= await axios.post('http://localhost:6060/getBills/',{});
+    console.log(result.data.bills);
+    setBills(result.data.bills);
   }, []);
 
   const billsData = useMemo(() => {
@@ -121,7 +118,7 @@ export const BillsList = () => {
                       padding: "0px",
                     }}
                   >
-                    {bill.id}
+                    {bill.billId}
                   </td>
                   <td
                     style={{
@@ -132,7 +129,7 @@ export const BillsList = () => {
                       padding: "0px",
                     }}
                   >
-                    {bill.stationId}
+                    {bill.gasStation.name}
                   </td>
                   <td
                     
@@ -144,7 +141,7 @@ export const BillsList = () => {
                       padding: "0px",
                     }}
                   >
-                    {bill.date}
+                    {bill.transactionDate.slice(0,10)}
                   </td>
                   <td
                    
@@ -158,7 +155,7 @@ export const BillsList = () => {
                       padding: "0px",
                     }}
                   >
-                    {bill.product}
+                    {bill.product.name}
                   </td>
     
                   
@@ -172,7 +169,7 @@ export const BillsList = () => {
                       padding: "0px",
                     }}
                   >
-                    {bill.total}
+                    {bill.total} VNĐ
                   </td>
                  
                   <td>

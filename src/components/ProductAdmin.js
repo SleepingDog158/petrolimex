@@ -9,18 +9,18 @@ export const ProductAdmin = () => {
 
     const [products, setProduct] = useState([]);
     const [currentProduct, setCurrentProduct] = useState(null);
-    const [product_id, setId] = useState(currentProduct ? currentProduct.product_id : "");
-    const [product_name, setName] = useState(currentProduct ? currentProduct.product_name : "");
-    const [product_price, setPrice] = useState(currentProduct ? currentProduct.product_price : "");
+    const [code, setCode] = useState(currentProduct ? currentProduct.code : "");
+    const [name, setName] = useState(currentProduct ? currentProduct.name : "");
+    const [price, setPrice] = useState(currentProduct ? currentProduct.price : "");
     const [modal, setModal] = useState(false);
     const [addModal, setAddModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
     const [sorting, setSorting] = useState("");
 
     const header = [
-        { name: "Mã sản phẩm", field: "product_id", sortable: true },
-        { name: "Tên sản phẩm", field: "product_name", sortable: true },
-        { name: "Giá", field: "product_price", sortable: true },
+        { name: "Mã sản phẩm", field: "code", sortable: true },
+        { name: "Tên sản phẩm", field: "name", sortable: true },
+        { name: "Giá", field: "price", sortable: true },
         { name: "", sortable: false }
     ];
 
@@ -28,9 +28,9 @@ export const ProductAdmin = () => {
         setModal(!modal);
         if (!modal) {
             setCurrentProduct(product);
-            setId(product.product_id);
-            setName(product.product_name);
-            setPrice(product.product_price)
+            setCode(product.code);
+            setName(product.name);
+            setPrice(product.price);
         }
     };
 
@@ -47,46 +47,46 @@ export const ProductAdmin = () => {
 
     function onChangeValue(content, type) {
         switch (type) {
-            case "product_id":
-                return setId(content);
-            case "product_name":
+            case "code":
+                return setCode(content);
+            case "name":
                 return setName(content);
-            case "product_price":
+            case "price":
                 return setPrice(content);
         }
     }
 
     function onAdd() {
-        console.log(product_id, product_name, product_price);
+        console.log(code, name, price);
         toast.success("Đã thêm thông tin sản phẩm!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
     }
 
     function onUpdate() {
-        console.log(product_id, product_name, product_price);
+        console.log(code, name, price);
         toast.info("Thay đổi thông tin thành công!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
     }
 
     function onRemove(product) {
-        setProduct(products.filter((p) => currentProduct.product_id !== p.product_id));
+        setProduct(products.filter((p) => currentProduct.code !== p.code));
         toast.error("Đã xóa thông tin sản phẩm!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
         console.log(products);
     }
 
-    useEffect(async() => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/product");
-        console.log(result.data);
-        setProduct(result.data);
+    useEffect(async () => {
+        const result = await axios.post("https://localhost:6060/getProducts/", {});
+        console.log(result.data.products);
+        setProduct(result.data.products);
     }, []);
 
     const productData = useMemo(() => {
-        let processProduct = products;
+        let processedProduct = products;
         if (sorting.field) {
             const reversed = sorting.order === "asc" ? 1 : -1;
-            processProduct = processProduct.sort(
+            processedProduct = processedProduct.sort(
                 (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
             );
         }
-        return processProduct.slice();
+        return processedProduct.slice();
     }, [products, sorting]);
 
     return (
@@ -104,16 +104,16 @@ export const ProductAdmin = () => {
                             onSorting={(field, order) => setSorting({ field, order })}
                         />
                         <tbody>
-                            {productData.map((product) => (
-                                <tr>
+                            {productData.map((product, i) => (
+                                <tr key={i}>
                                     <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                        {product.product_id}
+                                        {product.code}
                                     </td>
                                     <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                        {product.product_name}
+                                        {product.name}
                                     </td>
                                     <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                        {product.product_price}
+                                        {product.price}
                                     </td>
                                     <td>
                                         <button className="admin-edit-button" onClick={() => toggle(product)}>
@@ -133,8 +133,8 @@ export const ProductAdmin = () => {
                             <th>Tên sản phẩm</th>
                             <td>
                                 <input
-                                    defaultValue={product_name}
-                                    onChange={(event) => onChangeValue(event.target.value, "product_name")}
+                                    defaultValue={name}
+                                    onChange={(event) => onChangeValue(event.target.value, "name")}
                                 />
                             </td>
                         </tr>
@@ -142,8 +142,8 @@ export const ProductAdmin = () => {
                             <th>Giá</th>
                             <td>
                                 <input
-                                    defaultValue={product_price}
-                                    onChange={(event) => onChangeValue(event.target.value, "product_price")}
+                                    defaultValue={price}
+                                    onChange={(event) => onChangeValue(event.target.value, "price")}
                                 />
                             </td>
                         </tr>
@@ -156,7 +156,7 @@ export const ProductAdmin = () => {
                                 <td>
                                     <input
                                         defaultValue={""}
-                                        onChange={(event) => onChangeValue(event.target.value, "product_name")}
+                                        onChange={(event) => onChangeValue(event.target.value, "name")}
                                     />
                                 </td>
                             </tr>
@@ -165,7 +165,7 @@ export const ProductAdmin = () => {
                                 <td>
                                     <input
                                         defaultValue={""}
-                                        onChange={(event) => onChangeValue(event.target.value, "product_price")}
+                                        onChange={(event) => onChangeValue(event.target.value, "price")}
                                     />
                                 </td>
                             </tr>
