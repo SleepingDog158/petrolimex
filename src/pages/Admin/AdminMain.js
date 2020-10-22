@@ -1,8 +1,7 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from "../../components/NavBar"
 import "../../components/Admin.css"
 import GasPriceTable from '../../components/GasPriceTable'
-import { faUsersSlash } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 
 export const AdminMain = () => {

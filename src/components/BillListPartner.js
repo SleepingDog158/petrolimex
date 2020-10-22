@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, Component } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import axios from "axios"
 import Table from "react-bootstrap/Table"
 import { TableHeaderAdmin } from "./TableHeaderAdmin"
@@ -8,13 +8,7 @@ import { FilterAdminBill } from './FilterAdminBill'
 
 export const BillListPartner = () => {
 
-    const [bill, setBill] = useState([]);
-    const [bill_id, setId] = useState([]);
-    const [station_name, setStationName] = useState([]);
-    const [driver_name, setDriverName] = useState([]);
-    const [product_name, setProductName] = useState([]);
-    const [product_quantity, setProductQuantity] = useState([]);
-    const [created_time, setCreatedTime] = useState([]);
+    const [bills, setBill] = useState([]);
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [search, setSearch] = useState("");
     const ITEM_PER_PAGE = 10;
@@ -22,25 +16,25 @@ export const BillListPartner = () => {
     const [totalItem, setTotalItem] = useState(0);
 
     const header = [
-        { name: "Mã giao dịch", field: "bill_id", sortable: true },
+        { name: "Mã giao dịch", field: "code", sortable: true },
         { name: "Tên chi nhánh", field: "station_name", sortable: true },
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Tên sản phẩm", field: "product_name", sortable: true },
-        { name: "Số lượng", field: "product_quantity", sortable: false },
+        { name: "Số lượng", field: "quantity", sortable: false },
         { name: "Thời gian tạo", field: "created_time", sortable: true }
     ];
 
-    useEffect(async() => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/bill");
-        console.log(result.data);
-        setBill(result.data);
+    useEffect(async () => {
+        const result = await axios.post("http://localhost:6060/getBills/", {});
+        console.log(result.data.bills);
+        setBill(result.data.bills);
     }, []);
 
     const billData = useMemo(() => {
-        let processedBill = bill;
+        let processedBill = bills;
         if (search) {
             processedBill = processedBill.filter((bill) => 
-            bill.bill_id.includes(search) ||
+            bill.code.includes(search) ||
             bill.station_name.toLowerCase().includes(search.toLowerCase()) ||
             bill.driver_name.toLowerCase().includes(search.toLowerCase())
         );
@@ -56,7 +50,7 @@ export const BillListPartner = () => {
         (currentPage - 1) * ITEM_PER_PAGE,
         (currentPage - 1) * ITEM_PER_PAGE + ITEM_PER_PAGE
     );
-    }, [bill, currentPage, search, sorting]);
+    }, [bills, currentPage, search, sorting]);
 
     return (
         <div>
@@ -75,22 +69,22 @@ export const BillListPartner = () => {
                     {billData.map((bill) => (
                         <tr>
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                {bill.bill_id}
+                                {bill.code}
                             </td>
                             <td style={{width: "300px", verticalAlign: "middle"}}>
-                                {bill.station_name}
+                                {bill.gasStation.name}
                             </td>
                             <td style={{width: "160px", verticalAlign: "middle"}}>
-                                {bill.driver_name}
+                                {bill.driver.name}
                             </td>
                             <td style={{verticalAlign: "middle"}}>
-                                {bill.product_name}
+                                {bill.product.name}
                             </td>
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                {bill.product_quantity}
+                                {bill.quantity} lít
                             </td>
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                {bill.created_time}
+                                {bill.transactionDate}
                             </td>
                         </tr>
                     ))}

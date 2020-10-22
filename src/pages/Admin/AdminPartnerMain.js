@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import NavBar from "../../components/NavBar"
 import "../../components/Admin.css"
 import PieChart from '../../components/PieChart'
-import { Route, Redirect, Switch, BrowserRouter as Router } from "react-router-dom"
-import { DriverListAdmin } from "../../components/DriverListPartner"
 
 export default class AdminPartnerMain extends Component {
     render() {

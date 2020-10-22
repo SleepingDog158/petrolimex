@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, Component } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import axios from "axios"
 import Table from "react-bootstrap/Table"
 import { TableHeaderAdmin } from "./TableHeaderAdmin"
@@ -7,13 +7,7 @@ import { Search } from "./Search"
 
 export const DriverListPartner = () => {
 
-    const [driver, setDriver] = useState([]);
-    const [driver_id, setId] = useState([]);
-    const [driver_name, setName] = useState([]);
-    const [driver_phone, setPhone] = useState([]);
-    const [driver_plate, setPlate] = useState([]);
-    const [driver_team_id, setTeamId] = useState([]);
-    const [currentDriver, setCurrentDriver] = useState(null);
+    const [drivers, setDriver] = useState([]);
     const [totalItem, setTotalItem] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const ITEM_PER_PAGE = 10;
@@ -21,28 +15,32 @@ export const DriverListPartner = () => {
     const [search, setSearch] = useState("");
 
     const header = [
-        { name: "Mã tài xế", field: "driver_id", sortable: true },
-        { name: "Tên tài xế", field: "driver_name", sortable: true },
-        { name: "Số điện thoại", field: "driver_phone", sortable: false },
-        { name: "Biển kiểm soát", field: "driver_plate", sortable: false },
-        { name: "Mã đơn vị", field: "driver_team_id", sortable: true },
+        { name: "Mã tài xế", field: "code", sortable: true },
+        { name: "Tên tài xế", field: "name", sortable: true },
+        { name: "Mã công dân", field: "residentId", sortable: false },
+        { name: "Số điện thoại", field: "phone", sortable: false },
+        { name: "Biển kiểm soát", field: "plate", sortable: false },
+        { name: "Nơi ở", field: "address", sortable: false },
+        { name: "Trạng thái", field: "status", sortable: true },
         { name: "", sortable: false }
     ];
 
     useEffect(async () => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/driver");
-        console.log(result.data);
-        setDriver(result.data);
+        const result = await axios.post("http://localhost:6060/getDrivers/", {});
+        console.log(result.data.drivers);
+        setDriver(result.data.drivers);
     }, []);
 
     const driverData = useMemo(() => {
-        let processedDriver = driver;
+        let processedDriver = drivers;
         if (search) {
             processedDriver = processedDriver.filter((driver) => 
-                driver.driver_name.toLowerCase().includes(search.toLowerCase()) ||
-                driver.driver_phone.includes(search) ||
-                driver.driver_plate.toLowerCase().includes(search.toLowerCase()) ||
-                driver.driver_team_id.includes(search)
+                driver.name.toLowerCase().includes(search.toLowerCase()) ||
+                driver.residentId.includes(search) ||
+                driver.phone.includes(search) ||
+                driver.plate.toLowerCase().includes(search.toLowerCase()) ||
+                driver.address.toLowerCase().includes(search.toLowerCase()) ||
+                driver.status.toLowerCase().includes(search.toLowerCase())
             );
         }
         setTotalItem(processedDriver.length);
@@ -56,7 +54,7 @@ export const DriverListPartner = () => {
             (currentPage - 1) * ITEM_PER_PAGE,
             (currentPage - 1) * ITEM_PER_PAGE + ITEM_PER_PAGE
         );
-    }, [driver, currentPage, search, sorting]);
+    }, [drivers, currentPage, search, sorting]);
 
     return (
         <div>
@@ -74,19 +72,25 @@ export const DriverListPartner = () => {
                     {driverData.map((driver) => (
                         <tr>
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                {driver.driver_id}
+                                {driver.code}
                             </td>
-                            <td style={{width: "300px", verticalAlign: "middle"}}>
-                                {driver.driver_name}
-                            </td>
-                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                {driver.driver_phone}
+                            <td style={{width: "180px", verticalAlign: "middle"}}>
+                                {driver.name}
                             </td>
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                {driver.driver_plate}
+                                {driver.residentId}
                             </td>
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                {driver.driver_team_id}
+                                {driver.phone}
+                            </td>
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                {driver.plate}
+                            </td>
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                {driver.address}
+                            </td>
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                {driver.status}
                             </td>
                         </tr>
                     ))}

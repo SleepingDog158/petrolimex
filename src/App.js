@@ -13,8 +13,7 @@ function App() {
     //   <Router />
     // </AuthProvider>
     //<StationBill/>
-    //<AdminSwitch/>
-    <ClientSwitch/>
+    <AdminSwitch/>
   )
 }
 

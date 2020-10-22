@@ -1,9 +1,9 @@
-import React, { useState, useMemo, useEffect, Component } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import axios from 'axios';
 import Table from 'react-bootstrap/Table'
 import { TableHeaderAdmin } from './TableHeaderAdmin'
 import ModalEdit from './ModalAdmin'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 
 export const ProductAdmin = () => {
 
@@ -11,6 +11,7 @@ export const ProductAdmin = () => {
     const [currentProduct, setCurrentProduct] = useState(null);
     const [code, setCode] = useState(currentProduct ? currentProduct.code : "");
     const [name, setName] = useState(currentProduct ? currentProduct.name : "");
+    const [unit, setUnit] = useState(currentProduct ? currentProduct.unit : "");
     const [price, setPrice] = useState(currentProduct ? currentProduct.price : "");
     const [modal, setModal] = useState(false);
     const [addModal, setAddModal] = useState(false);
@@ -20,6 +21,7 @@ export const ProductAdmin = () => {
     const header = [
         { name: "Mã sản phẩm", field: "code", sortable: true },
         { name: "Tên sản phẩm", field: "name", sortable: true },
+        { name: "Đơn vị", field: "unit", sortable: false },
         { name: "Giá", field: "price", sortable: true },
         { name: "", sortable: false }
     ];
@@ -30,6 +32,7 @@ export const ProductAdmin = () => {
             setCurrentProduct(product);
             setCode(product.code);
             setName(product.name);
+            setUnit(product.unit);
             setPrice(product.price);
         }
     };
@@ -51,29 +54,43 @@ export const ProductAdmin = () => {
                 return setCode(content);
             case "name":
                 return setName(content);
+            case "unit":
+                return setUnit(content);
             case "price":
                 return setPrice(content);
         }
     }
 
     function onAdd() {
-        console.log(code, name, price);
-        toast.success("Đã thêm thông tin sản phẩm!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
+        console.log(code, name, unit, price);
+        toast.success("Đã thêm thông tin sản phẩm!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: true
+        });
     }
 
     function onUpdate() {
-        console.log(code, name, price);
-        toast.info("Thay đổi thông tin thành công!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
+        console.log(code, name, unit, price);
+        toast.info("Thay đổi thông tin thành công!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: true
+        });
     }
 
     function onRemove(product) {
         setProduct(products.filter((p) => currentProduct.code !== p.code));
-        toast.error("Đã xóa thông tin sản phẩm!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
+        toast.error("Đã xóa thông tin sản phẩm!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: true
+        });
         console.log(products);
     }
 
     useEffect(async () => {
-        const result = await axios.post("https://localhost:6060/getProducts/", {});
+        const result = await axios.post("http://localhost:6060/getProducts/", {});
         console.log(result.data.products);
         setProduct(result.data.products);
     }, []);
@@ -94,7 +111,7 @@ export const ProductAdmin = () => {
             <div>
                 <div>
                     <div>
-                        <button className="admin-add-button" onClick = {() => onToggleAdd()}>
+                        <button className="admin-add-button" onClick={() => onToggleAdd()}>
                             Thêm sản phẩm
                         </button>
                     </div>
@@ -106,16 +123,19 @@ export const ProductAdmin = () => {
                         <tbody>
                             {productData.map((product, i) => (
                                 <tr key={i}>
-                                    <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                    <td style={{textAlign: "center", verticalAlign: "middle", width: "125px"}}>
                                         {product.code}
                                     </td>
-                                    <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                    <td style={{verticalAlign: "middle", width: "250px"}}>
                                         {product.name}
                                     </td>
-                                    <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                    <td style={{textAlign: "center", verticalAlign: "middle", width: "80px"}}>
+                                        {product.unit}
+                                    </td>
+                                    <td style={{textAlign: "center", verticalAlign: "middle", width: "100px"}}>
                                         {product.price}
                                     </td>
-                                    <td>
+                                    <td style={{width: "150px", textAlign: "right"}}>
                                         <button className="admin-edit-button" onClick={() => toggle(product)}>
                                             Sửa
                                         </button>
@@ -129,24 +149,42 @@ export const ProductAdmin = () => {
                     </Table>
                     <ModalEdit modal={modal} toggle={toggle} onSubmit={onUpdate} title={"Thông tin sản phẩm"}>
                         <Table>
-                        <tr>
-                            <th>Tên sản phẩm</th>
-                            <td>
-                                <input
-                                    defaultValue={name}
-                                    onChange={(event) => onChangeValue(event.target.value, "name")}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Giá</th>
-                            <td>
-                                <input
-                                    defaultValue={price}
-                                    onChange={(event) => onChangeValue(event.target.value, "price")}
-                                />
-                            </td>
-                        </tr>
+                            <tr>
+                                <th>Mã sản phẩm</th>
+                                <td>
+                                    <input
+                                        defaultValue={code}
+                                        onChange={(event) => onChangeValue(event.target.value, "code")}
+                                        />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <td>
+                                    <input
+                                        defaultValue={name}
+                                        onChange={(event) => onChangeValue(event.target.value, "name")}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Đơn vị</th>
+                                <td>
+                                    <input
+                                        defaultValue={unit}
+                                        onChange={(event) => onChangeValue(event.target.value, "unit")}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Giá</th>
+                                <td>
+                                    <input
+                                        defaultValue={price}
+                                        onChange={(event) => onChangeValue(event.target.value, "price")}
+                                    />
+                                </td>
+                            </tr>
                         </Table>
                     </ModalEdit>
                     <ModalEdit modal={addModal} toggle={onToggleAdd} onSubmit={onAdd} title={"Thêm sản phẩm"}>
@@ -157,6 +195,15 @@ export const ProductAdmin = () => {
                                     <input
                                         defaultValue={""}
                                         onChange={(event) => onChangeValue(event.target.value, "name")}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Đơn vị</th>
+                                <td>
+                                    <input
+                                        defaultValue={""}
+                                        onChange={(event) => onChangeValue(event.target.value, "unit")}
                                     />
                                 </td>
                             </tr>
