@@ -7,13 +7,14 @@ import ClientSwitch from "./routes/ClientSwitch"
 import AdminSwitch from "./routes/AdminSwitch"
 import StationSwitch from "./routes/StationSwitch"
 import {BillCreate} from "./components/BillCreate"
+
 function App() {
   return (
     // <AuthProvider>
     //   <Router />
     // </AuthProvider>
 
-    <StationSwitch/>
+    <StationSwitch />
   
   )
 }
