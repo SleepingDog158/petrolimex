@@ -15,13 +15,22 @@ export default class StationSwitch extends Component {
           <Route path="/bills" exact>
             <StationBill />
           </Route>
-          
+          <Route exact path="/search" component={SearchPage} />
           <Route path="/products" exact>
             <StationProduct />
           </Route>
-          <Redirect to="/" />
+         
         </Switch>
       </Router>
       );
     }
+  }
+
+  const SearchPage = ({ location }) => {
+    return (
+      <p>
+        <strong>Location Props: </strong>
+        {JSON.stringify(location, null, 2)}
+      </p>
+    );
   }
