@@ -16,6 +16,7 @@ import { TableBody } from "@material-ui/core";
 import useDrivers from "../customHook/useDrivers";
 
 toast.configure();
+const newLocal = "debtCeiling";
 export const ContractList = () => {
   const [contracts, setContracts] = useState([]);
   const {
@@ -23,7 +24,7 @@ export const ContractList = () => {
     onCheckDriver,
     onDeleteDriver,
     onUpdate,
-    setDrivers,
+    
   } = useDrivers();
 
   const [totalItems, setTotalItems] = useState(0);
@@ -34,12 +35,13 @@ export const ContractList = () => {
 
   const [search, setSearch] = useState("");
 
+  const [contractId, setContractId] = useState(currentContract ? currentContract.contractId : "");
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
 
   const [currentContract, setCurrentContract] = useState(null);
 
-  const [id, setId] = useState(currentContract ? currentContract.id : "");
+  const [code, setCode] = useState(currentContract ? currentContract.code : "");
   const [startDate, setStartDate] = useState(
     currentContract ? currentContract.setStartDate : ""
   );
@@ -52,13 +54,17 @@ export const ContractList = () => {
   const [debtCeiling, setDebtCeiling] = useState(
     currentContract ? currentContract.debtCeiling : ""
   );
+  const [creditRemain, setCreditRemain] = useState(
+    currentContract ? currentContract.creditRemain : ""
+  );
 
   const [status, setStatus] = useState(
     currentContract ? currentContract.status : ""
   );
 
   const headers = [
-    { name: "ID", field: "id", sortable: true },
+    { name: "Mã hợp đồng", field: "code", sortable: true },
+    { name: "Tên hợp đồng", field: "name", sortable: true },
     { name: "Ngày kí kết", field: "signedDate", sortable: true },
     { name: "Ngày có hiệu lực", field: "startDate", sortable: true },
     { name: "Ngày kết thúc", field: "expiredDate", sortable: true },
@@ -87,11 +93,13 @@ export const ContractList = () => {
     setModal(!modal);
     if (!modal) {
       setCurrentContract(contract);
-      setId(contract.id);
+      setContractId(contract.contractId)
+      setCode(contract.code);
       setSignedDate(contract.signedDate);
       setStartDate(contract.startDate);
       setExpiredDate(contract.expiredDate);
       setDebtCeiling(contract.debtCeiling);
+      setCreditRemain(contract.creditRemain);
       setStatus(contract.status);
     }
   };
@@ -102,19 +110,20 @@ export const ContractList = () => {
 
   // fetch data
   useEffect(async () => {
-    const result = await axios.get(
-      "https://1ne1c.sse.codesandbox.io/contracts"
-    );
-
-    console.log(result.data);
-    setContracts(result.data);
+    const result = await axios.post("http://localhost:6060/getContracts/", {});
+    console.log(result.data.contracts);
+    setContracts(result.data.contracts);
   }, []);
+
   const unpicked = drivers.filter((d) => d.contractId === null);
   const contractsData = useMemo(() => {
     let computedContracts = contracts;
     if (search) {
-      computedContracts = computedContracts.filter((contract) =>
-        contract.id.includes(search)
+      computedContracts = computedContracts.filter(
+        (contract) =>
+          contract.code.includes(search) ||
+          contract.startDate.includes(search) ||
+          contract.expiredDate.includes(search)
       );
     }
     setTotalItems(computedContracts.length);
@@ -122,7 +131,7 @@ export const ContractList = () => {
     if (sorting.field) {
       const reversed = sorting.order === "asc" ? 1 : -1;
       computedContracts = computedContracts.sort(
-        (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
+        (a, b) => reversed * a[sorting.field].toString().localeCompare(b[sorting.field].toString())
       );
     }
     return computedContracts.slice(
@@ -150,10 +159,9 @@ export const ContractList = () => {
               onSorting={(field, order) => setSorting({ field, order })}
             />
             <tbody>
-              {contractsData.map((contract) => (
-                <tr>
+              {contractsData.map((contract, i) => (
+                <tr key={i}>
                   <td
-                    scope="row"
                     className="id-column"
                     style={{
                       fontSize: "15px",
@@ -162,7 +170,18 @@ export const ContractList = () => {
                       padding: "0px",
                     }}
                   >
-                    {contract.id}
+                    {contract.code}
+                  </td>
+                  <td
+                    className="name-column"
+                    style={{
+                      fontSize: "15px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "0px",
+                    }}
+                  >
+                    {contract.name}
                   </td>
                   <td
                     className="name-column"
@@ -198,9 +217,6 @@ export const ContractList = () => {
                     {contract.expiredDate}
                   </td>
                   <td
-                    className="number-column"
-                    scope="row"
-                    className="id-column"
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
@@ -261,7 +277,7 @@ export const ContractList = () => {
                     Mã hợp đồng:
                   </th>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {id}
+                    {code}
                   </td>
                   <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                     Ngày kí kết
@@ -315,7 +331,7 @@ export const ContractList = () => {
               />
               <tbody>
                 {drivers
-                  .filter((d) => d.contractId === id)
+                  .filter((d) => d.contractId === contractId)
                   .map((driver) => (
                     <tr>
                       <td
