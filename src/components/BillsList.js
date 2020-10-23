@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, Component } from "react";
+import React, { useState, useMemo, useEffect} from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -6,7 +6,7 @@ import { FaUserEdit } from "react-icons/fa";
 import ModalEdit from "./ModalExample";
 import { TableHeader } from "./TableHeader";
 import { PaginationComponent } from "./PaginationComponent";
-import { Search } from "./Search";
+
 import { Filterbar } from "./FilterBar";
 
 export const BillsList = () => {
@@ -16,8 +16,6 @@ export const BillsList = () => {
   const ITEMS_PER_PAGE = 20;
 
   const [sorting, setSorting] = useState({ field: "", order: "" });
-
-  const [search, setSearch] = useState("");
 
   const [modal, setModal] = useState(false);
 
@@ -63,9 +61,7 @@ export const BillsList = () => {
     }
   };
 
-  function onUpdate() {
-    console.log("Seen");
-  }
+  
   // fetch data
   useEffect(async () => {
     const result = await axios.post("http://localhost:6060/getBills/", {});
@@ -76,13 +72,7 @@ export const BillsList = () => {
   const billsData = useMemo(() => {
     let computedBills = bills;
 
-    if (search) {
-      computedBills = computedBills.filter(
-        (bill) =>
-          bill.phone.includes(search) ||
-          driver.plate.toLowerCase().includes(search.toLowerCase())
-      );
-    }
+    
     setTotalItems(computedBills.length);
     //sorting
     if (sorting.field) {
@@ -95,7 +85,7 @@ export const BillsList = () => {
       (currentPage - 1) * ITEMS_PER_PAGE,
       (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
     );
-  }, [bills, currentPage, search, sorting]);
+  }, [bills, currentPage, sorting]);
 
   return (
     <div className="row w-100">

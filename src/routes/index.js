@@ -9,8 +9,6 @@ import {
 import { AuthContext } from "../contexts/Auth";
 import ClientSwitch from "./ClientSwitch"
 import LandingPage from "../pages/LandingPage";
-import Client from "../pages/Client";
-import Admin from "../pages/Admin";
 import Station from "../pages/Station";
 import AdminSwitch from "./AdminSwitch"
 
@@ -73,7 +71,7 @@ export default class Routers extends Component {
         return <ClientSwitch />;
       case STATION:
         return <StationSwitch />;
-      case null:
+      case null :
         return null;
     }
 
