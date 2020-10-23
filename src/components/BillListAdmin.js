@@ -1,9 +1,10 @@
 import React, { useState, useMemo, useEffect, Component } from 'react'
 import axios from "axios"
 import Table from "react-bootstrap/Table"
-import { TableHeader } from "./TableHeader"
+import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { PaginationComponent } from "./PaginationComponent"
 import { Search } from "./Search"
+import { FilterAdminBill } from './FilterAdminBill'
 
 export const BillListAdmin = () => {
 
@@ -20,8 +21,8 @@ export const BillListAdmin = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItem, setTotalItem] = useState(0);
 
-    const headers = [
-        { name: "ID", field: "bill_id", sortable: true },
+    const header = [
+        { name: "Mã giao dịch", field: "bill_id", sortable: true },
         { name: "Tên chi nhánh", field: "station_name", sortable: true },
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Tên sản phẩm", field: "product_name", sortable: true },
@@ -48,7 +49,7 @@ export const BillListAdmin = () => {
     if (sorting.field) {
         const reversed = sorting.order === "asc" ? 1 : -1;
         processedBill = processedBill.sort(
-            (a, b) => reversed * a[sorting.field].toLocaleCompare(b[sorting.field])
+            (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
         );
     }
     return processedBill.slice(
@@ -60,34 +61,35 @@ export const BillListAdmin = () => {
     return (
         <div>
             <div>
+                <FilterAdminBill/>
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
                 }} />
             </div>
             <Table striped>
-                <TableHeader
-                    headers = {headers}
+                <TableHeaderAdmin
+                    header = {header}
                     onSorting = {(field, order) => setSorting({field, order})} />
                 <tbody>
                     {billData.map((bill) => (
                         <tr>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {bill.bill_id}
                             </td>
-                            <td>
+                            <td style={{width: "280px", verticalAlign: "middle"}}>
                                 {bill.station_name}
                             </td>
-                            <td>
+                            <td style={{width: "200px", verticalAlign: "middle"}}>
                                 {bill.driver_name}
                             </td>
-                            <td>
+                            <td style={{verticalAlign: "middle"}}>
                                 {bill.product_name}
                             </td>
-                            <td className="table-center">
+                            <td style={{width: "100px", textAlign: "center", verticalAlign: "middle"}}>
                                 {bill.product_quantity}
                             </td>
-                            <td className="table-center">
+                            <td style={{width: "130px", textAlign: "center", verticalAlign: "middle"}}>
                                 {bill.created_time}
                             </td>
                         </tr>

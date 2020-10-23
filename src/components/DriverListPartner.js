@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, Component } from 'react'
 import axios from "axios"
 import Table from "react-bootstrap/Table"
-import { TableHeader } from "./TableHeader"
+import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { PaginationComponent } from './PaginationComponent'
 import { Search } from "./Search"
 
@@ -11,7 +11,6 @@ export const DriverListPartner = () => {
     const [driver_id, setId] = useState([]);
     const [driver_name, setName] = useState([]);
     const [driver_phone, setPhone] = useState([]);
-    const [driver_login_id, setLoginId] = useState([]);
     const [driver_plate, setPlate] = useState([]);
     const [driver_team_id, setTeamId] = useState([]);
     const [currentDriver, setCurrentDriver] = useState(null);
@@ -21,11 +20,10 @@ export const DriverListPartner = () => {
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [search, setSearch] = useState("");
 
-    const headers = [
-        { name: "ID", field: "driver_id", sortable: true },
+    const header = [
+        { name: "Mã tài xế", field: "driver_id", sortable: true },
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Số điện thoại", field: "driver_phone", sortable: false },
-        { name: "Mã đăng nhập", field: "driver_login_id", sortable: false },
         { name: "Biển kiểm soát", field: "driver_plate", sortable: false },
         { name: "Mã đơn vị", field: "driver_team_id", sortable: true },
         { name: "", sortable: false }
@@ -51,7 +49,7 @@ export const DriverListPartner = () => {
         if (sorting.field) {
             const reversed = sorting.order === "asc" ? 1: -1;
             processedDriver = processedDriver.sort(
-                (a, b) => reversed * [sorting.field].localeCompare(b[sorting.field])
+                (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
             );
         }
         return processedDriver.slice(
@@ -69,27 +67,25 @@ export const DriverListPartner = () => {
                 }} />
             </div>
             <Table striped>
-                <TableHeader headers = {headers}
-                    onSorting = {(field, order) => setSorting({ field, order })} />
+                <TableHeaderAdmin
+                    header={header}
+                    onSorting={(field, order) => setSorting({ field, order })} />
                 <tbody>
                     {driverData.map((driver) => (
                         <tr>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {driver.driver_id}
                             </td>
-                            <td>
+                            <td style={{width: "300px", verticalAlign: "middle"}}>
                                 {driver.driver_name}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {driver.driver_phone}
                             </td>
-                            <td className="table-center">
-                                {driver.driver_login_id}
-                            </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {driver.driver_plate}
                             </td>
-                            <td className="table-center">
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {driver.driver_team_id}
                             </td>
                         </tr>

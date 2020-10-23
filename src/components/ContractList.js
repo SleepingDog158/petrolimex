@@ -386,15 +386,7 @@ export const ContractList = () => {
                           defaultValue={driver.creditLimit}
                         />
                       </td>
-                      <td>
-                        <Button
-                          onClick={() => onDeleteDriver(driver.driverId, contractId)}
-                          variant="danger"
-                          hidden={status === "inactive"}
-                        >
-                          <CgUserRemove />
-                        </Button>
-                      </td>
+                      
                     </tr>
                   ))}
               </tbody>
@@ -463,8 +455,11 @@ export const ContractList = () => {
                       </td>
 
                       <td>
-                        <Button
+
                           onClick={() => onCheckDriver(driver.driverId, contractId)}
+
+                        
+
                           variant="success"
                           className="mr-1"
                         >
