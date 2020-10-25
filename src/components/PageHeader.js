@@ -10,7 +10,7 @@ export default class PageHeader extends Component {
                         <img className="logo-col" src={LogoCol}/>
                     </div>
                     <div className="right-area d-flex ml-auto">
-                        <button  className="logout-btn btn-primary rounded" value="Logout">
+                        <button className="logout-btn btn-primary rounded" value="Logout">
                             Logout
                         </button>
                     </div>
