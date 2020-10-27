@@ -8,7 +8,7 @@ export const AdminPartnerMain = () => {
 
     const [partner, setPartner] = useState([]);
     useEffect(async () => {
-        const result = await axios.post("http://localhost:6060/getClients/", {clientId: 1});
+        const result = await axios.post("http://localhost:6060/getClients/", {clientId: 1,});
         console.log(result.data.clients);
         setPartner(result.data.clients);
     }, []);
