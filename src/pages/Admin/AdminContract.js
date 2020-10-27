@@ -8,7 +8,9 @@ export default class AdminContract extends Component {
             <div>
                 <NavBar/>
                 <div className="admin-contract-content">
-                    <h1 className="admin-contract-header">Danh sách hợp đồng</h1>
+                    <h1 className="admin-contract-header">
+                        Danh sách hợp đồng
+                    </h1>
                     <ContractListAdmin/>
                 </div>
             </div>

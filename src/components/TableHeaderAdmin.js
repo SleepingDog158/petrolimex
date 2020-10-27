@@ -15,7 +15,8 @@ export const TableHeaderAdmin = ({ header, onSorting }) => {
         <thead>
             <tr>
                 {header.map(({ name, field, sortable }) => (
-                    <th style={{textAlign: "center", verticalAlign: "middle"}} 
+                    <th 
+                        style={{textAlign: "center", verticalAlign: "middle"}}
                         key={name}
                         onClick={() => (sortable ? onSortingChange(field) : null)}
                     >

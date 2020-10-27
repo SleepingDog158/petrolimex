@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import NavBar from "../../components/NavBar"
 import "../../components/Admin.css"
 import GasPriceTable from '../../components/GasPriceTable'
@@ -13,55 +13,100 @@ export const AdminMain = () => {
     const [bill, setBill] = useState([]);
 
     useEffect(async () => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/partner");
-        console.log(result.data);
-        setPartner(result.data);
+        const result = await axios.post("https://localhost:6060/getClients/", {});
+        console.log(result.data.clients);
+        setPartner(result.data.clients);
     }, []);
     useEffect(async () => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/contract");
-        console.log(result.data);
-        setContract(result.data);
-        setActiveContract(result.data.filter((c) => c.contract_status === "active"));
+        const result = await axios.post("https://localhost:6060/getContracts/", {});
+        console.log(result.data.contracts);
+        setContract(result.data.contracts);
+        setActiveContract(result.data.filter((c) => c.status === "active"));
     }, []);
     useEffect(async () => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/station");
-        console.log(result.data);
-        setStation(result.data);
+        const result = await axios.post("https://localhost:6060/getGasStations/", {});
+        console.log(result.data.gasStations);
+        setStation(result.data.gasStations);
     }, []);
     useEffect(async () => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/bill");
-        console.log(result.data);
-        setBill(result.data);
+        const result = await axios.post("https://localhost:6060/getBills/", {});
+        console.log(result.data.bills);
+        setBill(result.data.bills);
     }, []);
+
+    const partnerData = useMemo(() => {
+        let processedPartner = partner;
+        return processedPartner.slice();
+    }, [partner]);
 
     return (
         <div>
             <NavBar/>
             <div className="admin-main-content">
-                <h1 className="admin-main-header">Trang chủ</h1>
+                <h1 className="admin-main-header">
+                    Trang chủ
+                </h1>
                 <div className="admin-main-grid">
                     <div className="admin-main-grid-item1">
-                        <h4>Đối tác</h4>
-                        <div>{partner.length} công ty đối tác<br/>50 có hợp đồng</div>
-                        <a href="/admin/partner"><button className="admin-main-grid-button">Xem thêm</button></a>
+                        <h4>
+                            Đối tác
+                        </h4>
+                        <div>
+                            {partner.length} công ty đối tác<br/>
+                            {partner.length} có hợp đồng
+                        </div>
+                        <a href="/admin/partner">
+                            <button className="admin-main-grid-button">
+                                Xem thêm
+                            </button>
+                        </a>
                     </div>
                     <div className="admin-main-grid-item2">
-                        <h4>Hợp đồng</h4>
-                        <div>{contract.length} hợp đồng<br/>{activeContract.length} đang hoạt động</div>
-                        <a href="/admin/contract"><button className="admin-main-grid-button">Xem thêm</button></a>
+                        <h4>
+                            Hợp đồng
+                        </h4>
+                        <div>
+                            {contract.length} hợp đồng<br/>
+                            {activeContract.length} đang hoạt động
+                        </div>
+                        <a href="/admin/contract">
+                            <button className="admin-main-grid-button">
+                                Xem thêm
+                            </button>
+                        </a>
                     </div>
                     <div className="admin-main-grid-item3">
-                        <h4>Chi nhánh</h4>
-                        <div>{station.length} chi nhánh<br/>160 đang mở cửa</div>
-                        <a href="/admin/station"><button className="admin-main-grid-button">Xem thêm</button></a>
+                        <h4>
+                            Chi nhánh
+                        </h4>
+                        <div>
+                            {station.length} chi nhánh<br/>
+                            {station.length} đang mở cửa
+                        </div>
+                        <a href="/admin/station">
+                            <button className="admin-main-grid-button">
+                                Xem thêm
+                            </button>
+                        </a>
                     </div>
                     <div className="admin-main-grid-item4">
-                        <h4>Giao dịch</h4>
-                        <div>{bill.length} giao dịch<br/>Trong 7 ngày</div>
-                        <a href="/admin/bill"><button className="admin-main-grid-button">Xem thêm</button></a>
+                        <h4>
+                            Giao dịch
+                        </h4>
+                        <div>
+                            {bill.length} giao dịch<br/>
+                            Trong 7 ngày
+                        </div>
+                        <a href="/admin/bill">
+                            <button className="admin-main-grid-button">
+                                Xem thêm
+                            </button>
+                        </a>
                     </div>
                     <div className="admin-main-grid-item5">
-                        <h4>Giá xăng dầu hiện tại</h4>
+                        <h4>
+                            Giá xăng dầu hiện tại
+                        </h4>
                         <GasPriceTable/>
                     </div>
                 </div>

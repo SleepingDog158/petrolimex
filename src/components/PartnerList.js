@@ -53,7 +53,8 @@ export const PartnerList = () => {
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
-                }} />
+                }}
+                />
             </div>
             <Table striped>
                 <TableHeaderAdmin
@@ -70,7 +71,9 @@ export const PartnerList = () => {
                                 {partner.name}
                             </td>
                             <td style={{textAlign: "right", verticalAlign: "middle"}}>
-                                <a href="/partner-main" className="admin-partner-detail-button">Xem chi tiết</a>
+                                <a href="/partner-main" className="admin-partner-detail-button">
+                                    Xem chi tiết
+                                </a>
                             </td>
                         </tr>
                     ))}

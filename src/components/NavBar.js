@@ -9,25 +9,39 @@ export default class NavBar extends Component {
                 <nav>
                     <ul className="nav-content">
                         <li className='list-content'>
-                            <a href="/admin" className="navbar-prop"><img src={LogoCol} alt="logo" id="logo"/></a>
+                            <a href="/admin" className="navbar-prop">
+                                <img src={LogoCol} alt="logo" id="logo"/>
+                            </a>
                         </li>
                         <li className='list-content'>
-                            <a href="/admin/partner" className="nav-items navbar-prop">Đối tác</a>
+                            <a href="/admin/partner" className="nav-items navbar-prop">
+                                Đối tác
+                            </a>
                         </li>
                         <li className='list-content'>
-                            <a href="/admin/station" className="nav-items navbar-prop">Chi nhánh</a>
+                            <a href="/admin/station" className="nav-items navbar-prop">
+                                Chi nhánh
+                            </a>
                         </li>
                         <li className='list-content'>
-                            <a href="/admin/product" className="nav-items navbar-prop">Sản phẩm</a>
+                            <a href="/admin/product" className="nav-items navbar-prop">
+                                Sản phẩm
+                            </a>
                         </li>
                         <li className='list-content'>
-                            <a href="/admin/bill" className="nav-items navbar-prop">Giao dịch</a>
+                            <a href="/admin/bill" className="nav-items navbar-prop">
+                                Giao dịch
+                            </a>
                         </li>
                         <li className='list-content'>
-                            <a href="/admin/contract" className="nav-items navbar-prop">Hợp đồng</a>
+                            <a href="/admin/contract" className="nav-items navbar-prop">
+                                Hợp đồng
+                            </a>
                         </li>
                         <li className='list-content'>
-                            <a href="/" className="nav-items navbar-prop">Logout</a>
+                            <a href="/" className="nav-items navbar-prop">
+                                Logout
+                            </a>
                         </li>
                     </ul>
                 </nav>

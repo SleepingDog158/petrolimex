@@ -59,7 +59,8 @@ export const BillListPartner = () => {
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
-                }} />
+                }}
+                />
             </div>
             <Table striped>
                 <TableHeaderAdmin
@@ -95,7 +96,8 @@ export const BillListPartner = () => {
                     total = {totalItem}
                     itemsPerPage = {ITEM_PER_PAGE}
                     currentPage = {currentPage}
-                    onPageChange = {(page) => setCurrentPage(page)} />
+                    onPageChange = {(page) => setCurrentPage(page)}
+                />
             </div>
         </div>
     )

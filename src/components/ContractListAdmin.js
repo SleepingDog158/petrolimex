@@ -129,12 +129,14 @@ export const ContractListAdmin = () => {
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
-                }} />
+                }}
+                />
             </div>
             <Table striped>
                 <TableHeaderAdmin
                     header={header}
-                    onSorting={(field, order) => setSorting({field, order})} />
+                    onSorting={(field, order) => setSorting({field, order})}
+                />
                 <tbody>
                     {contractData.map((contract) => (
                         <tr>
@@ -173,7 +175,8 @@ export const ContractListAdmin = () => {
                     total={totalItem}
                     itemsPerPage={ITEM_PER_PAGE}
                     currentPage={currentPage}
-                    onPageChange={(page) => setCurrentPage(page)} />
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
             </div>
             <ModalEdit modal={modal} toggle={toggle} onSubmit={onUpdate} title={"Thông tin hợp đồng"}>
                 <Table>

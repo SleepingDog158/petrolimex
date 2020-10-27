@@ -8,7 +8,9 @@ export default class AdminBill extends Component {
             <div>
                 <NavBar/>
                 <div className="admin-bill-content">
-                    <h1 className="admin-bill-header">Lịch sử giao dịch</h1>
+                    <h1 className="admin-bill-header">
+                        Lịch sử giao dịch
+                    </h1>
                     <BillListAdmin/>
                 </div>
             </div>
