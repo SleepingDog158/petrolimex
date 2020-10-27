@@ -129,12 +129,14 @@ export const ContractListAdmin = () => {
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
-                }} />
+                }}
+                />
             </div>
             <Table striped>
                 <TableHeaderAdmin
                     header={header}
-                    onSorting={(field, order) => setSorting({field, order})} />
+                    onSorting={(field, order) => setSorting({field, order})}
+                />
                 <tbody>
                     {contractData.map((contract) => (
                         <tr>
@@ -173,12 +175,15 @@ export const ContractListAdmin = () => {
                     total={totalItem}
                     itemsPerPage={ITEM_PER_PAGE}
                     currentPage={currentPage}
-                    onPageChange={(page) => setCurrentPage(page)} />
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
             </div>
             <ModalEdit modal={modal} toggle={toggle} onSubmit={onUpdate} title={"Thông tin hợp đồng"}>
                 <Table>
                     <tr>
-                        <th>Mã hợp đồng</th>
+                        <th>
+                            Mã hợp đồng
+                        </th>
                         <td>
                             <input
                                 defaultValue={code}
@@ -187,7 +192,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Tên đối tác</th>
+                        <th>
+                            Tên đối tác
+                        </th>
                         <td>
                             <input
                                 defaultValue={contracts}
@@ -196,7 +203,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày kí kết</th>
+                        <th>
+                            Ngày kí kết
+                        </th>
                         <td>
                             <input
                                 defaultValue={signedDate}
@@ -205,7 +214,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày có hiệu lực</th>
+                        <th>
+                            Ngày có hiệu lực
+                        </th>
                         <td>
                             <input
                                 defaultValue={startDate}
@@ -214,7 +225,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày hết hiệu lực</th>
+                        <th>
+                            Ngày hết hiệu lực
+                        </th>
                         <td>
                             <input
                                 defaultValue={expiredDate}
@@ -223,7 +236,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Hạn mức</th>
+                        <th>
+                            Hạn mức
+                        </th>
                         <td>
                             <input
                                 defaultValue={debtCeiling}
@@ -236,7 +251,9 @@ export const ContractListAdmin = () => {
             <ModalEdit modal={addModal} toggle={onToggleAdd} onSubmit={onAdd} title={"Thêm hợp đồng"}>
                 <Table>
                     <tr>
-                        <th>Mã hợp đồng</th>
+                        <th>
+                            Mã hợp đồng
+                        </th>
                         <td>
                             <input
                                 defaultValue={""}
@@ -245,7 +262,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Tên đối tác</th>
+                        <th>
+                            Tên đối tác
+                        </th>
                         <td>
                             <input
                                 defaultValue={""}
@@ -254,7 +273,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày kí kết</th>
+                        <th>
+                            Ngày kí kết
+                        </th>
                         <td>
                             <input
                                 defaultValue={""}
@@ -263,7 +284,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày có hiệu lực</th>
+                        <th>
+                            Ngày có hiệu lực
+                        </th>
                         <td>
                             <input
                                 defaultValue={""}
@@ -272,7 +295,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày hết hiệu lực</th>
+                        <th>
+                            Ngày hết hiệu lực
+                        </th>
                         <td>
                             <input
                                 defaultValue={""}
@@ -281,7 +306,9 @@ export const ContractListAdmin = () => {
                         </td>
                     </tr>
                     <tr>
-                        <th>Hạn mức</th>
+                        <th>
+                            Hạn mức
+                        </th>
                         <td>
                             <input
                                 defaultValue={""}

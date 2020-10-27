@@ -24,7 +24,7 @@ export const PartnerList = () => {
         const result = await axios.post("http://localhost:6060/getClients/", {});
         console.log(result.data.clients);
         setPartner(result.data.clients);
-      }, []);
+    }, []);
 
     const partnerData = useMemo(() => {
         let processedPartner = partner;
@@ -70,7 +70,9 @@ export const PartnerList = () => {
                                 {partner.name}
                             </td>
                             <td style={{textAlign: "right", verticalAlign: "middle"}}>
-                                <a href="/partner-main" className="admin-partner-detail-button">Xem chi tiết</a>
+                                <a href={`/admin/partner/${partner.clientId}`} className="admin-partner-detail-button">
+                                    Xem chi tiết
+                                </a>
                             </td>
                         </tr>
                     ))}
@@ -79,9 +81,10 @@ export const PartnerList = () => {
             <div>
                 <PaginationComponent
                     total={totalItem}
-                    itemsPerPage={ITEM_PER_PAGE}
+                    itemPerPage={ITEM_PER_PAGE}
                     currentPage={currentPage}
-                    onPageChange={(page) => setCurrentPage(page)} />
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
             </div>
         </div>
     )

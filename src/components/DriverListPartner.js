@@ -62,12 +62,14 @@ export const DriverListPartner = () => {
                 <Search onSearch = {(value) => {
                     setSearch(value);
                     setCurrentPage(1);
-                }} />
+                }}
+                />
             </div>
             <Table striped>
                 <TableHeaderAdmin
                     header={header}
-                    onSorting={(field, order) => setSorting({ field, order })} />
+                    onSorting={(field, order) => setSorting({ field, order })}
+                />
                 <tbody>
                     {driverData.map((driver) => (
                         <tr>
@@ -98,10 +100,11 @@ export const DriverListPartner = () => {
             </Table>
             <div>
                 <PaginationComponent
-                total = {totalItem}
-                itemsPerPage = {ITEM_PER_PAGE}
-                currentPage = {currentPage}
-                onPageChange = {(page) => setCurrentPage(page)} />
+                    total={totalItem}
+                    itemPerPage={ITEM_PER_PAGE}
+                    currentPage={currentPage}
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
             </div>
         </div>
     )

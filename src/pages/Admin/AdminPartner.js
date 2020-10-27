@@ -10,7 +10,9 @@ export default class AdminPartner extends Component {
                 <NavBar/>
                 <div className="admin-partner-content">
                     <div>
-                        <h1 className="admin-partner-header">Các công ty đối tác</h1>
+                        <h1 className="admin-partner-header">
+                            Các công ty đối tác
+                        </h1>
                         <PartnerList/>
                     </div>
                 </div>

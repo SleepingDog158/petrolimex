@@ -100,7 +100,7 @@ export const StationList = () => {
         const result = await axios.post("http://localhost:6060/getGasStations/", {});
         console.log(result.data.gasStations);
         setStation(result.data.gasStations);
-      }, []);
+    }, []);
 
     const stationData = useMemo(() => {
         let processedStation = stations;
@@ -133,7 +133,8 @@ export const StationList = () => {
                         <Search onSearch={(value) => {
                             setSearch(value);
                             setCurrentPage(1);
-                        }} />
+                        }}
+                        />
                     </div>
                     <Table striped>
                         <TableHeaderAdmin
@@ -141,8 +142,8 @@ export const StationList = () => {
                             onSorting={(field, order) => setSorting({ field, order })}
                         />
                         <tbody>
-                            {stationData.map((station, i) => (
-                                <tr key={i}>
+                            {stationData.map((station) => (
+                                <tr>
                                     <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                         {station.code}
                                     </td>
@@ -172,21 +173,26 @@ export const StationList = () => {
                             total={totalItem}
                             itemsPerPage={ITEM_PER_PAGE}
                             currentPage={currentPage}
-                            onPageChange={(page) => setCurrentPage(page)} />
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />
                     </div>
                     <ModalEdit modal={modal} toggle={toggle} onSubmit={onUpdate} title={"Thông tin chi nhánh"}>
                         <Table>
                             <tr>
-                                <th>Mã chi nhánh</th>
+                                <th>
+                                    Mã chi nhánh
+                                </th>
                                 <td>
                                     <input
                                         defaultValue={code}
                                         onChange={(event) => onChangeValue(event.target.value, "code")}
-                                        />
+                                    />
                                 </td>
                             </tr>
                             <tr>
-                                <th>Tên chi nhánh</th>
+                                <th>
+                                    Tên chi nhánh
+                                </th>
                                 <td>
                                     <input 
                                         defaultValue={name} 
@@ -195,7 +201,9 @@ export const StationList = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th>Địa chỉ</th>
+                                <th>
+                                    Địa chỉ
+                                </th>
                                 <td>
                                     <input
                                         defaultValue={address}
@@ -204,7 +212,9 @@ export const StationList = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th>Thời gian làm việc</th>
+                                <th>
+                                    Thời gian làm việc
+                                </th>
                                 <td>
                                     <input
                                         defaultValue={workingTime}
@@ -217,7 +227,9 @@ export const StationList = () => {
                     <ModalEdit modal={addModal} toggle={onToggleAdd} onSubmit={onAdd} title={"Thêm chi nhánh"}>
                         <Table>
                             <tr>
-                                <th>Mã chi nhánh</th>
+                                <th>
+                                    Mã chi nhánh
+                                </th>
                                 <td>
                                     <input
                                         defaultValue={""}
@@ -226,7 +238,9 @@ export const StationList = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th>Tên chi nhánh</th>
+                                <th>
+                                    Tên chi nhánh
+                                </th>
                                 <td>
                                     <input 
                                         defaultValue={""} 
@@ -235,7 +249,9 @@ export const StationList = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th>Địa chỉ</th>
+                                <th>
+                                    Địa chỉ
+                                </th>
                                 <td>
                                     <input
                                         defaultValue={""}
@@ -244,7 +260,9 @@ export const StationList = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th>Thời gian làm việc</th>
+                                <th>
+                                    Thời gian làm việc
+                                </th>
                                 <td>
                                     <input
                                         defaultValue={""}
@@ -255,7 +273,9 @@ export const StationList = () => {
                         </Table>
                     </ModalEdit>
                     <ModalEdit modal={deleteModal} toggle={onToggleDelete} onSubmit={onRemove} title={"Xóa chi nhánh"}>
-                        <p>Xóa thông tin chi nhánh?</p>
+                        <p>
+                            Xóa thông tin chi nhánh?
+                        </p>
                     </ModalEdit>
                 </div>
             </div>
