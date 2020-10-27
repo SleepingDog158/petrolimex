@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   Route,
   Redirect,
   Switch,
   BrowserRouter as Router,
-} from "react-router-dom";
-import { AdminMain } from "../pages/Admin/AdminMain";
-import AdminPartner from "../pages/Admin/AdminPartner";
-import AdminPartnerMain from "../pages/Admin/AdminPartnerMain";
-import AdminProduct from "../pages/Admin/AdminProduct";
-import AdminStation from "../pages/Admin/AdminStation";
-import AdminContract from "../pages/Admin/AdminContract";
-import AdminBill from "../pages/Admin/AdminBill";
-import AdminPartnerContract from "../pages/Admin/AdminPartnerContract";
-import AdminPartnerDriver from "../pages/Admin/AdminPartnerDriver";
-import AdminPartnerBill from "../pages/Admin/AdminPartnerBill";
+} from "react-router-dom"
+import { AdminMain } from "../pages/Admin/AdminMain"
+import AdminPartner from "../pages/Admin/AdminPartner"
+import { AdminPartnerMain } from "../pages/Admin/AdminPartnerMain"
+import AdminProduct from "../pages/Admin/AdminProduct"
+import AdminStation from "../pages/Admin/AdminStation"
+import AdminContract from "../pages/Admin/AdminContract"
+import AdminBill from "../pages/Admin/AdminBill"
+import AdminPartnerContract from "../pages/Admin/AdminPartnerContract"
+import AdminPartnerDriver from "../pages/Admin/AdminPartnerDriver"
+import AdminPartnerBill from "../pages/Admin/AdminPartnerBill"
 
 export default class AdminSwitch extends Component {
   render() {
@@ -42,13 +42,13 @@ export default class AdminSwitch extends Component {
           <Route path="/partner-main" exact>
             <AdminPartnerMain />
           </Route>
-          <Route path="/partner-contract" exact>
+          <Route path="/partner/contract" exact>
             <AdminPartnerContract />
           </Route>
-          <Route path="/partner-driver" exact>
+          <Route path="/partner/driver" exact>
             <AdminPartnerDriver />
           </Route>
-          <Route path="/partner-bill" exact>
+          <Route path="/partner/bill" exact>
             <AdminPartnerBill />
           </Route>
           <Redirect to="/" />

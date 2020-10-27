@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export const AdminMain = () => {
 
-    const [partner, setPartner] = useState([]);
+    const [partners, setPartner] = useState([]);
     const [contract, setContract] = useState([]);
     const [activeContract, setActiveContract] = useState([]);
     const [station, setStation] = useState([]);
@@ -17,6 +17,7 @@ export const AdminMain = () => {
         console.log(result.data.clients);
         setPartner(result.data.clients);
     }, []);
+
     useEffect(async () => {
         const result = await axios.post("https://localhost:6060/getContracts/", {});
         console.log(result.data.contracts);
@@ -35,9 +36,9 @@ export const AdminMain = () => {
     }, []);
 
     const partnerData = useMemo(() => {
-        let processedPartner = partner;
+        let processedPartner = partners;
         return processedPartner.slice();
-    }, [partner]);
+    }, [partners]);
 
     return (
         <div>
@@ -51,10 +52,12 @@ export const AdminMain = () => {
                         <h4>
                             Đối tác
                         </h4>
-                        <div>
-                            {partner.length} công ty đối tác<br/>
-                            {partner.length} có hợp đồng
-                        </div>
+                        {partnerData.map((partner) => (
+                        <p>
+                            {partners.length} công ty đối tác<br/>
+                            {partners.length} có hợp đồng
+                        </p>
+                        ))}
                         <a href="/admin/partner">
                             <button className="admin-main-grid-button">
                                 Xem thêm
