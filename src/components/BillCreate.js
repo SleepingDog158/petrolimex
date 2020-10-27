@@ -30,12 +30,13 @@ export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
       console.log(id);
       try {
         await getDriver(id);
+        
       } catch (error) {
         console.log(error);
       }
     }
   }
-
+  console.log(currentDriver)
   const renderCurrentDriver = () =>
     currentDriver && (
       <div>

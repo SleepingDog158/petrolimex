@@ -58,8 +58,11 @@ class AuthProvider extends Component {
     const { removeCookie } = this.props;
     removeCookie("token");
     removeCookie("role");
-    this.setIsLogin(false);
-    this.setRole(null);
+    this.setState({
+      isLogin: false,
+      role: null,
+    });
+    window.location.reload()
   };
 
   render() {

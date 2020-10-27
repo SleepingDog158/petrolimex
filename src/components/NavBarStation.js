@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import logo from "../assets/Logo.png"
 import './Client.css'
-import { withRouter } from 'react-router-dom';
+
 const NavBarStation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,10 +25,10 @@ const NavBarStation = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/bills">Tạo giao dịch</NavLink>
+              <NavLink href="/station/bills">Tạo giao dịch</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/products">Sản phẩm</NavLink>
+              <NavLink href="/station/products">Sản phẩm</NavLink>
             </NavItem>
             
           </Nav>
