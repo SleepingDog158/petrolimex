@@ -35,13 +35,14 @@ export const ContractList = () => {
 
   const [search, setSearch] = useState("");
 
-  const [contractId, setContractId] = useState(currentContract ? currentContract.contractId : "");
+  
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
 
   const [currentContract, setCurrentContract] = useState(null);
-
+  const [contractId, setContractId] = useState(currentContract ? currentContract.contractId : "");
   const [code, setCode] = useState(currentContract ? currentContract.code : "");
+
   const [startDate, setStartDate] = useState(
     currentContract ? currentContract.setStartDate : ""
   );
@@ -101,6 +102,7 @@ export const ContractList = () => {
       setDebtCeiling(contract.debtCeiling);
       setCreditRemain(contract.creditRemain);
       setStatus(contract.status);
+      
     }
   };
 
@@ -110,7 +112,7 @@ export const ContractList = () => {
 
   // fetch data
   useEffect(async () => {
-    const result = await axios.post("http://localhost:6060/getContracts/", {});
+    const result = await axios.post("http://localhost:6060/getContracts/", {"clientId": 2});
     console.log(result.data.contracts);
     setContracts(result.data.contracts);
   }, []);
@@ -308,7 +310,14 @@ export const ContractList = () => {
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {debtCeiling}
                   </td>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Hạn mức còn lại
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {creditRemain}
+                  </td>
                 </tr>
+                
               </tbody>
             </Table>
             <tr>
@@ -344,7 +353,7 @@ export const ContractList = () => {
                           padding: "0px",
                         }}
                       >
-                        {driver.id}
+                        {driver.driverId}
                       </td>
                       <td
                         className="name-column"
@@ -379,7 +388,7 @@ export const ContractList = () => {
                       </td>
                       <td>
                         <Button
-                          onClick={() => onDeleteDriver(driver.code, code)}
+                          onClick={() => onDeleteDriver(driver.driverId, contractId)}
                           variant="danger"
                           hidden={status === "inactive"}
                         >
@@ -455,7 +464,7 @@ export const ContractList = () => {
 
                       <td>
                         <Button
-                          onClick={() => onCheckDriver(driver.code, code)}
+                          onClick={() => onCheckDriver(driver.driverId, contractId)}
                           variant="success"
                           className="mr-1"
                         >

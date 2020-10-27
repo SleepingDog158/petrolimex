@@ -1,44 +1,70 @@
-import React,{Component, useState, useEffect} from 'react'
+import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
-export const BillCreate = () => {
-    const [drivers, setDrivers] = useState([]);
-    const [id, setId] = useState();
-    const [currentDrivers, setCurrentDrivers] = useState([]);
-    let checked =[]
-    useEffect(async () => {
-        const result = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
-        console.log(result.data);
-        setDrivers(result.data);
-      }, []);
-      function onEnter(){
-          checked= drivers.filter((d)=>d.id === id)
-          return checked
-          console.log(checked)
-      }
-
-      const onInputChange=(value)=>{
-        setId(value);
-        
-    }
-
-    return (
-        <div className="d-flex flex-column align-items-center">
-            
-                <h3> Thông tin tài xế</h3>
-
-                <div style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input  className="form-control w-100" type="text" value={id}
-                    onKeyDown={onEnter}
-                    onChange={(e)=>onInputChange(e.target.value)}
-                  />
-                </div>
-                <Table>
-                <tbody>
-                    {checked.map((d)=>
-                    <td>{d.id}</td>)}
-                </tbody>
-            </Table>
-        </div>
-    )
+import { Route, Link, useLocation } from "react-router-dom";
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
 }
+export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
+  const [id, setId] = useState(null);
+  const [error, setError] = useState("");
+  let query = useQuery();
+  const getDriver = async (i) => {
+    const result = await axios.post("http://localhost:6060/getDrivers/", {
+      driverId: i,
+    });
+    if (result.data.drivers.length === 0) {
+      return setError("Empty");
+    } else {
+      setCurrentDriver(result.data.drivers[0]);
+    }
+  };
+  function onChangeValue(text) {
+    if (text.key !== "Enter") {
+      return setId(text);
+    }
+  }
+  async function onSubmit(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      console.log(id);
+      try {
+        await getDriver(id);
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+  console.log(currentDriver)
+  const renderCurrentDriver = () =>
+    currentDriver && (
+      <div>
+        <h1>{currentDriver.driverId || ""}</h1>
+      </div>
+    );
+
+  return (
+    <Route>
+      <div
+        className="d-flex flex-column align-items-center"
+        style={{ marginTop: "10%" }}
+      >
+        <h3> Thông tin tài xế</h3>
+
+        <div style={{ textAlign: "center", verticalAlign: "middle" }}>
+          <form>
+            <input
+              className="w-100"
+              type="text"
+              defaultValue={" "}
+              onChange={(event) => onChangeValue(event.target.value, "id")}
+              onKeyDown={onSubmit}
+            />
+          </form>
+        </div>
+        <div>{currentDriver ? renderCurrentDriver() : <h2>{error}</h2>}</div>
+      </div>
+    </Route>
+  );
+};

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./css/LandingPage.css";
 import logo from "../assets/BigLogo.png";
 import { AuthContext } from "../contexts/Auth";
-
+import { useHistory, useLocation } from "react-router-dom";
 class LandingPage extends Component {
   render() {
     let auth = this.context;
@@ -40,7 +40,7 @@ class LandingPage extends Component {
 
             <button
               className="w-75 p-2 btn mt-4 btn-outline-primary shadow btn-custom font-weight-bold"
-              onClick={(event) => auth.onLogin(event)}
+              onClick={auth.onLogin}
             >
               <span></span>
               <span></span>
@@ -57,4 +57,8 @@ class LandingPage extends Component {
 
 LandingPage.contextType = AuthContext;
 
-export default LandingPage;
+export default (props) => {
+  const history = useHistory();
+  const location = useLocation();
+  return <LandingPage history={history} location={location} {...props} />;
+};

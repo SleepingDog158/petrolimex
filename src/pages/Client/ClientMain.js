@@ -41,7 +41,7 @@ export  const ClientMain = () => {
                 <CardTitle>Tài xế</CardTitle>
                 <CardSubtitle className="h5">{drivers.length} tài xế</CardSubtitle>
               </CardBody>
-              <Button className="w-50 mb-3 ml-3" color="primary" href="/driver">
+              <Button className="w-50 mb-3 ml-3" color="primary" href="/client/driver">
                 Xem thêm
               </Button>
             </Card>
@@ -51,7 +51,7 @@ export  const ClientMain = () => {
                 <CardSubtitle className="h5">{activeContracts.length} hợp đồng</CardSubtitle>
                 <CardText>đang có hiệu lực</CardText>
               </CardBody>
-              <Button className="w-50 mb-3 ml-3" color="primary"  href="/contract">
+              <Button className="w-50 mb-3 ml-3" color="primary"  href="/client/contract">
                 Xem thêm
               </Button>
             </Card>
@@ -61,7 +61,7 @@ export  const ClientMain = () => {
                 <CardSubtitle className="h5">100 giao dịch</CardSubtitle>
                 <CardText>trong 7 ngày</CardText>
               </CardBody>
-              <Button className="w-50 mb-3 ml-3" color="primary"  href="/bill">
+              <Button className="w-50 mb-3 ml-3" color="primary"  href="/client/bill">
                 Xem thêm
               </Button>
             </Card>
@@ -71,7 +71,7 @@ export  const ClientMain = () => {
                 <CardSubtitle className="h5">{activeDrivers.length} tài xế</CardSubtitle>
                 <CardText>được chia hợp đồng</CardText>
               </CardBody>
-              <Button className="w-50 mb-3 ml-3" color="primary"  href="/report">
+              <Button className="w-50 mb-3 ml-3" color="primary"  href="/client/report">
                 Xem thêm
               </Button>
             </Card>

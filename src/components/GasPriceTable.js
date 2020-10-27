@@ -13,12 +13,10 @@ const GasPriceTable = () => {
     { name: "Giá", field: "price"},
     ]
 
-    useEffect(() => {
-      async function fetchData(){
-      const result = await axios.get("https://1ne1c.sse.codesandbox.io/products");
-      console.log(result.data);
-      setProducts(result.data);}
-      fetchData()
+    useEffect(async () => {
+      const result = await axios.post("http://localhost:6060/getProducts/", {});
+      console.log(result.data.products);
+      setProducts(result.data.products);
     }, []);
   return (
     <Table className="col-12 ml-3" bordered>
@@ -38,7 +36,7 @@ const GasPriceTable = () => {
               padding: "3px",
             }}
           >
-            {product.id}
+            {product.code}
           </td>
           <td className="w-50"
             style={{
@@ -49,7 +47,7 @@ const GasPriceTable = () => {
               padding: "3px",
             }}
           >
-            {product.product}
+            {product.name}
           </td>
           <td
             style={{
@@ -60,7 +58,7 @@ const GasPriceTable = () => {
               padding: "3px",
             }}
           >
-            {product.price}
+            {product.price} VNĐ
           </td>
           </tr>
       ))}
