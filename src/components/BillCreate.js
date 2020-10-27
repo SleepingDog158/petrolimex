@@ -1,7 +1,9 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+import placeholder from "../assets/placeholder.png"
 import { Route, Link, useLocation } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -39,8 +41,28 @@ export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
   console.log(currentDriver)
   const renderCurrentDriver = () =>
     currentDriver && (
-      <div>
-        <h1>{currentDriver.driverId || ""}</h1>
+      <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+        <img src={placeholder} alt="placeholder" style={{width: "150px", height:"150px"}}/>
+        <Table>
+          <tbody>
+            <tr>
+              <th>Họ tên</th>
+              <td>{currentDriver.name}</td>
+            </tr>
+            <tr>
+              <th>Mã tài xế</th>
+              <td>{currentDriver.code}</td>
+            </tr>
+            <tr>
+              <th>Biển kiểm soát</th>
+              <td>{currentDriver.plate}</td>
+            </tr>
+            <tr>
+              <th>Công ty</th>
+              <td>{currentDriver.client.name}</td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
     );
 
