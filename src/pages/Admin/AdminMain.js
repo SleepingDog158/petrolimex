@@ -43,22 +43,22 @@ export const AdminMain = () => {
                     <div className="admin-main-grid-item1">
                         <h4>Đối tác</h4>
                         <div>{partner.length} công ty đối tác<br/>50 có hợp đồng</div>
-                        <a href="/partner"><button className="admin-main-grid-button">Xem thêm</button></a>
+                        <a href="/admin/partner"><button className="admin-main-grid-button">Xem thêm</button></a>
                     </div>
                     <div className="admin-main-grid-item2">
                         <h4>Hợp đồng</h4>
                         <div>{contract.length} hợp đồng<br/>{activeContract.length} đang hoạt động</div>
-                        <a href="/contract"><button className="admin-main-grid-button">Xem thêm</button></a>
+                        <a href="/admin/contract"><button className="admin-main-grid-button">Xem thêm</button></a>
                     </div>
                     <div className="admin-main-grid-item3">
                         <h4>Chi nhánh</h4>
                         <div>{station.length} chi nhánh<br/>160 đang mở cửa</div>
-                        <a href="/station"><button className="admin-main-grid-button">Xem thêm</button></a>
+                        <a href="/admin/station"><button className="admin-main-grid-button">Xem thêm</button></a>
                     </div>
                     <div className="admin-main-grid-item4">
                         <h4>Giao dịch</h4>
                         <div>{bill.length} giao dịch<br/>Trong 7 ngày</div>
-                        <a href="/bill"><button className="admin-main-grid-button">Xem thêm</button></a>
+                        <a href="/admin/bill"><button className="admin-main-grid-button">Xem thêm</button></a>
                     </div>
                     <div className="admin-main-grid-item5">
                         <h4>Giá xăng dầu hiện tại</h4>
