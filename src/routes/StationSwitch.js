@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Station from '../pages/Station';
-import { Route, Redirect, Switch, BrowserRouter as Router } from 'react-router-dom'
+
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import StationBill from '../pages/Station/StationBill'
 import StationMain from '../pages/Station/StationMain'
 import StationProduct from '../pages/Station/StationProductList'
@@ -15,13 +15,22 @@ export default class StationSwitch extends Component {
           <Route path="/bills" exact>
             <StationBill />
           </Route>
-          
+          <Route exact path="/search" component={SearchPage} />
           <Route path="/products" exact>
             <StationProduct />
           </Route>
-          <Redirect to="/" />
+         
         </Switch>
       </Router>
       );
     }
+  }
+
+  const SearchPage = ({ location }) => {
+    return (
+      <p>
+        <strong>Location Props: </strong>
+        {JSON.stringify(location, null, 2)}
+      </p>
+    );
   }

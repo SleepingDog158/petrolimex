@@ -1,79 +1,69 @@
+import Axios from "axios";
 import React, { Component } from "react";
-import { STATION, ADMIN, CLIENT } from "../constants";
+import { useCookies } from "react-cookie";
 
 export const AuthContext = React.createContext();
 
-export class AuthProvider extends Component {
+class AuthProvider extends Component {
   constructor(props) {
     super(props);
+
+    const { cookies } = this.props;
+    const { token, role } = cookies;
 
     this.state = {
       username: "",
       password: "",
-      isLogin: false,
-      role: CLIENT,
+      isLogin: token ? true : false,
+      role: role ? role : null,
     };
-
-    this.onChangeText = this.onChangeText.bind(this);
-    this.onLogin = this.onLogin.bind(this);
-    this.setIsLogin = this.setIsLogin.bind(this);
-    this.setRole = this.setRole.bind(this);
   }
 
-  setIsLogin(isLogin) {
-    this.setState({ isLogin });
-  }
-
-  setRole(role) {
-    this.setState({ role });
-  }
-
-  onChangeText(text, type) {
+  onChangeText = (text, type) => {
+    // eslint-disable-next-line default-case
     switch (type) {
       case "username":
         return this.setState({ username: text });
       case "password":
         return this.setState({ password: text });
     }
-  }
+  };
 
-  onLogin(event) {
+  onLogin = async (event) => {
     event.preventDefault();
+    const { setCookie } = this.props;
     let { username, password } = this.state;
-    console.log(username, password);
-
-    // save cookies
-    // auth sign
-    // role
-
-    // call api
-    this.setState({
-      isLogin: true,
-    });
-
-    this.setRole(CLIENT);
-  }
-
-  componentDidMount() {
-    // call api login
-    // check auth sign exist
-    // send auth sign to server
-    // role is correct
-
-    switch (this.state.role) {
-      case ADMIN:
-        this.setRole(ADMIN);
-        break;
-      case CLIENT:
-        this.setRole(CLIENT);
-        break;
-      case STATION:
-        this.setRole(STATION);
-        break;
-      default:
-        this.setIsLogin(false);
+    try {
+      const { data } = await Axios.post("http://localhost:6060/login", {
+        username,
+        password,
+      });
+      const { token, role } = data;
+      if (token) {
+        setCookie("token", token);
+        if (role) {
+          setCookie("role", role);
+        }
+        this.setState({
+          isLogin: true,
+          role: role,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
+
+  onLogout = () => {
+    const { removeCookie } = this.props;
+    removeCookie("token");
+    removeCookie("role");
+    this.setState({
+      isLogin: false,
+      role: null,
+    });
+    window.location.reload()
+  };
 
   render() {
     let { isLogin, role, username, password } = this.state;
@@ -86,6 +76,7 @@ export class AuthProvider extends Component {
           role: role,
           onLogin: this.onLogin,
           onChangeText: this.onChangeText,
+          onLogout: this.onLogout,
         }}
       >
         {this.props.children}
@@ -93,3 +84,15 @@ export class AuthProvider extends Component {
     );
   }
 }
+
+export default (props) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["token", "role"]);
+  return (
+    <AuthProvider
+      cookies={cookies}
+      setCookie={setCookie}
+      removeCookie={removeCookie}
+      {...props}
+    />
+  );
+};

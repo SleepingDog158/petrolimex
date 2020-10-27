@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, Component } from "react";
+import React, { useState, useMemo, useEffect} from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -6,7 +6,7 @@ import { FaUserEdit } from "react-icons/fa";
 import ModalEdit from "./ModalExample";
 import { TableHeader } from "./TableHeader";
 import { PaginationComponent } from "./PaginationComponent";
-import {Search} from "./Search"
+
 import { Filterbar } from "./FilterBar";
 
 export const BillsList = () => {
@@ -17,23 +17,24 @@ export const BillsList = () => {
 
   const [sorting, setSorting] = useState({ field: "", order: "" });
 
-  const [search, setSearch] = useState("");
-
   const [modal, setModal] = useState(false);
 
   const [currentBill, setCurrentBill] = useState(null);
 
-  const [id, setId] = useState(currentBill ? currentBill.id : "");
-  const [stationId, setStationId] = useState(currentBill ? currentBill.stationId : "");
-  const [date, setDate] = useState(currentBill ? currentBill.date : "");
-  const [teamId, setTeamId] = useState(
-    currentBill ? currentBill.teamId : ""
+  const [billId, setBillId] = useState(currentBill ? currentBill.billId : "");
+  const [gasStation, setGasStation] = useState(
+    currentBill ? currentBill.gasStation : ""
   );
- 
+  const [transactionDate, setTransactionDate] = useState(
+    currentBill ? currentBill.transactionDate : ""
+  );
+
   const [product, setProduct] = useState(
     currentBill ? currentBill.product : ""
   );
-  const [quantity, setQuantity] = useState(currentBill ? currentBill.quantity : "");
+  const [quantity, setQuantity] = useState(
+    currentBill ? currentBill.quantity : ""
+  );
   const [driver, setDriver] = useState(currentBill ? currentBill.driver : "");
   const [total, setTotal] = useState(currentBill ? currentBill.total : "");
 
@@ -50,37 +51,28 @@ export const BillsList = () => {
     setModal(!modal);
     if (!modal) {
       setCurrentBill(bill);
-      setId(bill.billId)
-      setStationId(bill.gasStationId);
-      setDate(bill.trasactionDate);
-      
+      setBillId(bill.billId);
+      setTransactionDate(bill.transactionDate);
+      setGasStation(bill.gasStation);
+      setProduct(bill.product);
       setTotal(bill.total);
+      setDriver(bill.driver);
+      setQuantity(bill.quantity);
     }
   };
 
   
- 
-  function onUpdate() {
-    console.log("Seen");
-  }
   // fetch data
   useEffect(async () => {
-    const result= await axios.post('http://localhost:6060/getBills/',{});
+    const result = await axios.post("http://localhost:6060/getBills/", {});
     console.log(result.data.bills);
     setBills(result.data.bills);
   }, []);
 
   const billsData = useMemo(() => {
     let computedBills = bills;
-    
 
-    if (search) {
-      computedBills = computedBills.filter(
-        (bill) =>
-          bill.phone.includes(search) ||
-          driver.plate.toLowerCase().includes(search.toLowerCase())
-      );
-    }
+    
     setTotalItems(computedBills.length);
     //sorting
     if (sorting.field) {
@@ -93,13 +85,13 @@ export const BillsList = () => {
       (currentPage - 1) * ITEMS_PER_PAGE,
       (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
     );
-  }, [bills, currentPage, search, sorting]);
+  }, [bills, currentPage, sorting]);
 
   return (
     <div className="row w-100">
       <div className="col mb-3 col-11 ml-4">
         <div className="row">
-            <Filterbar/>
+          <Filterbar />
           <Table className="col-12 ml-3" striped>
             <TableHeader
               headers={headers}
@@ -110,7 +102,6 @@ export const BillsList = () => {
                 <tr>
                   <td
                     scope="row"
-                
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
@@ -122,7 +113,7 @@ export const BillsList = () => {
                   </td>
                   <td
                     style={{
-                      width:"500px",
+                      width: "500px",
                       fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
@@ -132,46 +123,41 @@ export const BillsList = () => {
                     {bill.gasStation.name}
                   </td>
                   <td
-                    
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
-                      width:"400px",
+                      width: "400px",
                       padding: "0px",
                     }}
                   >
-                    {bill.transactionDate.slice(0,10)}
+                    {bill.transactionDate.slice(0, 10)}
                   </td>
                   <td
-                   
                     scope="row"
-                    
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
-                      width:"400px",
+                      width: "400px",
                       padding: "0px",
                     }}
                   >
                     {bill.product.name}
                   </td>
-    
-                  
+
                   <td
-                    
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
-                      width:"400px",
+                      width: "400px",
                       padding: "0px",
                     }}
                   >
                     {bill.total} VNĐ
                   </td>
-                 
+
                   <td>
                     <Button
                       variant="primary"
@@ -195,72 +181,72 @@ export const BillsList = () => {
             />
           </div>
 
-         
-
           {/* popup edit*/}
-          {/* <ModalEdit
+          <ModalEdit
+            className="bill-list"
             modal={modal}
             toggle={toggle}
-            onSubmit={onUpdate}
-            title={"Thông tin tài xế"}
+            title={"Chi tiết giao diện"}
           >
             <Table>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Họ tên
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={name}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "name")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Số điện thoại
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={phone}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "phone")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Biển kiểm soát
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={plate}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "plate")
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
-                  Mã đơn vị
-                </th>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  <input
-                    defaultValue={teamId}
-                    onChange={(event) =>
-                      onChangeValue(event.target.value, "teamId")
-                    }
-                  />
-                </td>
-              </tr>
-            </Table>
-          </ModalEdit> */}
+              <tbody>
+                <tr>
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Mã hóa đơn:
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {billId}
+                  </td>
+                </tr>
+                <tr>
+                  {" "}
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Ngày giao dịch
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {transactionDate.slice(0, 10)}
+                  </td>
+                </tr>
+                <tr>
+                  {" "}
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Tài xế
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {driver.name}
+                  </td>
+                </tr>
+                <tr>
+                  {" "}
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Mặt hàng
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {product.name}
+                  </td>
+                </tr>
+                <tr>
+                  {" "}
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Số lượng
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {quantity}L
+                  </td>
+                </tr>
 
-         
+                <tr>
+                  {" "}
+                  <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                    Thành tiền
+                  </th>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {total} VNĐ
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          </ModalEdit>
         </div>
       </div>
     </div>

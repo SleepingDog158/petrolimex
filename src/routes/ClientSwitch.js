@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {ClientMain} from "../pages/Client/ClientMain";
+import { ClientMain } from "../pages/Client/ClientMain";
 import ClientContract from "../pages/Client/ClientContract";
 import ClientDeal from "../pages/Client/ClientDeal";
 import ClientReport from "../pages/Client/ClientReport";
@@ -14,7 +14,7 @@ import {
 export default class ClientSwitch extends Component {
   render() {
     return (
-      <Router basename='/client'>
+      <Router basename="/client">
         <Switch>
           <Route path="/" exact>
             <ClientMain />

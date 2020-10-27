@@ -165,7 +165,7 @@ export const DriversList = () => {
                       fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
-                      padding: "0px",
+                      padding: "0px"
                     }}
                   >
                     {driver.code}
@@ -228,6 +228,7 @@ export const DriversList = () => {
                       variant="primary"
                       className="mr-1"
                       onClick={() => toggle(driver)}
+                    
                     >
                       <FaUserEdit />
                     </Button>
