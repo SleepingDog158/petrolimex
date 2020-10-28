@@ -94,7 +94,7 @@
     position: relative;
 }
 .admin-partner-main-table {
-    width: 750px;
+    width: 700px;
 }
 .admin-partner-main-table-header {
     text-align: center;
@@ -126,7 +126,7 @@
     text-decoration: none;
 }
 .admin-partner-main-chart {
-    width: 650px;
+    width: 600px;
 }
 .admin-partner-return-button {
     color: mediumblue;

@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export const AdminMain = () => {
 
-    const [partners, setPartner] = useState([]);
+    const [partner, setPartner] = useState([]);
     const [contract, setContract] = useState([]);
     const [activeContract, setActiveContract] = useState([]);
     const [station, setStation] = useState([]);
@@ -38,9 +38,9 @@ export const AdminMain = () => {
     }, []);
 
     const partnerData = useMemo(() => {
-        let processedPartner = partners;
+        let processedPartner = partner;
         return processedPartner.slice();
-    }, [partners]);
+    }, [partner]);
 
     return (
         <div>

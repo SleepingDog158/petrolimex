@@ -28,7 +28,9 @@ export const AdminPartnerMain = () => {
       <div className="admin-partner-main-content">
         {partnerData.map((partner) => (
           <div className="admin-partner-main-left-content">
-            <h2 className="admin-partner-main-header">{partner.name}</h2>
+            <h2 className="admin-partner-main-header">
+              {partner.name}
+            </h2>
             <table className="admin-partner-main-table">
               <tr>
                 <th colSpan="2" className="admin-partner-main-table-header">

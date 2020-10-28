@@ -38,3 +38,14 @@
 .list-content:last-child {
     float: right;
 }
+.logout-button {
+    color: white;
+    background-color: #0066cc;
+    border: none;
+    font-size: 18px;
+    padding: 20px;
+}
+.logout-button:hover {
+    color: white;
+    background-color: mediumblue;
+}

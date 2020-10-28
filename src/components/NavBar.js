@@ -41,11 +41,9 @@ export default class NavBar extends Component {
                             </a>
                         </li>
                         <li className='list-content'>
-                        
-                        <button className="logout-btn btn-primary rounded" value="Logout" onClick={auth.onLogout}>
-                            Logout
-                        </button>
-                  
+                            <button className="logout-button" value="Logout" onClick={auth.onLogout}>
+                                Logout
+                            </button>
                         </li>
                     </ul>
                 </nav>
