@@ -8,8 +8,8 @@ import ModalEdit from './ModalAdmin'
 import { toast } from 'react-toastify'
 import './Admin.css'
 
-export const ContractListPartner = () => {
-
+export const ContractListPartner = (props) => {
+    const {clientId} =props
     const [contracts, setContract] = useState([]);
     const [currentContract, setCurrentContract] = useState(null);
     const [code, setCode] = useState(currentContract ? currentContract.code : "");
@@ -80,10 +80,11 @@ export const ContractListPartner = () => {
     }
 
     useEffect(async () => {
-        const result = await axios.post("http://localhost:6060/getContracts/", {});
+        const result = await axios.post("http://localhost:6060/getContracts/", {clientId: clientId});
         console.log(result.data.contracts);
         setContract(result.data.contracts);
     }, []);
+
     const contractData = useMemo(() => {
         let processedContract = contracts;
         if (search) {
@@ -162,7 +163,9 @@ export const ContractListPartner = () => {
             <ModalEdit modal={modal} toggle={toggle} onSubmit={onUpdate} title={"Thông tin hợp đồng"}>
             <Table>
                 <tr>
-                    <th>Mã hợp đồng</th>
+                    <th>
+                        Mã hợp đồng
+                    </th>
                     <td>
                         <input
                             defaultValue={code}
@@ -171,7 +174,9 @@ export const ContractListPartner = () => {
                     </td>
                 </tr>
                 <tr>
-                    <th>Tên đối tác</th>
+                    <th>
+                        Tên đối tác
+                    </th>
                     <td>
                         <input
                             defaultValue={contracts}
@@ -180,7 +185,9 @@ export const ContractListPartner = () => {
                     </td>
                 </tr>
                 <tr>
-                    <th>Ngày kí kết</th>
+                    <th>
+                        Ngày kí kết
+                    </th>
                     <td>
                         <input
                             defaultValue={signedDate}
@@ -189,7 +196,9 @@ export const ContractListPartner = () => {
                     </td>
                 </tr>
                 <tr>
-                    <th>Ngày có hiệu lực</th>
+                    <th>
+                        Ngày có hiệu lực
+                    </th>
                     <td>
                         <input
                             defaultValue={startDate}
@@ -198,7 +207,9 @@ export const ContractListPartner = () => {
                     </td>
                 </tr>
                 <tr>
-                    <th>Ngày hết hiệu lực</th>
+                    <th>
+                        Ngày hết hiệu lực
+                    </th>
                     <td>
                         <input
                             defaultValue={expiredDate}
@@ -207,7 +218,9 @@ export const ContractListPartner = () => {
                     </td>
                 </tr>
                 <tr>
-                    <th>Hạn mức</th>
+                    <th>
+                        Hạn mức
+                    </th>
                     <td>
                         <input
                             defaultValue={debtCeiling}

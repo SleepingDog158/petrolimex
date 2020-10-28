@@ -6,8 +6,8 @@ import { PaginationComponent } from "./PaginationComponent"
 import { Search } from "./Search"
 import { FilterAdminBill } from './FilterAdminBill'
 
-export const BillListPartner = () => {
-
+export const BillListPartner = (props) => {
+    let {clientId} =props
     const [bills, setBill] = useState([]);
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [search, setSearch] = useState("");
@@ -25,7 +25,7 @@ export const BillListPartner = () => {
     ];
 
     useEffect(async () => {
-        const result = await axios.post("http://localhost:6060/getBills/", {});
+        const result = await axios.post("http://localhost:6060/getBills/", {clientId: clientId});
         console.log(result.data.bills);
         setBill(result.data.bills);
     }, []);
@@ -65,7 +65,8 @@ export const BillListPartner = () => {
             <Table striped>
                 <TableHeaderAdmin
                     header={header}
-                    onSorting={(field, order) => setSorting({field, order})} />
+                    onSorting={(field, order) => setSorting({field, order})}
+                />
                 <tbody>
                     {billData.map((bill) => (
                         <tr>

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
 import { ContractListAdmin } from '../../components/ContractListAdmin'
 
-export default class AdminContract extends Component {
-    render() {
+export default function AdminContract() {
+        
         return (
             <div>
                 <NavBar/>
@@ -15,5 +15,5 @@ export default class AdminContract extends Component {
                 </div>
             </div>
         )
-    }
+    
 }

@@ -10,12 +10,13 @@ import { CookiesProvider } from "react-cookie";
 
 function App() {
   return (
-    // <AuthProvider>
-    //   <Router />
-    // </AuthProvider>
-    //<StationBill/>
-    <AdminSwitch/>
-  )
+    <CookiesProvider>
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
+    </CookiesProvider>
+    // <StationSwitch />
+  );
 }
 
 export default App;

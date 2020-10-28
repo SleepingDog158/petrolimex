@@ -1,14 +1,14 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
-import { Route, Link, useLocation } from "react-router-dom";
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import placeholder from "../assets/placeholder.png"
+import { Route } from "react-router-dom";
+
+
 export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
   const [id, setId] = useState(null);
   const [error, setError] = useState("");
-  let query = useQuery();
+ 
   const getDriver = async (i) => {
     const result = await axios.post("http://localhost:6060/getDrivers/", {
       driverId: i,
@@ -39,8 +39,28 @@ export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
   console.log(currentDriver)
   const renderCurrentDriver = () =>
     currentDriver && (
-      <div>
-        <h1>{currentDriver.driverId || ""}</h1>
+      <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+        <img src={placeholder} alt="placeholder" style={{width: "150px", height:"150px"}}/>
+        <Table>
+          <tbody>
+            <tr>
+              <th>Họ tên</th>
+              <td>{currentDriver.name}</td>
+            </tr>
+            <tr>
+              <th>Mã tài xế</th>
+              <td>{currentDriver.code}</td>
+            </tr>
+            <tr>
+              <th>Biển kiểm soát</th>
+              <td>{currentDriver.plate}</td>
+            </tr>
+            <tr>
+              <th>Công ty</th>
+              <td>{currentDriver.client.name}</td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
     );
 

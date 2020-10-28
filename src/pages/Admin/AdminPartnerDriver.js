@@ -3,9 +3,10 @@ import { DriverListPartner } from '../../components/DriverListPartner'
 import NavBar from '../../components/NavBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-
-export default class AdminPartnerDriver extends Component {
-    render() {
+import {useParams} from 'react-router-dom'
+export default function AdminPartnerDriver(){
+    let {clientId} =useParams()
+    console.log(clientId)
         return (
             <div>
                 <NavBar/>
@@ -17,9 +18,9 @@ export default class AdminPartnerDriver extends Component {
                     <h1 className="admin-partner-driver-header">
                         Danh sách tài xế của công ty
                     </h1>
-                    <DriverListPartner/>
+                    <DriverListPartner clientId={clientId}/>
                 </div>
             </div>
         )
-    }
+    
 }

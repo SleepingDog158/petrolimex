@@ -59,7 +59,7 @@ export const BillListAdmin = () => {
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
-                }} 
+                }}
                 />
             </div>
             <Table striped>

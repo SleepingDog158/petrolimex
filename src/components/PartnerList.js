@@ -4,7 +4,8 @@ import Table from "react-bootstrap/Table"
 import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { Search } from "./Search"
 import { PaginationComponent } from "./PaginationComponent"
-
+import { AdminPartnerMain } from '../pages/Admin/AdminPartnerMain'
+import { Switch, useParams, Link, Route } from "react-router-dom";
 export const PartnerList = () => {
 
     const [partner, setPartner] = useState([]);
@@ -24,7 +25,7 @@ export const PartnerList = () => {
         const result = await axios.post("http://localhost:6060/getClients/", {});
         console.log(result.data.clients);
         setPartner(result.data.clients);
-      }, []);
+    }, []);
 
     const partnerData = useMemo(() => {
         let processedPartner = partner;
@@ -71,7 +72,7 @@ export const PartnerList = () => {
                                 {partner.name}
                             </td>
                             <td style={{textAlign: "right", verticalAlign: "middle"}}>
-                                <a href="/partner-main" className="admin-partner-detail-button">
+                                <a href={`/admin/partner/${partner.clientId}`} className="admin-partner-detail-button">
                                     Xem chi tiết
                                 </a>
                             </td>
@@ -82,10 +83,14 @@ export const PartnerList = () => {
             <div>
                 <PaginationComponent
                     total={totalItem}
-                    itemsPerPage={ITEM_PER_PAGE}
+                    itemPerPage={ITEM_PER_PAGE}
                     currentPage={currentPage}
-                    onPageChange={(page) => setCurrentPage(page)} />
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
             </div>
+            <Switch>
+            <Route path="/admin/partner/:clientId" component={AdminPartnerMain} />
+            </Switch>
         </div>
     )
 }

@@ -13,24 +13,26 @@ export const AdminMain = () => {
     const [bill, setBill] = useState([]);
 
     useEffect(async () => {
-        const result = await axios.post("https://localhost:6060/getClients/", {});
+        const result = await axios.post("http://localhost:6060/getClients/", {});
         console.log(result.data.clients);
         setPartner(result.data.clients);
+      }, []);
+
+      useEffect(async () => {
+        const result = await axios.post("http://localhost:6060/getContracts/", {});
+        console.log(result.data.contracts);
+        setContract(result.data.contracts);
+        setActiveContract(result.data.contracts.filter((c) => c.status === "active"));
     }, []);
 
     useEffect(async () => {
-        const result = await axios.post("https://localhost:6060/getContracts/", {});
-        console.log(result.data.contracts);
-        setContract(result.data.contracts);
-        setActiveContract(result.data.filter((c) => c.status === "active"));
-    }, []);
-    useEffect(async () => {
-        const result = await axios.post("https://localhost:6060/getGasStations/", {});
+        const result = await axios.post("http://localhost:6060/getGasStations/", {});
         console.log(result.data.gasStations);
         setStation(result.data.gasStations);
     }, []);
+
     useEffect(async () => {
-        const result = await axios.post("https://localhost:6060/getBills/", {});
+        const result = await axios.post("http://localhost:6060/getBills/", {});
         console.log(result.data.bills);
         setBill(result.data.bills);
     }, []);
@@ -52,12 +54,10 @@ export const AdminMain = () => {
                         <h4>
                             Đối tác
                         </h4>
-                        {partnerData.map((partner) => (
-                        <p>
-                            {partners.length} công ty đối tác<br/>
-                            {partners.length} có hợp đồng
-                        </p>
-                        ))}
+                        <div>
+                            {partner.length} công ty đối tác<br/>
+                            {partner.length} có hợp đồng
+                        </div>
                         <a href="/admin/partner">
                             <button className="admin-main-grid-button">
                                 Xem thêm

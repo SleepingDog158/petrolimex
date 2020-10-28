@@ -8,7 +8,9 @@ const ModalEdit = (prop) => {
     return (
         <div>
             <Modal isOpen={modal} toggle={toggle} className={className}>
-                <ModalHeader toggle={toggle}>{title}</ModalHeader>
+                <ModalHeader toggle ={toggle}>
+                    {title}
+                </ModalHeader>
                 <ModalBody>
                     {prop.children}
                 </ModalBody>
