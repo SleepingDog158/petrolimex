@@ -22,7 +22,7 @@ export const ProductAdmin = () => {
         { name: "Mã sản phẩm", field: "code", sortable: true },
         { name: "Tên sản phẩm", field: "name", sortable: true },
         { name: "Đơn vị", field: "unit", sortable: false },
-        { name: "Giá", field: "price", sortable: true },
+        { name: "Giá (VND)", field: "price", sortable: true },
         { name: "", sortable: false }
     ];
 
@@ -64,7 +64,7 @@ export const ProductAdmin = () => {
     function onAdd() {
         console.log(code, name, unit, price);
         toast.success("Đã thêm thông tin sản phẩm!", {
-            position: toast.POSITION.TOP_CENTER,
+            position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             hideProgressBar: true
         });
@@ -73,7 +73,7 @@ export const ProductAdmin = () => {
     function onUpdate() {
         console.log(code, name, unit, price);
         toast.info("Thay đổi thông tin thành công!", {
-            position: toast.POSITION.TOP_CENTER,
+            position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             hideProgressBar: true
         });
@@ -82,7 +82,7 @@ export const ProductAdmin = () => {
     function onRemove(product) {
         setProduct(products.filter((p) => currentProduct.code !== p.code));
         toast.error("Đã xóa thông tin sản phẩm!", {
-            position: toast.POSITION.TOP_CENTER,
+            position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             hideProgressBar: true
         });
@@ -109,120 +109,147 @@ export const ProductAdmin = () => {
     return (
         <div>
             <div>
-                <div>
-                    <div>
-                        <button className="admin-add-button" onClick={() => onToggleAdd()}>
-                            Thêm sản phẩm
-                        </button>
-                    </div>
-                    <Table striped>
-                        <TableHeaderAdmin
-                            header={header}
-                            onSorting={(field, order) => setSorting({ field, order })}
-                        />
-                        <tbody>
-                            {productData.map((product, i) => (
-                                <tr key={i}>
-                                    <td style={{textAlign: "center", verticalAlign: "middle", width: "125px"}}>
-                                        {product.code}
-                                    </td>
-                                    <td style={{verticalAlign: "middle", width: "250px"}}>
-                                        {product.name}
-                                    </td>
-                                    <td style={{textAlign: "center", verticalAlign: "middle", width: "80px"}}>
-                                        {product.unit}
-                                    </td>
-                                    <td style={{textAlign: "center", verticalAlign: "middle", width: "100px"}}>
-                                        {product.price}
-                                    </td>
-                                    <td style={{width: "150px", textAlign: "right"}}>
-                                        <button className="admin-edit-button" onClick={() => toggle(product)}>
-                                            Sửa
-                                        </button>
-                                        <button className="admin-delete-button" onClick={() => onToggleDelete(product)}>
-                                            Xóa
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                    <ModalEdit modal={modal} toggle={toggle} onSubmit={onUpdate} title={"Thông tin sản phẩm"}>
-                        <Table>
-                            <tr>
-                                <th>Mã sản phẩm</th>
-                                <td>
-                                    <input
-                                        defaultValue={code}
-                                        onChange={(event) => onChangeValue(event.target.value, "code")}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Tên sản phẩm</th>
-                                <td>
-                                    <input
-                                        defaultValue={name}
-                                        onChange={(event) => onChangeValue(event.target.value, "name")}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Đơn vị</th>
-                                <td>
-                                    <input
-                                        defaultValue={unit}
-                                        onChange={(event) => onChangeValue(event.target.value, "unit")}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Giá</th>
-                                <td>
-                                    <input
-                                        defaultValue={price}
-                                        onChange={(event) => onChangeValue(event.target.value, "price")}
-                                    />
-                                </td>
-                            </tr>
-                        </Table>
-                    </ModalEdit>
-                    <ModalEdit modal={addModal} toggle={onToggleAdd} onSubmit={onAdd} title={"Thêm sản phẩm"}>
-                        <Table>
-                            <tr>
-                                <th>Tên sản phẩm</th>
-                                <td>
-                                    <input
-                                        defaultValue={""}
-                                        onChange={(event) => onChangeValue(event.target.value, "name")}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Đơn vị</th>
-                                <td>
-                                    <input
-                                        defaultValue={""}
-                                        onChange={(event) => onChangeValue(event.target.value, "unit")}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Giá</th>
-                                <td>
-                                    <input
-                                        defaultValue={""}
-                                        onChange={(event) => onChangeValue(event.target.value, "price")}
-                                    />
-                                </td>
-                            </tr>
-                        </Table>
-                    </ModalEdit>
-                    <ModalEdit modal={deleteModal} toggle={onToggleDelete} onSubmit={onRemove} title={"Xóa sản phẩm"}>
-                        <p>Xóa thông tin sản phẩm?</p>
-                    </ModalEdit>
-                </div>
+                <button className="admin-add-button" onClick={() => onToggleAdd()}>
+                    Thêm sản phẩm
+                </button>
             </div>
+            <Table striped>
+                <TableHeaderAdmin
+                    header={header}
+                    onSorting={(field, order) => setSorting({ field, order })}
+                />
+                <tbody>
+                    {productData.map((product, i) => (
+                        <tr key={i}>
+                            <td style={{textAlign: "center", verticalAlign: "middle", width: "125px"}}>
+                                {product.code}
+                            </td>
+                            <td style={{verticalAlign: "middle", width: "250px"}}>
+                                {product.name}
+                            </td>
+                            <td style={{textAlign: "center", verticalAlign: "middle", width: "80px"}}>
+                                {product.unit}
+                            </td>
+                            <td style={{textAlign: "center", verticalAlign: "middle", width: "100px"}}>
+                                {product.price}
+                            </td>
+                            <td style={{width: "150px", textAlign: "right"}}>
+                                <button className="admin-edit-button" onClick={() => toggle(product)}>
+                                    Sửa
+                                </button>
+                                <button className="admin-delete-button" onClick={() => onToggleDelete(product)}>
+                                    Xóa
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+            <ModalEdit
+                modal={modal}
+                toggle={toggle}
+                onSubmit={onUpdate}
+                title={"Thông tin sản phẩm"}
+            >
+                <Table>
+                    <tr>
+                        <th>
+                            Mã sản phẩm
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={code}
+                                onChange={(event) => onChangeValue(event.target.value, "code")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={name}
+                                onChange={(event) => onChangeValue(event.target.value, "name")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Đơn vị
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={unit}
+                                onChange={(event) => onChangeValue(event.target.value, "unit")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Giá
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={price}
+                                onChange={(event) => onChangeValue(event.target.value, "price")}
+                            />
+                        </td>
+                    </tr>
+                </Table>
+            </ModalEdit>
+            <ModalEdit
+                modal={addModal}
+                toggle={onToggleAdd}
+                onSubmit={onAdd}
+                title={"Thêm sản phẩm"}
+            >
+                <Table>
+                    <tr>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "name")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Đơn vị
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "unit")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Giá
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "price")}
+                            />
+                        </td>
+                    </tr>
+                </Table>
+            </ModalEdit>
+            <ModalEdit
+                modal={deleteModal}
+                toggle={onToggleDelete}
+                onSubmit={onRemove}
+                title={"Xóa sản phẩm"}
+            >
+                <p>
+                    Xóa thông tin sản phẩm?
+                </p>
+            </ModalEdit>
         </div>
     )
 }
