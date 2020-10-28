@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useEffect, Component } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import axios from "axios"
 import Table from "react-bootstrap/Table"
-import { TableHeader } from "./TableHeader"
+import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { PaginationComponent } from "./PaginationComponent"
 import { Search } from "./Search"
 import ModalEdit from './ModalAdmin'
@@ -12,13 +12,13 @@ export const ContractListAdmin = () => {
 
     const [contracts, setContract] = useState([]);
     const [currentContract, setCurrentContract] = useState(null);
-    const [gross_contract_id, setGrossId] = useState(currentContract ? currentContract.gross_contract_id : "");
-    const [contract_partner, setPartner] = useState(currentContract ? currentContract.contract_partner : "");
-    const [contract_signed_date, setSignedDate] = useState(currentContract ? currentContract.contract_signed_date : "");
-    const [contract_start_date, setStartDate] = useState(currentContract ? currentContract.contract_start_date : "");
-    const [contract_end_date, setEndDate] = useState(currentContract ? currentContract.contract_end_date : "");
-    const [contract_debt_ceiling, setDebtCeiling] = useState(currentContract ? currentContract.contract_debt_ceiling : "");
-    const [contract_status, setStatus] = useState(currentContract ? currentContract.contract_status : "");
+    const [code, setCode] = useState(currentContract ? currentContract.code : "");
+    const [partner, setPartner] = useState(currentContract ? currentContract.partner : "");
+    const [signedDate, setSignedDate] = useState(currentContract ? currentContract.signedDate : "");
+    const [startDate, setStartDate] = useState(currentContract ? currentContract.startDate : "");
+    const [expiredDate, setExpiredDate] = useState(currentContract ? currentContract.expiredDate : "");
+    const [debtCeiling, setDebtCeiling] = useState(currentContract ? currentContract.debtCeiling : "");
+    const [status, setStatus] = useState(currentContract ? currentContract.status : "");
     const [sorting, setSorting] = useState({ field: "", order: ""});
     const [search, setSearch] = useState("");
     const ITEM_PER_PAGE = 10;
@@ -26,16 +26,15 @@ export const ContractListAdmin = () => {
     const [totalItem, setTotalItem] = useState(0);
     const [modal, setModal] = useState(false);
     const [addModal, setAddModal] = useState(false);
-    const [deleteModal, setDeleteModal] = useState(false);
 
-    const headers = [
-        { name: "ID tổng", field: "gross_contract_id", sortable: true },
-        { name: "Tên công ty", field: "contract_partner", sortable: true },
-        { name: "Ngày kí kết", field: "contract_signed_date", sortable: true },
-        { name: "Ngày có hiệu lực", field: "contract_start_date", sortable: true },
-        { name: "Ngày hết hiệu lực", field: "contract_end_date", sortable: true },
-        { name: "Hạn mức", field: "contract_debt_ceiling", sortable: true },
-        { name: "Trạng thái", field: "contract_status", sortable: true },
+    const header = [
+        { name: "Mã hợp đồng", field: "code", sortable: true },
+        { name: "Tên công ty", field: "partner", sortable: true },
+        { name: "Ngày kí kết", field: "signedDate", sortable: true },
+        { name: "Ngày có hiệu lực", field: "startDate", sortable: true },
+        { name: "Ngày hết hiệu lực", field: "expiredDate", sortable: true },
+        { name: "Hạn mức", field: "debtCeiling", sortable: true },
+        { name: "Trạng thái", field: "status", sortable: true },
         { name: "", sortable: false }
     ];
 
@@ -43,13 +42,13 @@ export const ContractListAdmin = () => {
         setModal(!modal);
         if(!modal) {
             setCurrentContract(contract);
-            setGrossId(contract.gross_contract_id);
-            setPartner(contract.contract_partner);
-            setSignedDate(contract.contract_signed_date);
-            setStartDate(contract.contract_start_date);
-            setEndDate(contract.contract_end_date);
-            setDebtCeiling(contract.contract_debt_ceiling);
-            setStatus(contract.contract_status);
+            setCode(contract.code);
+            setPartner(contract.partner);
+            setSignedDate(contract.signedDate);
+            setStartDate(contract.startDate);
+            setExpiredDate(contract.expiredDate);
+            setDebtCeiling(contract.debtCeiling);
+            setStatus(contract.status);
         }
     };
 
@@ -57,59 +56,55 @@ export const ContractListAdmin = () => {
         setAddModal(!addModal);
     };
 
-    const onToggleDelete = (contract) => {
-        setDeleteModal(!deleteModal);
-        if (!modal) {
-            setCurrentContract(contract);
-        }
-    };
-
     function onChangeValue(content, type) {
         switch (type) {
-            case "gross_contract_id":
-                return setGrossId(content);
-            case "contract_partner":
+            case "code":
+                return setCode(content);
+            case "partner":
                 return setPartner(content);
-            case "contract_signed_date":
+            case "signedDate":
                 return setSignedDate(content);
-            case "contract_start_date":
+            case "startDate":
                 return setStartDate(content);
-            case "contract_end_date":
-                return setEndDate(content);
-            case "contract_debt_ceiling":
+            case "expiredDate":
+                return setExpiredDate(content);
+            case "debtCeiling":
                 return setDebtCeiling(content);
-            case "contract_status":
+            case "status":
                 return setStatus(content);
         }
     }
 
     function onAdd() {
-        console.log(gross_contract_id, contract_partner, contract_signed_date, contract_start_date, contract_end_date, contract_debt_ceiling, contract_status);
-        toast.success("Đã thêm thông tin hợp đồng", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
+        console.log(code, partner, signedDate, startDate, expiredDate, debtCeiling, status);
+        toast.success("Đã thêm thông tin hợp đồng", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: true
+        });
     }
 
     function onUpdate() {
-        console.log(gross_contract_id, contract_partner, contract_signed_date, contract_start_date, contract_end_date, contract_debt_ceiling, contract_status);
-        toast.info("Thay đổi thông tin thành công!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
+        console.log(code, partner, signedDate, startDate, expiredDate, debtCeiling, status);
+        toast.info("Thay đổi thông tin thành công!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: true
+        });
     }
 
-    function onRemove(contract) {
-        setContract(contracts.filter((c) => currentContract.gross_contract_id !== c.gross_contract_id));
-        toast.error("Đã xóa thông tin hợp đồng", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true});
-    }
-
-    useEffect(async() => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/contract");
-        console.log(result.data);
-        setContract(result.data);
+    useEffect(async () => {
+        const result = await axios.post("http://localhost:6060/getContracts/", {});
+        console.log(result.data.contracts);
+        setContract(result.data.contracts);
     }, []);
 
     const contractData = useMemo(() => {
         let processedContract = contracts;
         if (search) {
             processedContract = processedContract.filter((contract) =>
-                contract.gross_contract_id.includes(search) ||
-                contract.contract_partner.toLowerCase().includes(search.toLowerCase())
+                contract.code.includes(search) ||
+                contract.client.name.toLowerCase().includes(search.toLowerCase())
             );
         }
         setTotalItem(processedContract.length);
@@ -134,37 +129,39 @@ export const ContractListAdmin = () => {
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
-                }} />
+                }}
+                />
             </div>
             <Table striped>
-                <TableHeader
-                    headers={headers}
-                    onSorting={(field, order) => setSorting({field, order})} />
+                <TableHeaderAdmin
+                    header={header}
+                    onSorting={(field, order) => setSorting({field, order})}
+                />
                 <tbody>
                     {contractData.map((contract) => (
                         <tr>
-                            <td className="table-center">
-                                {contract.gross_contract_id}
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                {contract.code}
                             </td>
-                            <td>
-                                {contract.contract_partner}
+                            <td style={{width: "300px", verticalAlign: "middle"}}>
+                                {contract.client.name}
                             </td>
-                            <td className="table-center">
-                                {contract.contract_signed_date}
+                            <td style={{width: "110px", textAlign: "center", verticalAlign: "middle"}}>
+                                {contract.signedDate}
                             </td>
-                            <td className="table-center">
-                                {contract.contract_start_date}
+                            <td style={{width: "110px", textAlign: "center", verticalAlign: "middle"}}>
+                                {contract.startDate}
                             </td>
-                            <td className="table-center">
-                                {contract.contract_end_date}
+                            <td style={{width: "110px", textAlign: "center", verticalAlign: "middle"}}>
+                                {contract.expiredDate}
                             </td>
-                            <td className="table-center">
-                                {contract.contract_debt_ceiling}
+                            <td style={{width: "100px", textAlign: "center", verticalAlign: "middle"}}>
+                                {contract.debtCeiling}
                             </td>
-                            <td>
-                                {contract.contract_status}
+                            <td style={{width: "110px", textAlign: "center", verticalAlign: "middle"}}>
+                                {contract.status}
                             </td>
-                            <td>
+                            <td style={{textAlign: "right", verticalAlign: "middle"}}>
                                 <button className="admin-edit-button" onClick = {() => toggle(contract)}>
                                     Sửa
                                 </button>
@@ -178,101 +175,144 @@ export const ContractListAdmin = () => {
                     total={totalItem}
                     itemsPerPage={ITEM_PER_PAGE}
                     currentPage={currentPage}
-                    onPageChange={(page) => setCurrentPage(page)} />
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
             </div>
-            <ModalEdit modal = {modal} toggle = {toggle} onSubmit = {onUpdate} title = {"Thông tin hợp đồng"}>
+            <ModalEdit modal={modal} toggle={toggle} onSubmit={onUpdate} title={"Thông tin hợp đồng"}>
                 <Table>
                     <tr>
-                        <th>Tên đối tác</th>
+                        <th>
+                            Mã hợp đồng
+                        </th>
                         <td>
                             <input
-                                defaultValue = {contract_partner}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_partner")}
+                                defaultValue={code}
+                                onChange={(event) => onChangeValue(event.target.value, "code")}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày kí kết</th>
+                        <th>
+                            Tên đối tác
+                        </th>
                         <td>
                             <input
-                                defaultValue = {contract_signed_date}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_signed_date")}
+                                defaultValue={contracts}
+                                onChange={(event) => onChangeValue(event.target.value, "partner")}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày có hiệu lực</th>
+                        <th>
+                            Ngày kí kết
+                        </th>
                         <td>
                             <input
-                                defaultValue = {contract_start_date}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_start_date")}
+                                defaultValue={signedDate}
+                                onChange={(event) => onChangeValue(event.target.value, "signedDate")}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày hết hiệu lực</th>
+                        <th>
+                            Ngày có hiệu lực
+                        </th>
                         <td>
                             <input
-                                defaultValue = {contract_end_date}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_end_date")}
+                                defaultValue={startDate}
+                                onChange={(event) => onChangeValue(event.target.value, "startDate")}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Hạn mức</th>
+                        <th>
+                            Ngày hết hiệu lực
+                        </th>
                         <td>
                             <input
-                                defaultValue = {contract_debt_ceiling}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_debt_ceiling")}
+                                defaultValue={expiredDate}
+                                onChange={(event) => onChangeValue(event.target.value, "expiredDate")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Hạn mức
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={debtCeiling}
+                                onChange={(event) => onChangeValue(event.target.value, "debtCeiling")}
                             />
                         </td>
                     </tr>
                 </Table>
             </ModalEdit>
-            <ModalEdit modal = {addModal} toggle = {onToggleAdd} onSubmit = {onToggleAdd} title = {"Thêm hợp đồng"}>
+            <ModalEdit modal={addModal} toggle={onToggleAdd} onSubmit={onAdd} title={"Thêm hợp đồng"}>
                 <Table>
                     <tr>
-                        <th>Tên đối tác</th>
+                        <th>
+                            Mã hợp đồng
+                        </th>
                         <td>
                             <input
-                                defaultValue = {""}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_partner")}
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "code")}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày kí kết</th>
+                        <th>
+                            Tên đối tác
+                        </th>
                         <td>
                             <input
-                                defaultValue = {""}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_signed_date")}
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "partner")}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày có hiệu lực</th>
+                        <th>
+                            Ngày kí kết
+                        </th>
                         <td>
                             <input
-                                defaultValue = {""}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_start_date")}
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "signedDate")}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày hết hiệu lực</th>
+                        <th>
+                            Ngày có hiệu lực
+                        </th>
                         <td>
                             <input
-                                defaultValue = {""}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_end_date")}
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "startDate")}
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Hạn mức</th>
+                        <th>
+                            Ngày hết hiệu lực
+                        </th>
                         <td>
                             <input
-                                defaultValue = {""}
-                                onChange = {(event) => onChangeValue(event.target.value, "contract_debt_ceiling")}
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "expiredDate")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Hạn mức
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "debtCeiling")}
                             />
                         </td>
                     </tr>

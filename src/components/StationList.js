@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState, Component } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import axios from "axios"
 import ModalEdit from "./ModalAdmin"
 import Table from "react-bootstrap/Table"
-import { TableHeader } from "./TableHeader"
+import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { Search } from "./Search"
 import { PaginationComponent } from "./PaginationComponent"
 import { toast } from 'react-toastify'
@@ -15,21 +15,21 @@ export const StationList = () => {
     const [addModal, setAddModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
     const [currentStation, setCurrentStation] = useState(null);
-    const [id, setId] = useState(currentStation ? currentStation.id : "");
-    const [station_name, setStationName] = useState(currentStation ? currentStation.station_name : "");
-    const [station_address, setStationAddress] = useState(currentStation ? currentStation.station_address : "");
-    const [station_working_time, setStationWorkingTime] = useState(currentStation ? currentStation.station_working_time : "");
+    const [code, setCode] = useState(currentStation ? currentStation.code : "");
+    const [name, setName] = useState(currentStation ? currentStation.name : "");
+    const [address, setAddress] = useState(currentStation ? currentStation.address : "");
+    const [workingTime, setWorkingTime] = useState(currentStation ? currentStation.workingTime : "");
     const [sorting, setSorting] = useState({ field: "", order: ""});
     const [search, setSearch] = useState("");
     const ITEM_PER_PAGE = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItem, setTotalItem] = useState(0)
 
-    const headers = [
-        { name: "ID", field: "id", sortable: true },
-        { name: "Tên cửa hàng", field: "station_name", sortable: true },
-        { name: "Địa chỉ", field: "station_address", sortable: false },
-        { name: "Thời gian làm việc", field: "station_working_time", sortable: false },
+    const header = [
+        { name: "Mã cửa hàng", field: "code", sortable: true },
+        { name: "Tên cửa hàng", field: "name", sortable: true },
+        { name: "Địa chỉ", field: "address", sortable: false },
+        { name: "Thời gian làm việc", field: "workingTime", sortable: false },
         { name: "", sortable: false },
     ];
 
@@ -37,10 +37,10 @@ export const StationList = () => {
         setModal(!modal);
         if (!modal) {
             setCurrentStation(station);
-            setId(station.id);
-            setStationName(station.station_name);
-            setStationAddress(station.station_address);
-            setStationWorkingTime(station.station_working_time);
+            setCode(station.code);
+            setName(station.name);
+            setAddress(station.address);
+            setWorkingTime(station.workingTime);
         }
     };
 
@@ -57,42 +57,56 @@ export const StationList = () => {
 
     function onChangeValue(content, type) {
         switch (type) {
-            case "station_name":
-                return setStationName(content);
-            case "station_address":
-                return setStationAddress(content);
-            case "station_working_time":
-                return setStationWorkingTime(content);
+            case "code":
+                return setCode(content);
+            case "name":
+                return setName(content);
+            case "address":
+                return setAddress(content);
+            case "workingTime":
+                return setWorkingTime(content);
         }
     }
 
     function onAdd() {
-        console.log(id, station_name, station_address, station_working_time);
-        toast.success("Đã thêm thông tin chi nhánh!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true});
+        console.log(code, name, address, workingTime);
+        toast.success("Đã thêm thông tin chi nhánh!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: true
+        });
     }
 
     function onUpdate() {
-        console.log(id, station_name, station_address, station_working_time);
-        toast.info("Thay đổi thông tin thành công!", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true});
+        console.log(code, name, address, workingTime);
+        toast.info("Thay đổi thông tin thành công!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: true
+        });
     }
 
     function onRemove(station) {
-        setStation(stations.filter((s) => currentStation.id !== s.id));
-        toast.error("Đã xóa thông tin chi nhánh", { position: toast.POSITION.TOP_CENTER, autoClose: 2000, hideProgressBar: true });
+        setStation(stations.filter((s) => currentStation.code !== s.code));
+        toast.error("Đã xóa thông tin chi nhánh", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: true
+        });
         console.log(stations);
     }
     
-    useEffect(async() => {
-        const result = await axios.get("https://tnzio.sse.codesandbox.io/station");
-        console.log(result.data);
-        setStation(result.data);
+    useEffect(async () => {
+        const result = await axios.post("http://localhost:6060/getGasStations/", {});
+        console.log(result.data.gasStations);
+        setStation(result.data.gasStations);
     }, []);
 
     const stationData = useMemo(() => {
         let processedStation = stations;
         if (search) {
             processedStation = processedStation.filter((station) =>
-                station.id.includes(search) || station.station_name.toLowerCase().includes(search.toLowerCase())
+                station.code.includes(search) || station.name.toLowerCase().includes(search.toLowerCase())
             );
         }
         setTotalItem(processedStation.length);
@@ -113,39 +127,40 @@ export const StationList = () => {
             <div>
                 <div>
                     <div>
-                        <button className="admin-add-button" onClick = {() => onToggleAdd()}>
+                        <button className="admin-add-button" onClick={() => onToggleAdd()}>
                             Thêm chi nhánh
                         </button>
                         <Search onSearch={(value) => {
                             setSearch(value);
                             setCurrentPage(1);
-                        }} />
+                        }}
+                        />
                     </div>
                     <Table striped>
-                        <TableHeader
-                            headers={headers}
+                        <TableHeaderAdmin
+                            header={header}
                             onSorting={(field, order) => setSorting({ field, order })}
                         />
                         <tbody>
                             {stationData.map((station) => (
                                 <tr>
-                                    <td className="table-center">
-                                        {station.id}
+                                    <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                        {station.code}
                                     </td>
-                                    <td>
-                                        {station.station_name}
+                                    <td style={{width: "280px", verticalAlign: "middle"}}>
+                                        {station.name}
                                     </td>
-                                    <td>
-                                        {station.station_address}
+                                    <td style={{width: "320px", verticalAlign: "middle"}}>
+                                        {station.address}
                                     </td>
-                                    <td className="table-center">
-                                        {station.station_working_time}
+                                    <td style={{width: "170px", textAlign: "center", verticalAlign: "middle"}}>
+                                        {station.workingTime}
                                     </td>
-                                    <td>
-                                        <button className="admin-edit-button" onClick = {() => toggle(station)}>
+                                    <td style={{width: "150px", textAlign: "right"}}>
+                                        <button className="admin-edit-button" onClick={() => toggle(station)}>
                                             Sửa
                                         </button>
-                                        <button className="admin-delete-button" onClick = {() => onToggleDelete(station)}>
+                                        <button className="admin-delete-button" onClick={() => onToggleDelete(station)}>
                                             Xóa
                                         </button>
                                     </td>
@@ -156,68 +171,111 @@ export const StationList = () => {
                     <div>
                         <PaginationComponent
                             total={totalItem}
-                            itemPerPage={ITEM_PER_PAGE}
+                            itemsPerPage={ITEM_PER_PAGE}
                             currentPage={currentPage}
-                            onPageChange={(page) => setCurrentPage(page)} />
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />
                     </div>
-                    <ModalEdit modal = {modal} toggle = {toggle} onSubmit = {onUpdate} title = {"Thông tin chi nhánh"}>
+                    <ModalEdit modal={modal} toggle={toggle} onSubmit={onUpdate} title={"Thông tin chi nhánh"}>
                         <Table>
                             <tr>
-                                <th>Tên chi nhánh</th>
+                                <th>
+                                    Mã chi nhánh
+                                </th>
+                                <td>
+                                    <input
+                                        defaultValue={code}
+                                        onChange={(event) => onChangeValue(event.target.value, "code")}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Tên chi nhánh
+                                </th>
                                 <td>
                                     <input 
-                                        defaultValue = {station_name} 
-                                        onChange = {(event) => onChangeValue(event.target.value, "station_name")} />
+                                        defaultValue={name} 
+                                        onChange={(event) => onChangeValue(event.target.value, "name")}
+                                    />
                                 </td>
                             </tr>
                             <tr>
-                                <th>Địa chỉ</th>
+                                <th>
+                                    Địa chỉ
+                                </th>
                                 <td>
                                     <input
-                                        defaultValue = {station_address}
-                                        onChange = {(event) => onChangeValue(event.target.value, "station_address")} />
+                                        defaultValue={address}
+                                        onChange={(event) => onChangeValue(event.target.value, "address")}
+                                    />
                                 </td>
                             </tr>
                             <tr>
-                                <th>Thời gian làm việc</th>
+                                <th>
+                                    Thời gian làm việc
+                                </th>
                                 <td>
                                     <input
-                                        defaultValue = {station_working_time}
-                                        onChange = {(event) => onChangeValue(event.target.value, "station_working_time")} />
+                                        defaultValue={workingTime}
+                                        onChange={(event) => onChangeValue(event.target.value, "workingTime")}
+                                    />
                                 </td>
                             </tr>
                         </Table>
                     </ModalEdit>
-                    <ModalEdit modal = {addModal} toggle = {onToggleAdd} onSubmit = {onAdd} title = {"Thêm chi nhánh"}>
+                    <ModalEdit modal={addModal} toggle={onToggleAdd} onSubmit={onAdd} title={"Thêm chi nhánh"}>
                         <Table>
                             <tr>
-                                <th>Tên chi nhánh</th>
+                                <th>
+                                    Mã chi nhánh
+                                </th>
+                                <td>
+                                    <input
+                                        defaultValue={""}
+                                        onChange={(event) => onChangeValue(event.target.value, "code")}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Tên chi nhánh
+                                </th>
                                 <td>
                                     <input 
-                                        defaultValue = {""} 
-                                        onChange = {(event) => onChangeValue(event.target.value, "station_name")} />
+                                        defaultValue={""} 
+                                        onChange={(event) => onChangeValue(event.target.value, "name")}
+                                    />
                                 </td>
                             </tr>
                             <tr>
-                                <th>Địa chỉ</th>
+                                <th>
+                                    Địa chỉ
+                                </th>
                                 <td>
                                     <input
-                                        defaultValue = {""}
-                                        onChange = {(event) => onChangeValue(event.target.value, "station_address")} />
+                                        defaultValue={""}
+                                        onChange={(event) => onChangeValue(event.target.value, "address")}
+                                    />
                                 </td>
                             </tr>
                             <tr>
-                                <th>Thời gian làm việc</th>
+                                <th>
+                                    Thời gian làm việc
+                                </th>
                                 <td>
                                     <input
-                                        defaultValue = {""}
-                                        onChange = {(event) => onChangeValue(event.target.value, "station_working_time")} />
+                                        defaultValue={""}
+                                        onChange={(event) => onChangeValue(event.target.value, "workingTime")}
+                                    />
                                 </td>
                             </tr>
                         </Table>
                     </ModalEdit>
-                    <ModalEdit modal = {deleteModal} toggle = {onToggleDelete} onSubmit = {onRemove} title = {"Xóa chi nhánh"}>
-                        <p>Xóa thông tin chi nhánh?</p>
+                    <ModalEdit modal={deleteModal} toggle={onToggleDelete} onSubmit={onRemove} title={"Xóa chi nhánh"}>
+                        <p>
+                            Xóa thông tin chi nhánh?
+                        </p>
                     </ModalEdit>
                 </div>
             </div>
