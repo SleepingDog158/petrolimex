@@ -186,7 +186,7 @@ export const BillsList = () => {
             className="bill-list"
             modal={modal}
             toggle={toggle}
-            title={"Chi tiết giao diện"}
+            title={"Chi tiết giao dịch"}
           >
             <Table>
               <tbody>
