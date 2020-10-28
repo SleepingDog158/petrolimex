@@ -40,9 +40,9 @@ class AuthProvider extends Component {
       });
       const { token, role } = data;
       if (token) {
-        setCookie("token", token);
+        setCookie("token", token, { path: "/" });
         if (role) {
-          setCookie("role", role);
+          setCookie("role", role, { path: "/" });
         }
         this.setState({
           isLogin: true,
@@ -54,15 +54,15 @@ class AuthProvider extends Component {
     }
   };
 
-  onLogout = () => {
+  onLogout = async () => {
     const { removeCookie } = this.props;
-    removeCookie("token");
-    removeCookie("role");
+    removeCookie("token", { path: "/" });
+    removeCookie("role", { path: "/" });
     this.setState({
       isLogin: false,
       role: null,
     });
-    window.location.reload()
+    document.location.reload();
   };
 
   render() {
