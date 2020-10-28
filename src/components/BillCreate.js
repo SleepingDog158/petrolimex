@@ -2,15 +2,13 @@ import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import placeholder from "../assets/placeholder.png"
-import { Route, Link, useLocation } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import { Route } from "react-router-dom";
+
+
 export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
   const [id, setId] = useState(null);
   const [error, setError] = useState("");
-  let query = useQuery();
+ 
   const getDriver = async (i) => {
     const result = await axios.post("http://localhost:6060/getDrivers/", {
       driverId: i,

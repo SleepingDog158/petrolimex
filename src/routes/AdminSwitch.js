@@ -37,13 +37,13 @@ export default class AdminSwitch extends Component {
           <Route path="/admin/partner/:clientId" exact>
             <AdminPartnerMain />
           </Route>
-          <Route path="/admin/partner/contract" exact>
+          <Route path="/admin/partner/:clientId/contract" exact>
             <AdminPartnerContract />
           </Route>
-          <Route path="/admin/partner/driver" exact>
+          <Route path="/admin/partner/:clientId/driver" exact>
             <AdminPartnerDriver />
           </Route>
-          <Route path="/admin/partnerbill" exact>
+          <Route path="/admin/partner/:clientId/bill" exact>
             <AdminPartnerBill />
           </Route>
           <Redirect to="/" />

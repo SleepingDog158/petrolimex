@@ -5,8 +5,8 @@ import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { PaginationComponent } from './PaginationComponent'
 import { Search } from "./Search"
 
-export const DriverListPartner = () => {
-
+export const DriverListPartner = (props) => {
+    const {clientId} =props
     const [drivers, setDriver] = useState([]);
     const [totalItem, setTotalItem] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -26,7 +26,7 @@ export const DriverListPartner = () => {
     ];
 
     useEffect(async () => {
-        const result = await axios.post("http://localhost:6060/getDrivers/", {});
+        const result = await axios.post("http://localhost:6060/getDrivers/", {clientId: clientId});
         console.log(result.data.drivers);
         setDriver(result.data.drivers);
     }, []);

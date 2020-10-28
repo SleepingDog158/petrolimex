@@ -3,9 +3,10 @@ import NavBar from '../../components/NavBar'
 import { BillListPartner } from "../../components/BillListPartner"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-
-export default class AdminPartnerBill extends Component {
-    render() {
+import {useParams} from "react-router-dom"
+export default function AdminPartnerBill() {
+        let {clientId}=useParams()
+        console.log(clientId)
         return (
             <div>
                 <NavBar/>
@@ -17,9 +18,9 @@ export default class AdminPartnerBill extends Component {
                     <h1 className="admin-partner-bill-header">
                         Lịch sử giao dịch của công ty
                     </h1>
-                    <BillListPartner/>
+                    <BillListPartner clientId={clientId}/>
                 </div>
             </div>
         )
-    }
+    
 }
