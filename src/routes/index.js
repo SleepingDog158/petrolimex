@@ -14,11 +14,13 @@ import AdminSwitch from "./AdminSwitch";
 
 const AuthSwitch = () => {
   return (
-    <Switch>
-      <Route path="/">
-        <LandingPage />
-      </Route>
-    </Switch>
+    <Router basename="/login">
+      <Switch>
+        <Route path="/" exact>
+          <LandingPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
@@ -41,7 +43,7 @@ const Routers = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/login" exact render={onRenderLoginScreen} />
+        <Route path="/login" render={onRenderLoginScreen} />
         <PrivateRoute path="/station" {...auth}>
           <StationSwitch />
         </PrivateRoute>
