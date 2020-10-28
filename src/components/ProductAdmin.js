@@ -155,7 +155,7 @@ export const ProductAdmin = () => {
                                     <input
                                         defaultValue={code}
                                         onChange={(event) => onChangeValue(event.target.value, "code")}
-                                        />
+                                    />
                                 </td>
                             </tr>
                             <tr>

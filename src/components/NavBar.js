@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import "./NavBar.css"
 import LogoCol from "../assets/Logo-col.png"
-
+import { Navbar } from 'reactstrap'
+import { AuthContext } from "../contexts/Auth";
 export default class NavBar extends Component {
     render() {
+        let auth = this.context;
         return (
             <div className="nav-bar">
                 <nav>
@@ -39,9 +41,9 @@ export default class NavBar extends Component {
                             </a>
                         </li>
                         <li className='list-content'>
-                            <a href="/" className="nav-items navbar-prop">
+                            <button className="logout-button" value="Logout" onClick={auth.onLogout}>
                                 Logout
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </nav>
@@ -49,3 +51,4 @@ export default class NavBar extends Component {
         )
     }
 }
+NavBar.contextType= AuthContext

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import NavBar from "../../components/NavBar"
 import "../../components/Admin.css"
 import GasPriceTable from '../../components/GasPriceTable'
@@ -36,6 +36,11 @@ export const AdminMain = () => {
         console.log(result.data.bills);
         setBill(result.data.bills);
     }, []);
+
+    const partnerData = useMemo(() => {
+        let processedPartner = partner;
+        return processedPartner.slice();
+    }, [partner]);
 
     return (
         <div>

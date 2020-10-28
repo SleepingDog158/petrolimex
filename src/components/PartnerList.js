@@ -4,7 +4,8 @@ import Table from "react-bootstrap/Table"
 import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { Search } from "./Search"
 import { PaginationComponent } from "./PaginationComponent"
-
+import { AdminPartnerMain } from '../pages/Admin/AdminPartnerMain'
+import { Switch, useParams, Link, Route } from "react-router-dom";
 export const PartnerList = () => {
 
     const [partner, setPartner] = useState([]);
@@ -53,7 +54,8 @@ export const PartnerList = () => {
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
-                }} />
+                }}
+                />
             </div>
             <Table striped>
                 <TableHeaderAdmin
@@ -86,6 +88,9 @@ export const PartnerList = () => {
                     onPageChange={(page) => setCurrentPage(page)}
                 />
             </div>
+            <Switch>
+            <Route path="/admin/partner/:clientId" component={AdminPartnerMain} />
+            </Switch>
         </div>
     )
 }

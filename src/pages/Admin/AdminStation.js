@@ -12,7 +12,7 @@ export default class AdminStation extends Component {
                     <h1 className="admin-station-header">
                         Các chi nhánh của công ty
                     </h1>
-                <StationList/>
+                    <StationList/>
                 </div>
             </div>
         )

@@ -8,8 +8,8 @@ import ModalEdit from './ModalAdmin'
 import { toast } from 'react-toastify'
 import './Admin.css'
 
-export const ContractListPartner = () => {
-
+export const ContractListPartner = (props) => {
+    const {clientId} =props
     const [contracts, setContract] = useState([]);
     const [currentContract, setCurrentContract] = useState(null);
     const [code, setCode] = useState(currentContract ? currentContract.code : "");
@@ -80,7 +80,7 @@ export const ContractListPartner = () => {
     }
 
     useEffect(async () => {
-        const result = await axios.post("http://localhost:6060/getContracts/", {});
+        const result = await axios.post("http://localhost:6060/getContracts/", {clientId: clientId});
         console.log(result.data.contracts);
         setContract(result.data.contracts);
     }, []);
