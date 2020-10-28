@@ -38,11 +38,12 @@ class AuthProvider extends Component {
         username,
         password,
       });
-      const { token, role } = data;
+      const { token, role, userId } = data;
       if (token) {
         setCookie("token", token, { path: "/" });
         if (role) {
           setCookie("role", role, { path: "/" });
+          setCookie("userId", userId, { path: "/" });
         }
         this.setState({
           isLogin: true,
@@ -58,6 +59,7 @@ class AuthProvider extends Component {
     const { removeCookie } = this.props;
     removeCookie("token", { path: "/" });
     removeCookie("role", { path: "/" });
+    removeCookie("userId", { path: "/" });
     this.setState({
       isLogin: false,
       role: null,
@@ -84,9 +86,12 @@ class AuthProvider extends Component {
     );
   }
 }
-
 export default (props) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["token", "role"]);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "token",
+    "role",
+    "userId",
+  ]);
   return (
     <AuthProvider
       cookies={cookies}

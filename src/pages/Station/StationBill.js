@@ -5,7 +5,12 @@ import "../../components/Client.css";
 import { BillCreate } from "../../components/BillCreate";
 const StationBill = () => {
   const [currentDriver, setCurrentDriver] = useState(null);
-
+  const [quantity, setQuantity] = useState(0);
+  const [total, setTotal] = useState(0);
+  const priceEach = 3000;
+  // viet vao cho e
+  // doi ten nua :V
+  console.log(quantity);
   return (
     <div>
       <NavBarStation />
@@ -42,16 +47,33 @@ const StationBill = () => {
                 Số lượng (lit)
               </th>
               <td style={{ textAlign: "right", verticalAlign: "middle" }}>
-                <input className="col-11" defaultValue={""} />
+                <input
+                  className="col-11"
+                  type="number"
+                  value={quantity}
+                  onChange={(event) => {
+                    let currentQuantity = event?.target?.value;
+                    setQuantity(currentQuantity); // can lam tron k a :v
+                    setTotal(currentQuantity * priceEach);
+                  }}
+                />
               </td>
             </tr>
-
             <tr>
               <th style={{ textAlign: "left", verticalAlign: "middle" }}>
                 Thành tiền
               </th>
               <td style={{ textAlign: "right", verticalAlign: "middle" }}>
-                <input className="col-11" defaultValue={""} />
+                <input
+                  className="col-11"
+                  value={total}
+                  type="number"
+                  onChange={(event) => {
+                    let currentTotal = event?.target?.value;
+                    setTotal(currentTotal);
+                    setQuantity(currentTotal / priceEach); // vay ok r nhi ?????? dung vay
+                  }}
+                />
               </td>
             </tr>
           </Table>
