@@ -2,21 +2,24 @@ import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import placeholder from "../assets/placeholder.png"
-import { Route } from "react-router-dom";
+import { Route, Link, useLocation } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 
-
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
   const [id, setId] = useState(null);
   const [error, setError] = useState("");
- 
+  let query = useQuery();
   const getDriver = async (i) => {
-    const result = await axios.post("http://localhost:6060/getDrivers/", {
+    const result = await axios.post("http://localhost:6060/transaction", {
       driverId: i,
     });
-    if (result.data.drivers.length === 0) {
+    if (!result.data.driver) {
       return setError("Empty");
     } else {
-      setCurrentDriver(result.data.drivers[0]);
+      setCurrentDriver(result.data.driver);
     }
   };
   function onChangeValue(text) {
@@ -37,6 +40,7 @@ export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
     }
   }
   console.log(currentDriver)
+ 
   const renderCurrentDriver = () =>
     currentDriver && (
       <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
@@ -56,9 +60,14 @@ export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
               <td>{currentDriver.plate}</td>
             </tr>
             <tr>
-              <th>Công ty</th>
-              <td>{currentDriver.client.name}</td>
+              <th>Hạn mức còn lại</th>
+              <td>{currentDriver.dividedContracts[0].creditRemain} VNĐ</td>
             </tr>
+            <tr>
+              <th>Mức giao dịch tối đa</th>
+              <td>{currentDriver.dividedContracts[0].max_transaction} VNĐ</td>
+            </tr>
+            
           </tbody>
         </Table>
       </div>
