@@ -40,9 +40,9 @@ export const BillsList = () => {
 
   const headers = [
     { name: "Mã hóa đơn", field: "billId", sortable: true },
-    { name: "Tên cửa hàng", field: "transactionDate", sortable: true },
+    { name: "Tên cửa hàng", field: "gasStation", sortable: false },
     { name: "Ngày giao dịch", field: "transactionDate", sortable: true },
-    { name: "Mặt hàng", field: "transactionDate", sortable: true },
+    { name: "Mặt hàng", field: "product", sortable: false },
     { name: "Thành tiền", field: "total", sortable: true },
     { name: "", sortable: false },
   ];
