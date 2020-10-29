@@ -9,6 +9,7 @@ export const Filterbar = () => {
     </Button>
     <UncontrolledCollapse toggler="#toggler">
     <table striped className="mb-3 ml-3">
+    
         <tr>
           <td className="p-1">
             Mặt hàng:
@@ -35,8 +36,12 @@ export const Filterbar = () => {
             Đến ngày:
             <input type="date" className="form-control" />
           </td>
+          
         </tr>
+       
+  
       </table>
+      
     </UncontrolledCollapse>
       
     </div>

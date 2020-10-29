@@ -1,7 +1,8 @@
 import React from 'react'
 import {Doughnut} from 'react-chartjs-2'
 
-function PieChart() {
+function PieChart(props) {
+    const {creditLimit, creditUsed} = props
     const data= {
         labels: ['Đã sử dụng', 'Còn lại'],
         datasets: [

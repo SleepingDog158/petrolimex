@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function () {
   const [drivers, setDrivers] = useState([]);
   const [dividedContracts, setDividedContracts] = useState([]);
- 
+  
   const getDrivers = async () => {
     const { data } =await Axios.post("http://localhost:6060/getToCreateDividedContract", {
       clientId: 1,
