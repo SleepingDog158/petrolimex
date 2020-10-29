@@ -15,18 +15,17 @@ import { Search } from "./Search";
 import { TableBody } from "@material-ui/core";
 import useDrivers from "../customHook/useDrivers";
 
-toast.configure();
-const newLocal = "debtCeiling";
 export const ContractList = () => {
   const [contracts, setContracts] = useState([]);
   const {
-    drivers,
+    //   drivers,
     onCheckDriver,
-    onDeleteDriver,
-    onUpdate,
     
+    onUpdate,
   } = useDrivers();
-
+  const [unpicked, setUnpicked] = useState([]);
+  const [dividedContracts, setDividedContracts] = useState([]);
+  
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
@@ -35,12 +34,13 @@ export const ContractList = () => {
 
   const [search, setSearch] = useState("");
 
-  
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
 
   const [currentContract, setCurrentContract] = useState(null);
-  const [contractId, setContractId] = useState(currentContract ? currentContract.contractId : "");
+  const [contractId, setContractId] = useState(
+    currentContract ? currentContract.contractId : ""
+  );
   const [code, setCode] = useState(currentContract ? currentContract.code : "");
 
   const [startDate, setStartDate] = useState(
@@ -75,26 +75,29 @@ export const ContractList = () => {
   ];
 
   const headerlist = [
-    { name: "ID", field: "id", sortable: true },
-    { name: "Họ tên", field: "name", sortable: true },
-    { name: "Số điện thoại", field: "phone", sortable: true },
-    { name: "Biển kiểm soát", field: "plate", sortable: true },
+    { name: "Mã tài xế", field: "code", sortable: false },
+    { name: "Họ tên", field: "name", sortable: false },
+    { name: "Số điện thoại", field: "phone", sortable: false },
+    { name: "Biển kiểm soát", field: "plate", sortable: false },
     { name: "", sortable: false },
   ];
   const headerSubList = [
-    { name: "ID", field: "id", sortable: true },
-    { name: "Họ tên", field: "name", sortable: true },
-    { name: "Biển kiểm soát", field: "plate", sortable: true },
+    { name: "Mã tài xế", field: "code", sortable: false },
+    { name: "Họ tên", field: "name", sortable: false },
+    { name: "Mức giao dịch tối đa", field: "plate", sortable: false },
     { name: "Hạn mức công nợ" },
 
-    { name: "", sortable: false },
+    
   ];
+  // async function fetch(i){
 
-  const toggle = (contract) => {
+  //   return drivers
+  // };
+  async function toggle(contract) {
     setModal(!modal);
     if (!modal) {
       setCurrentContract(contract);
-      setContractId(contract.contractId)
+      setContractId(contract.contractId);
       setCode(contract.code);
       setSignedDate(contract.signedDate);
       setStartDate(contract.startDate);
@@ -102,22 +105,48 @@ export const ContractList = () => {
       setDebtCeiling(contract.debtCeiling);
       setCreditRemain(contract.creditRemain);
       setStatus(contract.status);
-      
+      const { data } = await axios.post(
+        "http://localhost:6060/getToCreateDividedContract",
+        {
+          clientId: 1,
+          contractId: contract.contractId,
+        }
+      );
+      if (data) {
+        setDividedContracts(data.contract.dividedContracts);
+      }
+      console.log(dividedContracts);
     }
-  };
+  }
 
-  const toggleNested = () => {
+  async function toggleNested(contractId) {
     setNestedModal(!nestedModal);
+    if(!nestedModal){
+      
+      const { data } = await axios.post(
+        "http://localhost:6060/getToCreateDividedContract",
+        {
+          clientId: 1,
+          contractId:contractId,
+        }
+      );
+      if (data) {
+        setUnpicked(data.drivers);
+      }
+      console.log(unpicked);
+    }
   };
 
   // fetch data
   useEffect(async () => {
-    const result = await axios.post("http://localhost:6060/getContracts/", {"clientId": 2});
+    const result = await axios.post("http://localhost:6060/getContracts/", {
+      clientId: 1,
+    });
     console.log(result.data.contracts);
     setContracts(result.data.contracts);
   }, []);
 
-  const unpicked = drivers.filter((d) => d.contractId === null);
+  // const unpicked = drivers.filter((d) => d.contractId === null);
   const contractsData = useMemo(() => {
     let computedContracts = contracts;
     if (search) {
@@ -133,7 +162,9 @@ export const ContractList = () => {
     if (sorting.field) {
       const reversed = sorting.order === "asc" ? 1 : -1;
       computedContracts = computedContracts.sort(
-        (a, b) => reversed * a[sorting.field].toString().localeCompare(b[sorting.field].toString())
+        (a, b) =>
+          reversed *
+          a[sorting.field].toString().localeCompare(b[sorting.field].toString())
       );
     }
     return computedContracts.slice(
@@ -317,7 +348,6 @@ export const ContractList = () => {
                     {creditRemain}
                   </td>
                 </tr>
-                
               </tbody>
             </Table>
             <tr>
@@ -326,8 +356,8 @@ export const ContractList = () => {
                 <Button
                   variant="success"
                   className="mr-1"
-                  onClick={() => toggleNested()}
-                  hidden={status === "inactive"}
+                  onClick={() => toggleNested(contractId)}
+                  hidden={status !== "active"}
                 >
                   Thêm tài xế
                 </Button>
@@ -339,64 +369,62 @@ export const ContractList = () => {
                 onSorting={(field, order) => setSorting({ field, order })}
               />
               <tbody>
-                {drivers
-                  .filter((d) => d.contractId === contractId)
-                  .map((driver) => (
-                    <tr>
-                      <td
-                        scope="row"
-                        className="id-column"
-                        style={{
-                          fontSize: "15px",
-                          textAlign: "center",
-                          verticalAlign: "middle",
-                          padding: "0px",
-                        }}
-                      >
-                        {driver.driverId}
-                      </td>
-                      <td
-                        className="name-column"
-                        style={{
-                          fontSize: "15px",
-                          textAlign: "center",
-                          verticalAlign: "middle",
-                          padding: "0px",
-                        }}
-                      >
-                        {driver.name}
-                      </td>
+                {dividedContracts?.map((d,i) => (
+                  <tr key={i}>
+                    <td
+                      scope="row"
+                      className="id-column"
+                      style={{
+                        fontSize: "15px",
+                        textAlign: "center",
+                        verticalAlign: "middle",
+                        padding: "0px",
+                      }}
+                    >
+                      {d.driver.code}
+                    </td>
+                    <td
+                      className="name-column"
+                      style={{
+                        fontSize: "15px",
+                        textAlign: "center",
+                        verticalAlign: "middle",
+                        padding: "0px",
+                      }}
+                    >
+                      {d.driver.name}
+                    </td>
 
-                      <td
-                        className="number-column"
-                        style={{
-                          fontSize: "15px",
-                          textAlign: "center",
-                          verticalAlign: "middle",
-                          padding: "0px",
+                    
+                    <td
+                      style={{ textAlign: "center", verticalAlign: "middle" }}
+                    >
+                      <input
+                        onChange={(event) => {
+                          let current = event?.target?.value;
+                         
                         }}
-                      >
-                        {driver.plate}
-                      </td>
-                      <td
-                        style={{ textAlign: "center", verticalAlign: "middle" }}
-                      >
-                        <input
-                          disabled={status === "inactive"}
-                          defaultValue={driver.creditLimit}
-                        />
-                      </td>
-                      <td>
-                        <Button
-                          onClick={() => onDeleteDriver(driver.driverId, contractId)}
-                          variant="danger"
-                          hidden={status !== "active"}
-                        >
-                          <CgUserRemove />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
+                        disabled={status === "inactive"}
+                        defaultValue={d.max_transaction}
+                      />
+                    </td>
+
+                    
+                    <td
+                      style={{ textAlign: "center", verticalAlign: "middle" }}
+                    >
+                      <input
+                        onChange={(event) => {
+                          let current = event?.target?.value;
+                         
+                        }}
+                        disabled={status === "inactive"}
+                        defaultValue={d.creditLimit}
+                      />
+                    </td>
+                    
+                  </tr>
+                ))}
               </tbody>
             </Table>
             <ModalEdit
@@ -413,8 +441,8 @@ export const ContractList = () => {
                   onSorting={(field, order) => setSorting({ field, order })}
                 />
                 <tbody>
-                  {unpicked.map((driver) => (
-                    <tr>
+                  {unpicked.map((driver,i) => (
+                    <tr key={i}>
                       <td
                         scope="row"
                         className="id-column"
@@ -425,7 +453,7 @@ export const ContractList = () => {
                           padding: "0px",
                         }}
                       >
-                        {driver.id}
+                        {driver.code}
                       </td>
                       <td
                         className="name-column"
@@ -464,7 +492,9 @@ export const ContractList = () => {
 
                       <td>
                         <Button
-                          onClick={() => onCheckDriver(driver.driverId, contractId)}
+                          onClick={() =>
+                            onCheckDriver(driver.driverId, contractId)
+                          }
                           variant="success"
                           className="mr-1"
                         >
