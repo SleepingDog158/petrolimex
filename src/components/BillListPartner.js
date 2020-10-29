@@ -71,7 +71,7 @@ export const BillListPartner = (props) => {
                     {billData.map((bill) => (
                         <tr>
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
-                                {bill.code}
+                                {bill.billId}
                             </td>
                             <td style={{width: "300px", verticalAlign: "middle"}}>
                                 {bill.gasStation.name}

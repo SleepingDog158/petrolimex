@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "./NavBar.css"
 import LogoCol from "../assets/Logo-col.png"
-import { Navbar } from 'reactstrap'
+
 import { AuthContext } from "../contexts/Auth";
 export default class NavBar extends Component {
     render() {
