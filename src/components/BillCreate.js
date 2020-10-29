@@ -61,11 +61,11 @@ export const BillCreate = ({ currentDriver, setCurrentDriver }) => {
             </tr>
             <tr>
               <th>Hạn mức còn lại</th>
-              <td>{currentDriver.dividedContracts[0].creditRemain} VNĐ</td>
+              <td>{currentDriver.dividedContracts[0]?.creditRemain} VNĐ</td>
             </tr>
             <tr>
               <th>Mức giao dịch tối đa</th>
-              <td>{currentDriver.dividedContracts[0].max_transaction} VNĐ</td>
+              <td>{currentDriver.dividedContracts[0]?.max_transaction} VNĐ</td>
             </tr>
             
           </tbody>

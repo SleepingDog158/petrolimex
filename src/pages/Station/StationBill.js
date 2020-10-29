@@ -10,7 +10,7 @@ import ModalEdit from "../../components/ModalExample";
 const StationBill = () => {
   const [currentDriver, setCurrentDriver] = useState(null);
   const [quantity, setQuantity] = useState(0);
-  const newDate = new Date().toLocaleDateString();
+  const newDate = new Date().toISOString();
  
   const [transactionDate, setTransactionDate] =useState(newDate)
   const [billDriver, setBillDriver] = useState(null);
