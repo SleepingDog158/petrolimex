@@ -16,9 +16,11 @@ export const StationList = () => {
     const [deleteModal, setDeleteModal] = useState(false);
     const [currentStation, setCurrentStation] = useState(null);
     const [code, setCode] = useState(currentStation ? currentStation.code : "");
+    const [gasStationId, setId] = useState(null);
     const [name, setName] = useState(currentStation ? currentStation.name : "");
     const [address, setAddress] = useState(currentStation ? currentStation.address : "");
     const [workingTime, setWorkingTime] = useState(currentStation ? currentStation.workingTime : "");
+    const [username, setUsername] = useState(currentStation ? currentStation.username : "");
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [search, setSearch] = useState("");
     const ITEM_PER_PAGE = 10;
@@ -38,9 +40,11 @@ export const StationList = () => {
         if (!modal) {
             setCurrentStation(station);
             setCode(station.code);
+            setId(station.gasStationId);
             setName(station.name);
             setAddress(station.address);
             setWorkingTime(station.workingTime);
+            setUsername(station.username);
         }
     };
 
@@ -65,28 +69,44 @@ export const StationList = () => {
                 return setAddress(content);
             case "workingTime":
                 return setWorkingTime(content);
+            case "username":
+                return setUsername(content);
         }
     }
 
-    function onAdd() {
-        console.log(code, name, address, workingTime);
-        toast.success("Đã thêm thông tin chi nhánh!", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-            hideProgressBar: true
-        });
+    async function onAdd() {
+        console.log(code, name, address, workingTime, username);
+        await axios.post("http://localhost:6060/createGasStation", {
+            code: code ? code : null,
+            name: name ? name : null,
+            location: "16.026670, 108.249181",
+            address: address ? address : null,
+            workingTime: workingTime ? workingTime : null,
+            username: username ? username : null,
+            password: "12345678",
+            roleId: "2",
+        }).then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
     }
 
-    function onUpdate() {
-        console.log(code, name, address, workingTime);
-        toast.info("Thay đổi thông tin thành công!", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-            hideProgressBar: true
-        });
+    async function onUpdate() {
+        console.log(name, code, gasStationId, address, workingTime);
+        await axios.post("http://localhost:6060/updateGasStation", {
+            name: name,
+            code: code,
+            gasStationId: gasStationId,
+            address: address,
+            workingTime: workingTime,
+        }).then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        window.location.reload();
     }
 
-    function onRemove(station) {
+        function onRemove(station) {
         setStation(stations.filter((s) => currentStation.code !== s.code));
         toast.error("Đã xóa thông tin chi nhánh", {
             position: toast.POSITION.TOP_RIGHT,
@@ -279,6 +299,17 @@ export const StationList = () => {
                                     <input
                                         defaultValue={""}
                                         onChange={(event) => onChangeValue(event.target.value, "workingTime")}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Tên đăng nhập
+                                </th>
+                                <td>
+                                    <input
+                                        defaultValue={""}
+                                        onChange={(event) => onChangeValue(event.target.value, "username")}
                                     />
                                 </td>
                             </tr>

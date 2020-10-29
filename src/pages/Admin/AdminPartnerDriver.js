@@ -1,17 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { DriverListPartner } from '../../components/DriverListPartner'
 import NavBar from '../../components/NavBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import {useParams} from 'react-router-dom'
-export default function AdminPartnerDriver(){
-    let {clientId} =useParams()
-    console.log(clientId)
+import { useParams, useHistory } from 'react-router-dom'
+export default function AdminPartnerDriver() {
+    let { clientId } = useParams();
+    const history = useHistory();
+
         return (
             <div>
                 <NavBar/>
                 <div className="admin-partner-driver-content">
-                    <a href="/partner-main" className="admin-partner-return-button">
+                    <a className="admin-partner-return-button" onClick={() => history.goBack()}>
                         <FontAwesomeIcon icon={faAngleLeft}/>
                         Đối tác
                     </a>

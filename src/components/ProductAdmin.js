@@ -10,6 +10,7 @@ export const ProductAdmin = () => {
     const [products, setProduct] = useState([]);
     const [currentProduct, setCurrentProduct] = useState(null);
     const [code, setCode] = useState(currentProduct ? currentProduct.code : "");
+    const [productId, setId] = useState(null);
     const [name, setName] = useState(currentProduct ? currentProduct.name : "");
     const [unit, setUnit] = useState(currentProduct ? currentProduct.unit : "");
     const [price, setPrice] = useState(currentProduct ? currentProduct.price : "");
@@ -31,6 +32,7 @@ export const ProductAdmin = () => {
         if (!modal) {
             setCurrentProduct(product);
             setCode(product.code);
+            setId(product.productId);
             setName(product.name);
             setUnit(product.unit);
             setPrice(product.price);
@@ -61,24 +63,34 @@ export const ProductAdmin = () => {
         }
     }
 
-    function onAdd() {
+    async function onAdd() {
         console.log(code, name, unit, price);
-        toast.success("Đã thêm thông tin sản phẩm!", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-            hideProgressBar: true
-        });
+        await axios.post("http://localhost:6060/createProduct", {
+            name: name ? name : null,
+            code: code ? code: null,
+            unit: unit ? unit : null,
+            price: price ? price : null,
+        }).then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
     }
-
-    function onUpdate() {
-        console.log(code, name, unit, price);
-        toast.info("Thay đổi thông tin thành công!", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-            hideProgressBar: true
-        });
+    
+    async function onUpdate() {
+        console.log(code, name, productId, unit, price);
+        await axios.post("http://localhost:6060/updateProduct", {
+            name: name,
+            code: code,
+            productId: productId,
+            unit: unit,
+            price: price,
+        }).then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        window.location.reload()
     }
-
+    
     function onRemove(product) {
         setProduct(products.filter((p) => currentProduct.code !== p.code));
         toast.error("Đã xóa thông tin sản phẩm!", {
@@ -205,6 +217,17 @@ export const ProductAdmin = () => {
                 title={"Thêm sản phẩm"}
             >
                 <Table>
+                    <tr>
+                        <th>
+                            Mã sản phẩm
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "code")}
+                            />
+                        </td>
+                    </tr>
                     <tr>
                         <th>
                             Tên sản phẩm
