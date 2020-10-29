@@ -15,9 +15,10 @@ export const BillListAdmin = () => {
     const ITEM_PER_PAGE = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItem, setTotalItem] = useState(0);
+    const [code, setCode] = useState([]);
 
     const header = [
-        { name: "Mã giao dịch", field: "code", sortable: true },
+        { name: "Mã giao dịch", field: "billId", sortable: true },
         { name: "Tên chi nhánh", field: "station_name", sortable: true },
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Tên sản phẩm", field: "product_name", sortable: true },

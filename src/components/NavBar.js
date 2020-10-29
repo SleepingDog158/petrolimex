@@ -11,7 +11,7 @@ export default class NavBar extends Component {
                 <nav>
                     <ul className="nav-content">
                         <li className='list-content'>
-                            <a href="/" className="navbar-prop">
+                            <a href="/admin" className="navbar-prop">
                                 <img src={LogoCol} alt="logo" id="logo"/>
                             </a>
                         </li>
@@ -41,7 +41,7 @@ export default class NavBar extends Component {
                             </a>
                         </li>
                         <li className='list-content'>
-                            <button className="logout-button" value="Logout" onClick={auth.onLogout}>
+                            <button className="logout-button" value="Logout" /*onClick={auth.onLogout}*/>
                                 Logout
                             </button>
                         </li>
