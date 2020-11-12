@@ -390,7 +390,7 @@ export const ContractList = () => {
                         <Button
                           onClick={() => onDeleteDriver(driver.driverId, contractId)}
                           variant="danger"
-                          hidden={status === "inactive"}
+                          hidden={status !== "active"}
                         >
                           <CgUserRemove />
                         </Button>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "./NavBar.css"
 import LogoCol from "../assets/Logo-col.png"
-import { Navbar } from 'reactstrap'
+
 import { AuthContext } from "../contexts/Auth";
 export default class NavBar extends Component {
     render() {
@@ -11,7 +11,7 @@ export default class NavBar extends Component {
                 <nav>
                     <ul className="nav-content">
                         <li className='list-content'>
-                            <a href="/" className="navbar-prop">
+                            <a href="/admin" className="navbar-prop">
                                 <img src={LogoCol} alt="logo" id="logo"/>
                             </a>
                         </li>
@@ -41,9 +41,9 @@ export default class NavBar extends Component {
                             </a>
                         </li>
                         <li className='list-content'>
-                            <button className="logout-button" value="Logout" onClick={auth.onLogout}>
+                            <a className="nav-items navbar-prop" value="Logout" onClick={auth.onLogout}>
                                 Logout
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </nav>

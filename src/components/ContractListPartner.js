@@ -9,9 +9,10 @@ import { toast } from 'react-toastify'
 import './Admin.css'
 
 export const ContractListPartner = (props) => {
-    const {clientId} =props
+    const {clientId} = props
     const [contracts, setContract] = useState([]);
     const [currentContract, setCurrentContract] = useState(null);
+    const [name, setName] = useState(currentContract ? currentContract.name : "");
     const [code, setCode] = useState(currentContract ? currentContract.code : "");
     const [signedDate, setSignedDate] = useState(currentContract ? currentContract.signedDate : "");
     const [startDate, setStartDate] = useState(currentContract ? currentContract.startDate : "");
@@ -25,6 +26,8 @@ export const ContractListPartner = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItem, setTotalItem] = useState(0);
     const [modal, setModal] = useState(false);
+    const [addModal, setAddModal] = useState(false);
+
     
     const header = [
         { name: "Mã hợp đồng", field: "code", sortable: true },
@@ -51,6 +54,10 @@ export const ContractListPartner = (props) => {
         }
     };
 
+    const onToggleAdd = () => {
+        setAddModal(!addModal);
+    };
+
     function onChangeValue(content, type) {
         switch (type) {
             case "code":
@@ -68,6 +75,23 @@ export const ContractListPartner = (props) => {
             case "status":
                 return setStatus(content);
         }
+    }
+
+    async function onAdd() {
+        console.log(code, name, clientId, signedDate, startDate, expiredDate, debtCeiling, status);
+        await axios.post("http://localhost:6060/createContract", {
+            name: name ? name : null,
+            code: code ? code: null,
+            clientId: clientId ? clientId : null,
+            signedDate: signedDate ? signedDate : null,
+            startDate: startDate ? startDate : null,
+            expiredDate: expiredDate ? expiredDate : null,
+            debtCeiling: debtCeiling ? debtCeiling : null,
+            status: "active",
+        }).then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
     }
 
     function onUpdate() {
@@ -230,6 +254,92 @@ export const ContractListPartner = (props) => {
                 </tr>
             </Table>
         </ModalEdit>
+        <ModalEdit
+                modal={addModal}
+                toggle={onToggleAdd}
+                onSubmit={onAdd}
+                title={"Thêm hợp đồng"}
+            >
+                <Table>
+                    <tr>
+                        <th>
+                            Mã hợp đồng
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "code")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tên hợp đồng
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "name")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Mã đối tác
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "clientId")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Ngày kí kết
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "signedDate")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Ngày có hiệu lực
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "startDate")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Ngày hết hiệu lực
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "expiredDate")}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Hạn mức
+                        </th>
+                        <td>
+                            <input
+                                defaultValue={""}
+                                onChange={(event) => onChangeValue(event.target.value, "debtCeiling")}
+                            />
+                        </td>
+                    </tr>
+                </Table>
+            </ModalEdit>
         </div>
     )
 }

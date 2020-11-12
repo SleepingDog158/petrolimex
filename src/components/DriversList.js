@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { FaUserEdit } from "react-icons/fa";
 
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import ModalEdit from "./ModalExample";
 import { TableHeader } from "./TableHeader";
@@ -23,25 +23,33 @@ export const DriversList = () => {
 
   const [modal, setModal] = useState(false);
 
-  
-
   const [addModal, setAddModal] = useState(false);
 
   const [currentDriver, setCurrentDriver] = useState(null);
-
+  const[driverId, setDriverID]=useState(null)
   const [code, setCode] = useState(currentDriver ? currentDriver.code : "");
-  const [residentId, setResidentId] = useState(currentDriver ? currentDriver.residentId : "");
+  const [username, setUsername] = useState(
+    currentDriver ? currentDriver.username : ""
+  );
+  const [address, setAddress] = useState(
+    currentDriver ? currentDriver.address : ""
+  );
+  const [residentId, setResidentId] = useState(
+    currentDriver ? currentDriver.residentId : ""
+  );
   const [name, setName] = useState(currentDriver ? currentDriver.name : "");
   const [phone, setPhone] = useState(currentDriver ? currentDriver.phone : "");
 
   const [plate, setPlate] = useState(currentDriver ? currentDriver.plate : "");
-  const [status, setStatus] = useState(currentDriver ? currentDriver.status : "");
+  const [status, setStatus] = useState(
+    currentDriver ? currentDriver.status : ""
+  );
 
   const headers = [
     { name: "Mã tài xế", field: "code", sortable: true },
     { name: "Họ tên", field: "name", sortable: true },
     { name: "Số điện thoại", field: "phone", sortable: true },
-    { name: "Số CMND", field: "plate", sortable: true },
+    { name: "Số CMND", field: "residentId", sortable: true },
     { name: "Biển kiểm soát", field: "plate", sortable: true },
     { name: "Trạng thái", field: "status", sortable: true },
     { name: "", sortable: false },
@@ -51,6 +59,7 @@ export const DriversList = () => {
     setModal(!modal);
     if (!modal) {
       setCurrentDriver(driver);
+      setDriverID(driver.driverId);
       setCode(driver.code);
       setName(driver.name);
       setPhone(driver.phone);
@@ -59,8 +68,6 @@ export const DriversList = () => {
       setStatus(driver.status);
     }
   };
-
- 
 
   const onToggleAdd = () => {
     setAddModal(!addModal);
@@ -72,30 +79,66 @@ export const DriversList = () => {
         return setName(text);
       case "phone":
         return setPhone(text);
-      case "plate":
-        return setResidentId(text);
       case "residentId":
+        return setResidentId(text);
+      case "plate":
         return setPlate(text);
+      case "address":
+        return setAddress(text);
       case "status":
         return setStatus(text);
+      case "username":
+        return setUsername(text);
+      case "code":
+        return setCode(text);
     }
   }
 
-  function onAdd() {
-    console.log(name, phone, plate);
-    toast.success("Đã thêm thông tin tài xế", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-      hideProgressBar: true,
-    });
+
+
+  async function onAdd() {
+    
+    console.log(name, phone, plate, residentId, address, username);
+    await axios.post("http://localhost:6060/createDriver", {
+      name: name? name : null,
+      code: code? code: null,
+      clientId: "1",
+      residentId: residentId? residentId : null,
+      avatar: "avatar",
+      phone: phone? phone : null,
+      plate: plate? plate : null,
+      address: address? address : null,
+      status: "active",
+      username: username? username : null,
+      password: "12345678",
+      roleId: "4",
+    }).then(res => {
+      console.log(res);
+      console.log(res.data);
+    })
+    // toast.success("Đã thêm thông tin tài xế", {
+    //   position: toast.POSITION.TOP_CENTER,
+    //   autoClose: 2000,
+    //   hideProgressBar: true,
+    // });
   }
-  function onUpdate() {
-    console.log(name, phone, plate, residentId, status);
-    toast.info("Thay đổi thành công", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-      hideProgressBar: true,
-    });
+ async function onUpdate() {
+    console.log(name, phone, plate, residentId, status, driverId);
+    await axios.post("http://localhost:6060/updateDriver", {
+      name: name,
+      code: code,
+      driverId: driverId,
+        residentId: residentId,
+      phone: phone,
+      plate: plate,
+      address: address,
+      status: status,
+    }).then(res => {
+      console.log(res);
+      console.log(res.data);
+    })
+    window.location.reload()
+    
   }
   // fetch data
   useEffect(async () => {
@@ -159,13 +202,12 @@ export const DriversList = () => {
               {driversData.map((driver, i) => (
                 <tr key={i}>
                   <td
-                   
                     className="id-column"
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
                       verticalAlign: "middle",
-                      padding: "0px"
+                      padding: "0px",
                     }}
                   >
                     {driver.code}
@@ -182,7 +224,6 @@ export const DriversList = () => {
                     {driver.name}
                   </td>
                   <td
-                    
                     style={{
                       fontSize: "15px",
                       textAlign: "center",
@@ -195,7 +236,7 @@ export const DriversList = () => {
                   <td
                     style={{
                       fontSize: "15px",
-                      textAlign: "center",  
+                      textAlign: "center",
                       verticalAlign: "middle",
                       padding: "0px",
                     }}
@@ -228,12 +269,9 @@ export const DriversList = () => {
                       variant="primary"
                       className="mr-1"
                       onClick={() => toggle(driver)}
-                    
                     >
                       <FaUserEdit />
                     </Button>
-                    
-                      
                   </td>
                 </tr>
               ))}
@@ -248,8 +286,6 @@ export const DriversList = () => {
               onPageChange={(page) => setCurrentPage(page)}
             />
           </div>
-
-         
 
           {/* popup edit*/}
           <ModalEdit
@@ -317,7 +353,13 @@ export const DriversList = () => {
                     Trạng thái
                   </th>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    <select defaultValue={status} onChange={(event)=> onChangeValue(event.target.value, "status")} style={{width:"100%"}}>
+                    <select
+                      defaultValue={status}
+                      onChange={(event) =>
+                        onChangeValue(event.target.value, "status")
+                      }
+                      style={{ width: "100%" }}
+                    >
                       <option value="active">active</option>
                       <option value="inactive">inactive</option>
                     </select>
@@ -384,6 +426,45 @@ export const DriversList = () => {
                     defaultValue={""}
                     onChange={(event) =>
                       onChangeValue(event.target.value, "plate")
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Địa chỉ
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={""}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "address")
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Tên tài khoản
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={""}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "username")
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th style={{ textAlign: "left", verticalAlign: "middle" }}>
+                  Mã tài xế
+                </th>
+                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                  <input
+                    defaultValue={""}
+                    onChange={(event) =>
+                      onChangeValue(event.target.value, "code")
                     }
                   />
                 </td>

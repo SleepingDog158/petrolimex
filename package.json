@@ -27,8 +27,9 @@
     "react-minimal-pie-chart": "^8.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
-    "react-toastify": "^6.0.9",
-    "reactstrap": "^8.6.0"
+    "react-select": "^3.1.0",
+    "react-toastify": "^6.0.8",
+    "reactstrap": "^8.5.1"
   },
   "scripts": {
     "start": "react-scripts start",

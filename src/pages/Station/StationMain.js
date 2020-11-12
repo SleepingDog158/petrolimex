@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NavBarStation from "../../components/NavBarStation"
 
-import {BillsListStation} from "../../components/BillsListStation"
+import {BillsList} from "../../components/BillsList"
 import "../../components/Client.css"
 export default class StationMain extends Component {
   
@@ -14,7 +14,7 @@ export default class StationMain extends Component {
             <h4 style={{marginTop:"70px"}}>Lịch sử giao dịch</h4>
           </div>
           <div style={{alignSelf:"center"}}>
-            <BillsListStation /></div>
+            <BillsList /></div>
         </div>
       </div>
     );

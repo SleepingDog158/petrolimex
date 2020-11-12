@@ -39,10 +39,10 @@ export const BillsList = () => {
   const [total, setTotal] = useState(currentBill ? currentBill.total : "");
 
   const headers = [
-    { name: "ID", field: "id", sortable: true },
-    { name: "Cửa hàng", field: "stationName", sortable: true },
-    { name: "Ngày giao dịch", field: "date", sortable: true },
-    { name: "Mặt hàng", field: "product", sortable: true },
+    { name: "Mã hóa đơn", field: "billId", sortable: true },
+    { name: "Tên cửa hàng", field: "gasStation", sortable: false },
+    { name: "Ngày giao dịch", field: "transactionDate", sortable: true },
+    { name: "Mặt hàng", field: "product", sortable: false },
     { name: "Thành tiền", field: "total", sortable: true },
     { name: "", sortable: false },
   ];
@@ -78,7 +78,7 @@ export const BillsList = () => {
     if (sorting.field) {
       const reversed = sorting.order === "asc" ? 1 : -1;
       computedBills = computedBills.sort(
-        (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
+        (a, b) => reversed * a[sorting.field].toString().localeCompare(b[sorting.field].toString())
       );
     }
     return computedBills.slice(

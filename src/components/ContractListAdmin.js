@@ -13,6 +13,7 @@ export const ContractListAdmin = () => {
     const [contracts, setContract] = useState([]);
     const [currentContract, setCurrentContract] = useState(null);
     const [code, setCode] = useState(currentContract ? currentContract.code : "");
+    const [name, setName] = useState(currentContract ? currentContract.name : "");
     const [partner, setPartner] = useState(currentContract ? currentContract.partner : "");
     const [signedDate, setSignedDate] = useState(currentContract ? currentContract.signedDate : "");
     const [startDate, setStartDate] = useState(currentContract ? currentContract.startDate : "");
@@ -25,10 +26,11 @@ export const ContractListAdmin = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItem, setTotalItem] = useState(0);
     const [modal, setModal] = useState(false);
-    const [addModal, setAddModal] = useState(false);
+    const [clientId, setClientId] = useState(null);
 
     const header = [
         { name: "Mã hợp đồng", field: "code", sortable: true },
+        { name: "Tên hợp đồng", field: "name", sortable: true },
         { name: "Tên công ty", field: "partner", sortable: true },
         { name: "Ngày kí kết", field: "signedDate", sortable: true },
         { name: "Ngày có hiệu lực", field: "startDate", sortable: true },
@@ -43,23 +45,23 @@ export const ContractListAdmin = () => {
         if(!modal) {
             setCurrentContract(contract);
             setCode(contract.code);
+            setName(contract.name);
             setPartner(contract.partner);
             setSignedDate(contract.signedDate);
             setStartDate(contract.startDate);
             setExpiredDate(contract.expiredDate);
             setDebtCeiling(contract.debtCeiling);
             setStatus(contract.status);
+            setClientId(contract.clientId);
         }
-    };
-
-    const onToggleAdd = () => {
-        setAddModal(!addModal);
     };
 
     function onChangeValue(content, type) {
         switch (type) {
             case "code":
                 return setCode(content);
+            case "name":
+                return setName(content);
             case "partner":
                 return setPartner(content);
             case "signedDate":
@@ -72,16 +74,9 @@ export const ContractListAdmin = () => {
                 return setDebtCeiling(content);
             case "status":
                 return setStatus(content);
+            case "clientId":
+                return setClientId(content);
         }
-    }
-
-    function onAdd() {
-        console.log(code, partner, signedDate, startDate, expiredDate, debtCeiling, status);
-        toast.success("Đã thêm thông tin hợp đồng", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000,
-            hideProgressBar: true
-        });
     }
 
     function onUpdate() {
@@ -123,9 +118,6 @@ export const ContractListAdmin = () => {
     return (
         <div>
             <div>
-                <button className="admin-add-button" onClick = {() => onToggleAdd()}>
-                    Thêm hợp đồng
-                </button>
                 <Search onSearch={(value) => {
                     setSearch(value);
                     setCurrentPage(1);
@@ -143,22 +135,25 @@ export const ContractListAdmin = () => {
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.code}
                             </td>
-                            <td style={{width: "300px", verticalAlign: "middle"}}>
+                            <td style={{textAlign: "center", verticalAlign: "middle"}}>
+                                {contract.name}
+                            </td>
+                            <td style={{width: "250px", verticalAlign: "middle"}}>
                                 {contract.client.name}
                             </td>
-                            <td style={{width: "110px", textAlign: "center", verticalAlign: "middle"}}>
+                            <td style={{width: "100px", textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.signedDate}
                             </td>
-                            <td style={{width: "110px", textAlign: "center", verticalAlign: "middle"}}>
+                            <td style={{width: "100px", textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.startDate}
                             </td>
-                            <td style={{width: "110px", textAlign: "center", verticalAlign: "middle"}}>
+                            <td style={{width: "100px", textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.expiredDate}
                             </td>
                             <td style={{width: "100px", textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.debtCeiling}
                             </td>
-                            <td style={{width: "110px", textAlign: "center", verticalAlign: "middle"}}>
+                            <td style={{width: "100px", textAlign: "center", verticalAlign: "middle"}}>
                                 {contract.status}
                             </td>
                             <td style={{textAlign: "right", verticalAlign: "middle"}}>
@@ -173,7 +168,7 @@ export const ContractListAdmin = () => {
             <div>
                 <PaginationComponent
                     total={totalItem}
-                    itemsPerPage={ITEM_PER_PAGE}
+                    itemPerPage={ITEM_PER_PAGE}
                     currentPage={currentPage}
                     onPageChange={(page) => setCurrentPage(page)}
                 />
@@ -197,7 +192,7 @@ export const ContractListAdmin = () => {
                         </th>
                         <td>
                             <input
-                                defaultValue={contracts}
+                                defaultValue={partner}
                                 onChange={(event) => onChangeValue(event.target.value, "partner")}
                             />
                         </td>
@@ -242,76 +237,6 @@ export const ContractListAdmin = () => {
                         <td>
                             <input
                                 defaultValue={debtCeiling}
-                                onChange={(event) => onChangeValue(event.target.value, "debtCeiling")}
-                            />
-                        </td>
-                    </tr>
-                </Table>
-            </ModalEdit>
-            <ModalEdit modal={addModal} toggle={onToggleAdd} onSubmit={onAdd} title={"Thêm hợp đồng"}>
-                <Table>
-                    <tr>
-                        <th>
-                            Mã hợp đồng
-                        </th>
-                        <td>
-                            <input
-                                defaultValue={""}
-                                onChange={(event) => onChangeValue(event.target.value, "code")}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Tên đối tác
-                        </th>
-                        <td>
-                            <input
-                                defaultValue={""}
-                                onChange={(event) => onChangeValue(event.target.value, "partner")}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Ngày kí kết
-                        </th>
-                        <td>
-                            <input
-                                defaultValue={""}
-                                onChange={(event) => onChangeValue(event.target.value, "signedDate")}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Ngày có hiệu lực
-                        </th>
-                        <td>
-                            <input
-                                defaultValue={""}
-                                onChange={(event) => onChangeValue(event.target.value, "startDate")}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Ngày hết hiệu lực
-                        </th>
-                        <td>
-                            <input
-                                defaultValue={""}
-                                onChange={(event) => onChangeValue(event.target.value, "expiredDate")}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Hạn mức
-                        </th>
-                        <td>
-                            <input
-                                defaultValue={""}
                                 onChange={(event) => onChangeValue(event.target.value, "debtCeiling")}
                             />
                         </td>

@@ -5,6 +5,7 @@ import { TableHeaderAdmin } from "./TableHeaderAdmin"
 import { PaginationComponent } from "./PaginationComponent"
 import { Search } from "./Search"
 import { FilterAdminBill } from './FilterAdminBill'
+import ModalEdit from './ModalAdmin'
 
 export const BillListAdmin = () => {
 
@@ -14,9 +15,10 @@ export const BillListAdmin = () => {
     const ITEM_PER_PAGE = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItem, setTotalItem] = useState(0);
+    const [code, setCode] = useState([]);
 
     const header = [
-        { name: "Mã giao dịch", field: "code", sortable: true },
+        { name: "Mã giao dịch", field: "billId", sortable: true },
         { name: "Tên chi nhánh", field: "station_name", sortable: true },
         { name: "Tên tài xế", field: "driver_name", sortable: true },
         { name: "Tên sản phẩm", field: "product_name", sortable: true },
@@ -73,10 +75,10 @@ export const BillListAdmin = () => {
                             <td style={{textAlign: "center", verticalAlign: "middle"}}>
                                 {bill.billId}
                             </td>
-                            <td style={{width: "300px", verticalAlign: "middle"}}>
+                            <td style={{width: "250px", verticalAlign: "middle"}}>
                                 {bill.gasStation.name}
                             </td>
-                            <td style={{width: "180px", verticalAlign: "middle"}}>
+                            <td style={{width: "150px", verticalAlign: "middle"}}>
                                 {bill.driver.name}
                             </td>
                             <td style={{verticalAlign: "middle"}}>

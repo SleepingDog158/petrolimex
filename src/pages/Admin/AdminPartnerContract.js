@@ -3,14 +3,16 @@ import NavBar from '../../components/NavBar'
 import { ContractListPartner } from "../../components/ContractListPartner"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import {useParams} from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 export default function AdminPartnerContract() {
-        let {clientId} =useParams()
+        let { clientId } = useParams();
+        const history = useHistory();
+
         return (
             <div>
                 <NavBar/>
                 <div className="admin-partner-contract-content">
-                    <a href="/partner-main" className="admin-partner-return-button">
+                    <a className="admin-partner-return-button" onClick={() => history.goBack()}>
                         <FontAwesomeIcon icon={faAngleLeft}/>
                         Đối tác
                     </a>
