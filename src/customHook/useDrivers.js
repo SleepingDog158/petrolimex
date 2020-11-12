@@ -5,10 +5,21 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function () {
   const [drivers, setDrivers] = useState([]);
-
+  const [dividedContracts, setDividedContracts] = useState([]);
+  
   const getDrivers = async () => {
-    const { data } =await Axios.post("http://localhost:6060/getDrivers/", {
+    const { data } =await Axios.post("http://localhost:6060/getToCreateDividedContract", {
       clientId: 1,
+      contractId: "1"
+    });
+    if (data) {
+      setDrivers(data.drivers);
+    }
+  };
+  const getDividedContracts = async () => {
+    const { data } =await Axios.post("http://localhost:6060/getToCreateDividedContract", {
+      clientId: 1,
+      contractId: "1"
     });
     if (data) {
       setDrivers(data.drivers);
@@ -31,21 +42,7 @@ export default function () {
     );
   };
 
-  const onDeleteDriver = (driverId, contractId) => {
-    setDrivers(
-      drivers.map((driver) => {
-        if (driver.driverId === driverId) {
-          let driverTemp = {
-            ...driver,
-            contractId: null,
-          };
-          return driverTemp;
-        } else {
-          return driver;
-        }
-      })
-    );
-  };
+
 
   const onUpdate = () => {
     toast.info("Thay đổi thành công", {
@@ -64,7 +61,7 @@ export default function () {
   return {
     drivers,
     onCheckDriver,
-    onDeleteDriver,
+   
     onUpdate,
     setDrivers,
   };

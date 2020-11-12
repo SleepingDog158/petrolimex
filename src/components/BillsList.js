@@ -186,6 +186,7 @@ export const BillsList = () => {
             className="bill-list"
             modal={modal}
             toggle={toggle}
+            onSubmit={toggle}
             title={"Chi tiết giao dịch"}
           >
             <Table>

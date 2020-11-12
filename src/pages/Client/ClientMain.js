@@ -12,21 +12,44 @@ import {
   CardSubtitle,
   Button,
 } from "reactstrap";
-import { func } from "prop-types";
+import {useCookies} from 'react-cookie'
 export  const ClientMain = () => {
   const [drivers, setDrivers] = useState([]);
-  const [activeDrivers, setActiveDrivers] = useState([]);
+  const [cookies] = useCookies(['userId']);
+  const [clientId, setClientId]=useState(null)
+  console.log(cookies.userId)
+  useEffect(async () => {
+    const result = await axios.post("http://localhost:6060/getClients", {
+      userId: cookies.userId
+    });
+    console.log(result.data.clients[0].clientId);
+    setClientId(result.data.clients[0].clientId);
+  },{});
   const [activeContracts, setActiveContracts] = useState([]);
-  // useEffect( () => {
-  //   async function fetchData(){
-  //   const response = await axios.get("https://1ne1c.sse.codesandbox.io/drivers");
-  //   console.log(response.data);
-  //   setDrivers(response.data);}
-
-  //   fetchData()
-    
-  // }, []);
+  const [bills, setBills] = useState([]);
+  useEffect(async () => {
+    const result = await axios.post("http://localhost:6060/getContracts/", {
+      clientId: 1,
+    });
+    console.log(result.data.contracts);
+    setActiveContracts(result.data.contracts.filter((d)=>(d.status==="active")));
+  }, []);
  
+  useEffect(async () => {
+    const result = await axios.post("http://localhost:6060/getDrivers/", {
+      clientId: 1,
+    });
+    console.log(result.data.drivers);
+    setDrivers(result.data.drivers);
+    
+  }, []);
+  useEffect(async () => {
+    const result = await axios.post("http://localhost:6060/getBills/", {
+      clientId: 1,
+    });
+    console.log(result.data.bills);
+    setBills(result.data.bills);
+  }, []);
     return (
       <div>
         <PageHeader />
@@ -58,8 +81,8 @@ export  const ClientMain = () => {
             <Card className="card-tab ml-3">
               <CardBody>
                 <CardTitle>Giao dịch</CardTitle>
-                <CardSubtitle className="h5">100 giao dịch</CardSubtitle>
-                <CardText>trong 7 ngày</CardText>
+                <CardSubtitle className="h5">{bills.length} giao dịch</CardSubtitle>
+               
               </CardBody>
               <Button className="w-50 mb-3 ml-3" color="primary"  href="/client/bill">
                 Xem thêm
@@ -67,9 +90,8 @@ export  const ClientMain = () => {
             </Card>
             <Card className="card-tab ml-3">
               <CardBody>
-                <CardTitle>Công nợ</CardTitle>
-                <CardSubtitle className="h5">{activeDrivers.length} tài xế</CardSubtitle>
-                <CardText>được chia hợp đồng</CardText>
+                <CardTitle>Thống kê công nợ tài xế</CardTitle>
+                
               </CardBody>
               <Button className="w-50 mb-3 ml-3" color="primary"  href="/client/report">
                 Xem thêm
